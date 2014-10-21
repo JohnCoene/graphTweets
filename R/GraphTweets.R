@@ -7,16 +7,16 @@
 #' edge_table(tweet_df, text, screenName, ...)
 #' 
 #' @param tweet_df Required. Data frame of tweets
-#' @param text Required. Column name of tweets within tweets_df
-#' @param screenName Required. User name or ID column name of users.
+#' @param text Required. Column name of tweets within tweet_df
+#' @param screenName Required. User name or ID column.
 #' @param ... Any other columns to be passed on to the edge_table, otpional.
 #' 
 #' @details
 #' 
-#' The edges function takes in a data frame of tweets typically obtained via the twitter API, scrapes the content of tweets to subset the @@tags and form a table of edges. @@tags are subsets of regular expressions starting with at-signs (@@) until first space (" ").
+#' The edges function takes in a data frame of tweets -typically obtained from the twitter Search or Streaming API-, scrapes the content of tweets to subset the @@tags subsequently forming a table of edges. @@tags are subsets of regular expressions between at-signs (@@) and first space (" ").
 #' Note that the table of edges returned is meant for a directed graph.
-#' If no @@tags are mentioned in the tweets (text) then the user name (screenName) is repeated to form a self-loop.
-#' Self-loops can be easily filtered using the boolean loop variable (see return). Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
+#' If no @@tags are mentioned in the tweets (text) then the user name or ID (screenName) is repeated to form a self-loop.
+#' Self-loops can be filtered out using the boolean loop variable (see return). Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
 #' 
 #' @return
 #' 
@@ -57,6 +57,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
   args <- unlist(list(...))
   for (i in 1:nrow(tweet_df)) {
     handles <- regmatches(text[i], gregexpr("@[^ ]*", text[i]))[[1]]
+    handles <- gsub(":", "",handles)
     handles <- substring(handles, 2)
     if (length(handles) >= 1) {
       for (x in 1:length(handles)){
@@ -99,19 +100,19 @@ edge_table <- function(tweet_df, text, screenName, ...) {
 
 #' node_table
 #' 
-#' @description Builds table of nodes from an edge table (data.frame). Also known as vertices. Ideal to add metadata to igraph objects/graphml files.
+#' @description Builds table of nodes|vertices from an edge table (data.frame). Use to metadata to igraph objects/graphml files.
 #' 
 #' 
 #' @usage
 #' 
 #' node_table(edge_table, ...)
 #' 
-#' @param edge_table Required - data.frame. First column is source node, second is target node.
+#' @param edge_table Required - data.frame. Assumes first column is source node, second is target node.
 #' @param ... Any other column names (meta-data)
 #' 
 #' @return Returns table of nodes/vertices; first column is nodes' name or ID following columns are optional args. Meant to be used as meta-data for graph.
 #' 
-#' @details Looks for uniques in both source and target columns of the edge table it is fed. Note that other (optional) args only apply to the source, not the target; will return NA. Assumes the first column of the edge_table are the sources of edges and the second are the targets.
+#' @details Looks for uniques in both source and target columns of the edge table it is fed. Note that other args (optional) only apply to the source node; will return NA for target nodes. Assumes first column of the edge_table are source nodes and the second are target nods.
 #' 
 #' @seealso \code{\link{edge_table}}
 #' 
