@@ -144,12 +144,14 @@ node_table <- function(edge_table, ...) {
   nodes <- as.data.frame(unique(rbind(edge_table[1], edge_table[2])))
   args <- unlist(list(...))
   if(length(args)) {
-    edges_args <- edge_table[,args]
+    edges_args <- as.data.frame(edge_table[,args])
+    names(edges_args) <- args
     edges_src <- cbind(edge_table[1], edges_args)
     edges_tg <- cbind(edge_table[2], edges_args)
     names(edges_tg)[1] <- "source"
-    edg_db <- unique(rbind(edges_src, edges_tg))
-    edg_db[nrow(edges_tg):nrow(edg_db), args] <- NA
+    edg_db <- rbind(edges_src, edges_tg)
+    edg_db[(nrow(edges_tg)+1):nrow(edg_db), args] <- NA
+    edg_db <- edg_db[!duplicated(edg_db[,args,]),]
     library(dplyr)
     nodes <- left_join(nodes, edg_db, by = "source")
     names(nodes) <- c("screenName", args)
