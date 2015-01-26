@@ -15,12 +15,11 @@
 #' 
 #' The edges function takes in a data frame of tweets -typically obtained from the twitter Search or Streaming API-, scrapes the content of tweets to subset the @@tags subsequently forming a table of edges. @@tags are subsets of regular expressions between at-signs (@@) and first space (" ").
 #' Note that the table of edges returned is meant for a directed graph.
-#' If no @@tags are mentioned in the tweets (text) then the user name or ID (screenName) is repeated to form a self-loop.
-#' Self-loops can be filtered out using the boolean loop variable (see return). Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
+#' If no @@tags are mentioned in the tweets (text) then the user name or ID (screenName) is repeated to form a self-loop. Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
 #' 
 #' @return
 #' 
-#' Returns a table of edges; source, target, loop, ...
+#' Returns a table of edges; source, target, ...
 #' 
 #' @seealso
 #' 
@@ -58,6 +57,10 @@ edge_table <- function(tweet_df, text, screenName, ...) {
   for (i in 1:nrow(tweet_df)) {
     handles <- regmatches(text[i], gregexpr("@[^ ]*", text[i]))[[1]]
     handles <- gsub(":", "",handles)
+    handles <- gsub(",", "",handles)
+    handles <- gsub(";", "",handles)
+    handles <- gsub(">", "",handles)
+    handles <- gsub("<", "",handles)
     handles <- substring(handles, 2)
     if (length(handles) >= 1) {
       for (x in 1:length(handles)){
@@ -87,13 +90,6 @@ edge_table <- function(tweet_df, text, screenName, ...) {
       names(edge_tb)[1:2] <- c("source", "target")
     }
     edges <- rbind(edge_tb, edges)
-  }
-  for (i in 1:nrow(edges)) {
-    if(as.character(edges$source[i]) == as.character(edges$target[i])) {
-      edges$loop[i] <- "TRUE"
-    } else {
-      edges$loop[i] <- "FALSE"
-    }
   }
   return(edges)
 }
