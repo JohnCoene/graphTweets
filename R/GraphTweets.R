@@ -74,6 +74,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
         meta <- as.data.frame(tweet_df[i, args])
         meta <- meta[rep(seq_len(nrow(meta)), each=length(handles)),]
         edge_tb <- cbind(edge_table, meta)
+        names(edge_tb) <- c("source", "target", args)
       } else {
         edge_tb <- edge_table
       }
@@ -84,6 +85,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
       if( length(args)) {
         meta <- tweet_df[i, args]
         edge_tb <- cbind(edge_table, meta)
+        names(edge_tb) <- c("source", "target", args)
       } else {
         edge_tb <- edge_table
       }
