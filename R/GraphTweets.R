@@ -91,6 +91,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
     }
     edges <- rbind(edge_tb, edges)
   }
+  edges <- unique(edges)
   edges <- edges[complete.cases(edges),]
   edges$loop <- FALSE
   for(i in 1:nrow(edges)){
@@ -140,7 +141,7 @@ node_table <- function(edge_table, ...) {
     stop("missing edge_table")
   }
   names(edge_table)[2] <- "source"
-  nodes <- as.data.frame(unique(rbind( , edge_table[2])))
+  nodes <- as.data.frame(unique(rbind(edge_table[1], edge_table[2])))
   args <- unlist(list(...))
   if(length(args)) {
     edges_args <- edge_table[,args]
