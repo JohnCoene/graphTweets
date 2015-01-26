@@ -15,11 +15,11 @@
 #' 
 #' The edges function takes in a data frame of tweets -typically obtained from the twitter Search or Streaming API-, scrapes the content of tweets to subset the @@tags subsequently forming a table of edges. @@tags are subsets of regular expressions between at-signs (@@) and first space (" ").
 #' Note that the table of edges returned is meant for a directed graph.
-#' If no @@tags are mentioned in the tweets (text) then the user name or ID (screenName) is repeated to form a self-loop. Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
+#' If no @@tags are mentioned in the tweets (text) then the user name or ID (screenName) is repeated to form a self-loop. Self-loop can be identified by loop variables (boolean). Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
 #' 
 #' @return
 #' 
-#' Returns a table of edges; source, target, ...
+#' Returns a table of edges; source, target, loop, ...
 #' 
 #' @seealso
 #' 
@@ -91,6 +91,15 @@ edge_table <- function(tweet_df, text, screenName, ...) {
     }
     edges <- rbind(edge_tb, edges)
   }
+  edges <- edges[complete.cases(edges),]
+  edges$loop <- FALSE
+  for(i in 1:nrow(edges)){
+    if( as.character(edges$source[i] == as.character(edges$target[i]))){
+      edges$loop[i] <- TRUE
+    } else {
+      edges$loop[i] <- FALSE
+    }
+  }
   return(edges)
 }
 
@@ -108,7 +117,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
 #' 
 #' @return Returns table of nodes/vertices; first column is nodes' name or ID following columns are optional args. Meant to be used as meta-data for graph.
 #' 
-#' @details Looks for uniques in both source and target columns of the edge table it is fed. Note that other args (optional) only apply to the source node; will return NA for target nodes. Assumes first column of the edge_table are source nodes and the second are target nods.
+#' @details Looks for uniques in both source and target columns of the edge table it is fed. Note that other args (optional) only apply to the source node; will return NA for target nodes. Assumes first column of the edge_table are source nodes and the second are target nodes.
 #' 
 #' @seealso \code{\link{edge_table}}
 #' 
@@ -131,7 +140,7 @@ node_table <- function(edge_table, ...) {
     stop("missing edge_table")
   }
   names(edge_table)[2] <- "source"
-  nodes <- as.data.frame(unique(rbind(edge_table[1], edge_table[2])))
+  nodes <- as.data.frame(unique(rbind( , edge_table[2])))
   args <- unlist(list(...))
   if(length(args)) {
     edges_args <- edge_table[,args]
