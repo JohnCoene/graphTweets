@@ -7,8 +7,8 @@
 #' edge_table(tweet_df, text, screenName, ...)
 #' 
 #' @param tweet_df Required. Data frame of tweets
-#' @param text Required. Column name of tweets within tweet_df
-#' @param screenName Required. User name or ID column.
+#' @param text Required. Column name of tweets within tweet_df, must be of character class.
+#' @param screenName Required. User name or ID column, must be of character class.
 #' @param ... Any other columns to be passed on to the edge_table, otpional.
 #' 
 #' @details
