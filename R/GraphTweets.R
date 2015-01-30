@@ -48,6 +48,10 @@ edge_table <- function(tweet_df, text, screenName, ...) {
     stop("missing text column")
   } else if (missing(screenName)) {
     stop("missing screenName column")
+  } else if (class(tweet_df[, text]) != "character"){
+    stop("text must be of class character")
+  } else if (class(tweet_df[, screenName]) != "character"){
+    stop("ScreenName must be of class character")
   }
   edges <- data.frame()
   edge_tb <- data.frame()
