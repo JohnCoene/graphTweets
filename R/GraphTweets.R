@@ -97,7 +97,6 @@ edge_table <- function(tweet_df, text, screenName, ...) {
     }
     edges <- rbind(edge_tb, edges)
   }
-  edges <- unique(edges)
   edges <- edges[complete.cases(edges),]
   edges$loop <- FALSE
   for(i in 1:nrow(edges)){
