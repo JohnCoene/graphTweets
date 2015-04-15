@@ -4,18 +4,20 @@
 #' 
 #' @usage 
 #' 
-#' edge_table(tweet_df, text, screenName, ...)
+#' edge_table(tweet_df, text, screenName, strLength, ...)
 #' 
-#' @param tweet_df Required. Data frame of tweets
-#' @param text Required. Column name of tweets within tweet_df, must be of character class.
-#' @param screenName Required. User name or ID column, must be of character class.
-#' @param ... Any other columns to be passed on to the edge_table, otpional.
+#' @param tweet_df. Data frame of tweets which includes text and screenNames, required.
+#' @param text. Column name of tweets within tweet_df, must be of character class, required.
+#' @param screenName. User name or ID column, must be of character class, required.
+#' @param strLength. Shorten length of @@tags (see details), maximum number of characters, optional.
+#' @param ... Any other columns to be passed on to the edge_table, optional.
 #' 
 #' @details
 #' 
 #' The edges function takes in a data frame of tweets -typically obtained from the twitter Search or Streaming API-, scrapes the content of tweets to subset the @@tags subsequently forming a table of edges. @@tags are subsets of regular expressions between at-signs (@@) and first space (" ").
 #' Note that the table of edges returned is meant for a directed graph.
 #' If no @@tags are mentioned in the tweets (text) then the user name or ID (screenName) is repeated to form a self-loop. Self-loop can be identified by loop variables (boolean). Failed @@tags i.e.:@@ tag are not caught and will instead produce a self-loop.
+#' Node labels can be shortened using the strLength parameters. This is useful for non-latin alphabet where nodes may be wrongly identified. 
 #' 
 #' @return
 #' 
@@ -35,13 +37,14 @@
 #' [11] "screenName"    "retweetCount"  "isRetweet"     "retweeted"     "longitude"    
 #' [16] "latitude" 
 #' 
-#' edges_table <- edge_table(tweet_df=tw_table, text="text", screenName="screenName", "longitude", "latitude")
+#' edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "longitude", "latitude")
 #' 
+#' # output
 #' names(edges_table)
-#' [1] "source"    "target"    "longitude" "latitude" 
+#' [1] "source"    "target"   "loop"    "longitude"    "latitude" 
 #' 
 #' }
-edge_table <- function(tweet_df, text, screenName, ...) {
+edge_table <- function(tweet_df, text, screenName, strLength,...) {
   if (class(tweet_df) != "data.frame") {
     stop("tweet_df is not data.frame")
   } else if (missing(text)) {
@@ -52,11 +55,17 @@ edge_table <- function(tweet_df, text, screenName, ...) {
     stop("text must be of class character")
   } else if (class(tweet_df[, screenName]) != "character"){
     stop("ScreenName must be of class character")
+  } else if (class(strLength) != "numeric") {
+    stop("strLength must be numeric")
   }
   edges <- data.frame()
   edge_tb <- data.frame()
   text <- tweet_df[, text]
   screenName <- tweet_df[, screenName]
+  if(missing(strLength)){
+  } else {
+    screenName <- substring(screenName, 0, strLength)
+  }
   args <- unlist(list(...))
   for (i in 1:nrow(tweet_df)) {
     handles <- regmatches(text[i], gregexpr("@[^ ]*", text[i]))[[1]]
@@ -67,6 +76,10 @@ edge_table <- function(tweet_df, text, screenName, ...) {
     handles <- gsub("<", "",handles)
     handles <- substring(handles, 2)
     if (length(handles) >= 1) {
+      if(missing(strLength)){
+      } else {
+        handles <- substring(handles, 0, strLength)
+      }
       for (x in 1:length(handles)){
         if(handles[x] == "") {
           handles[x] <- as.character(screenName[i])
@@ -118,7 +131,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
 #' 
 #' node_table(edge_table, ...)
 #' 
-#' @param edge_table Required - data.frame. Assumes first column is source node, second is target node.
+#' @param edge_table. data.frame. Assumes first column is source node, second is target node, required.
 #' @param ... Any other column names (meta-data)
 #' 
 #' @return Returns table of nodes/vertices; first column is nodes' name or ID following columns are optional args. Meant to be used as meta-data for graph.
@@ -136,6 +149,7 @@ edge_table <- function(tweet_df, text, screenName, ...) {
 #' 
 #' node_table <- node_table(edge_table, "longitude", "latitude")
 #' 
+#' # output
 #' names(node_table)
 #' [1] "screenName" "longitude"  "latitude"
 #' }
@@ -157,7 +171,6 @@ node_table <- function(edge_table, ...) {
     edg_db <- rbind(edges_src, edges_tg)
     edg_db[(nrow(edges_tg)+1):nrow(edg_db), args] <- NA
     edg_db <- edg_db[!duplicated(edg_db[,args,]),]
-    library(dplyr)
     nodes <- left_join(nodes, edg_db, by = "source")
     names(nodes) <- c("screenName", args)
   } else {
