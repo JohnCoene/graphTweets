@@ -4,7 +4,7 @@
 \alias{edge_table}
 \title{edge_table}
 \usage{
-edge_table(tweet_df, text, screenName, strLength, ...)
+edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
 }
 \arguments{
 \item{...}{Any other columns to be passed on to the edge_table, optional.}
@@ -15,7 +15,7 @@ edge_table(tweet_df, text, screenName, strLength, ...)
 
 \item{screenName.}{User name or ID column, must be of character class, required.}
 
-\item{strLength.}{Shorten length of @tags (see details), maximum number of characters, optional.}
+\item{strLength.}{Defaults to FALSE. Shorten length of @tags (see details), maximum number of characters, optional.}
 }
 \value{
 Returns a table of edges; source, target, loop, ...
@@ -38,7 +38,7 @@ names(tw_table)
 [11] "screenName"    "retweetCount"  "isRetweet"     "retweeted"     "longitude"
 [16] "latitude"
 
-edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "longitude", "latitude")
+edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "retweetCount", strLength = FALSE)
 
 # output
 names(edges_table)

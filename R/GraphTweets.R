@@ -4,12 +4,12 @@
 #' 
 #' @usage 
 #' 
-#' edge_table(tweet_df, text, screenName, strLength, ...)
+#' edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
 #' 
 #' @param tweet_df. Data frame of tweets which includes text and screenNames, required.
 #' @param text. Column name of tweets within tweet_df, must be of character class, required.
 #' @param screenName. User name or ID column, must be of character class, required.
-#' @param strLength. Shorten length of @@tags (see details), maximum number of characters, optional.
+#' @param strLength. Defaults to FALSE. Shorten length of @@tags (see details), maximum number of characters, optional.
 #' @param ... Any other columns to be passed on to the edge_table, optional.
 #' 
 #' @details
@@ -37,14 +37,14 @@
 #' [11] "screenName"    "retweetCount"  "isRetweet"     "retweeted"     "longitude"    
 #' [16] "latitude" 
 #' 
-#' edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "longitude", "latitude")
+#' edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "retweetCount", strLength = FALSE)
 #' 
 #' # output
 #' names(edges_table)
 #' [1] "source"    "target"   "loop"    "longitude"    "latitude" 
 #' 
 #' }
-edge_table <- function(tweet_df, text, screenName, strLength,...) {
+edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
   if (class(tweet_df) != "data.frame") {
     stop("tweet_df is not data.frame")
   } else if (missing(text)) {
@@ -55,7 +55,7 @@ edge_table <- function(tweet_df, text, screenName, strLength,...) {
     stop("text must be of class character")
   } else if (class(tweet_df[, screenName]) != "character"){
     stop("ScreenName must be of class character")
-  } else if (class(strLength) != "numeric") {
+  } else if (strLength != FALSE & class(strLength) != "numeric") {
     stop("strLength must be numeric")
   }
   edges <- data.frame()
@@ -76,7 +76,8 @@ edge_table <- function(tweet_df, text, screenName, strLength,...) {
     handles <- gsub("<", "",handles)
     handles <- substring(handles, 2)
     if (length(handles) >= 1) {
-      if(missing(strLength)){
+      if(strLength == FALSE){
+        
       } else {
         handles <- substring(handles, 0, strLength)
       }
