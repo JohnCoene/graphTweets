@@ -4,12 +4,13 @@
 #' 
 #' @usage 
 #' 
-#' edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
+#' edge_table(tweet_df, text, screenName, strLength = FALSE, weight = FALSE, ...)
 #' 
 #' @param tweet_df Data frame of tweets which includes text and screenNames, required.
 #' @param text Column name of tweets within tweet_df, must be of character class, required.
 #' @param screenName User name or ID column, must be of character class, required.
 #' @param strLength Defaults to FALSE. Shorten length of @@tags (see details), maximum number of characters, optional.
+#' @param weight Defaults to FALSE. If TRUE uses edge frequency as weight.
 #' @param ... Any other columns to be passed on to the edge_table function, optional.
 #' 
 #' @details
@@ -37,14 +38,14 @@
 #' [11] "screenName"    "retweetCount"  "isRetweet"     "retweeted"     "longitude"    
 #' [16] "latitude" 
 #' 
-#' edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "retweetCount", strLength = FALSE)
+#' edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "retweetCount", strLength = FALSE, weight = FALSE)
 #' 
 #' # output
 #' names(edges_table)
 #' [1] "source"    "target"   "loop"    "longitude"    "latitude" 
 #' 
 #' }
-edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
+edge_table <- function(tweet_df, text, screenName, strLength = FALSE, weight = FALSE, ...) {
   if (class(tweet_df) != "data.frame") {
     stop("tweet_df is not data.frame")
   } else if (missing(text)) {
@@ -106,12 +107,8 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
         
       }
       
-      # if handle empty then copy screenName to form loop
-      for (x in 1:length(handles)){
-        if(handles[x] == "") {
-          handles[x] <- as.character(screenName[i])
-        }
-      }
+      # remove failed handles
+      handles <- handles[!handles == ""]
       
       # get source
       src <- rep(as.character(screenName[i]), length(handles))
@@ -133,12 +130,16 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
         
         # change names
         names(edge_tb) <- c("source", "target", args)
+        
       } else {
         
         # copy table
         edge_tb <- edge_table
       }
+      
+      # rename
       names(edge_tb)[1:2] <- c("source", "target")
+      
     } else {
       edge_table <- as.data.frame(cbind(as.character(screenName[i]),
                                         as.character(screenName[i])))
@@ -153,6 +154,20 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
     }
     edges <- rbind(edge_tb, edges)
   }
+  
+  # check weight
+  if(weight == TRUE) {
+    
+    #add weight
+    edges$weight <- 1
+    
+    edges <- ddply(edges, c("source", "target"), transform, 
+                   weight = sum(weight))
+  } else {
+    # do nothing
+  }
+  
+  # idetnigy self-loops
   edges$loop <- FALSE
   for(i in 1:nrow(edges)){
     if( as.character(edges$source[i] == as.character(edges$target[i]))){

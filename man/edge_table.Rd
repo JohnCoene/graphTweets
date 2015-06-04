@@ -4,7 +4,7 @@
 \alias{edge_table}
 \title{edge_table}
 \usage{
-edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
+edge_table(tweet_df, text, screenName, strLength = FALSE, weight = FALSE, ...)
 }
 \arguments{
 \item{tweet_df}{Data frame of tweets which includes text and screenNames, required.}
@@ -14,6 +14,8 @@ edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
 \item{screenName}{User name or ID column, must be of character class, required.}
 
 \item{strLength}{Defaults to FALSE. Shorten length of @tags (see details), maximum number of characters, optional.}
+
+\item{weight}{Defaults to FALSE. If TRUE uses edge frequency as weight.}
 
 \item{...}{Any other columns to be passed on to the edge_table function, optional.}
 }
@@ -38,7 +40,7 @@ names(tw_table)
 [11] "screenName"    "retweetCount"  "isRetweet"     "retweeted"     "longitude"
 [16] "latitude"
 
-edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "retweetCount", strLength = FALSE)
+edges_table <- edge_table(tweet_df = tw_table, text = "text", screenName = "screenName", "retweetCount", strLength = FALSE, weight = FALSE)
 
 # output
 names(edges_table)
