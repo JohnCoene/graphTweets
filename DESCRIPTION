@@ -9,4 +9,5 @@ Description: Allows building an edge table from data frame of tweets, also
     provides function to build vertices (meta-data).
 License: MIT
 Depends:
+    plyr,
     dplyr
