@@ -6,11 +6,11 @@
 #' 
 #' edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
 #' 
-#' @param tweet_df. Data frame of tweets which includes text and screenNames, required.
-#' @param text. Column name of tweets within tweet_df, must be of character class, required.
-#' @param screenName. User name or ID column, must be of character class, required.
-#' @param strLength. Defaults to FALSE. Shorten length of @@tags (see details), maximum number of characters, optional.
-#' @param ... Any other columns to be passed on to the edge_table, optional.
+#' @param tweet_df Data frame of tweets which includes text and screenNames, required.
+#' @param text Column name of tweets within tweet_df, must be of character class, required.
+#' @param screenName User name or ID column, must be of character class, required.
+#' @param strLength Defaults to FALSE. Shorten length of @@tags (see details), maximum number of characters, optional.
+#' @param ... Any other columns to be passed on to the edge_table function, optional.
 #' 
 #' @details
 #' 
@@ -132,7 +132,7 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
 #' 
 #' node_table(edge_table, ...)
 #' 
-#' @param edge_table. data.frame. Assumes first column is source node, second is target node, required.
+#' @param edge_table data.frame. Assumes first column is source node, second is target node, required.
 #' @param ... Any other column names (meta-data)
 #' 
 #' @return Returns table of nodes/vertices; first column is nodes' name or ID following columns are optional args. Meant to be used as meta-data for graph.

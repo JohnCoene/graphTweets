@@ -7,15 +7,15 @@
 edge_table(tweet_df, text, screenName, strLength = FALSE, ...)
 }
 \arguments{
-\item{...}{Any other columns to be passed on to the edge_table, optional.}
+\item{tweet_df}{Data frame of tweets which includes text and screenNames, required.}
 
-\item{tweet_df.}{Data frame of tweets which includes text and screenNames, required.}
+\item{text}{Column name of tweets within tweet_df, must be of character class, required.}
 
-\item{text.}{Column name of tweets within tweet_df, must be of character class, required.}
+\item{screenName}{User name or ID column, must be of character class, required.}
 
-\item{screenName.}{User name or ID column, must be of character class, required.}
+\item{strLength}{Defaults to FALSE. Shorten length of @tags (see details), maximum number of characters, optional.}
 
-\item{strLength.}{Defaults to FALSE. Shorten length of @tags (see details), maximum number of characters, optional.}
+\item{...}{Any other columns to be passed on to the edge_table function, optional.}
 }
 \value{
 Returns a table of edges; source, target, loop, ...

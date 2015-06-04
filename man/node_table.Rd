@@ -7,9 +7,9 @@
 node_table(edge_table, ...)
 }
 \arguments{
-\item{...}{Any other column names (meta-data)}
+\item{edge_table}{data.frame. Assumes first column is source node, second is target node, required.}
 
-\item{edge_table.}{data.frame. Assumes first column is source node, second is target node, required.}
+\item{...}{Any other column names (meta-data)}
 }
 \value{
 Returns table of nodes/vertices; first column is nodes' name or ID following columns are optional args. Meant to be used as meta-data for graph.
