@@ -55,39 +55,71 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
     stop("text must be of class character")
   } else if (class(tweet_df[, screenName]) != "character"){
     stop("ScreenName must be of class character")
-  } else if (strLength != FALSE & class(strLength) != "numeric") {
+  } else if (strLength != FALSE && class(strLength) != "numeric") {
     stop("strLength must be numeric")
   }
+  
+  # create data.frames
   edges <- data.frame()
   edge_tb <- data.frame()
+  
+  # extract text and screenName (to vector)
   text <- tweet_df[, text]
   screenName <- tweet_df[, screenName]
-  if(missing(strLength)){
+  if(strLength == FALSE){
+    
+    # leave screenName as is
+    
   } else {
+    
+    # cut screenName
     screenName <- substring(screenName, 0, strLength)
+    
   }
+  
+  # get arguments
   args <- unlist(list(...))
+  
+  # loop through tweets
   for (i in 1:nrow(tweet_df)) {
+    
+    # grep the @tags
     handles <- regmatches(text[i], gregexpr("@[^ ]*", text[i]))[[1]]
+    
+    # remove unwanted punctuation
     handles <- gsub(":", "",handles)
     handles <- gsub(",", "",handles)
     handles <- gsub(";", "",handles)
     handles <- gsub(">", "",handles)
     handles <- gsub("<", "",handles)
     handles <- substring(handles, 2)
+    
     if (length(handles) >= 1) {
       if(strLength == FALSE){
         
+        # leave @handles as is
+        
       } else {
+        
+        # cut handles
         handles <- substring(handles, 0, strLength)
+        
       }
+      
+      # if handle empty then copy screenName to form loop
       for (x in 1:length(handles)){
         if(handles[x] == "") {
           handles[x] <- as.character(screenName[i])
         }
       }
+      
+      # get source
       src <- rep(as.character(screenName[i]), length(handles))
+      
+      # form table
       edge_table <- as.data.frame(cbind(as.character(src), as.character(handles)))
+      
+      # if ... arguments then add to row
       if(length(args)) {
         meta <- as.data.frame(tweet_df[i, args])
         meta <- meta[rep(seq_len(nrow(meta)), each=length(handles)),]
