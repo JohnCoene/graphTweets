@@ -120,12 +120,22 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
       edge_table <- as.data.frame(cbind(as.character(src), as.character(handles)))
       
       # if ... arguments then add to row
-      if(length(args)) {
+      if(length(args) >= 1) {
+        
+        # get columns of arguments
         meta <- as.data.frame(tweet_df[i, args])
+        
+        # build df (rep screenName)
         meta <- meta[rep(seq_len(nrow(meta)), each=length(handles)),]
+        
+        # cbind to edges
         edge_tb <- cbind(edge_table, meta)
+        
+        # change names
         names(edge_tb) <- c("source", "target", args)
       } else {
+        
+        # copy table
         edge_tb <- edge_table
       }
       names(edge_tb)[1:2] <- c("source", "target")
@@ -143,7 +153,6 @@ edge_table <- function(tweet_df, text, screenName, strLength = FALSE, ...) {
     }
     edges <- rbind(edge_tb, edges)
   }
-  edges <- edges[complete.cases(edges),]
   edges$loop <- FALSE
   for(i in 1:nrow(edges)){
     if( as.character(edges$source[i] == as.character(edges$target[i]))){
