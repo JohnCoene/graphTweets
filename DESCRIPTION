@@ -1,4 +1,4 @@
-Package: GraphTweets
+Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
 Version: 0.1
@@ -12,3 +12,4 @@ Imports:
 RoxygenNote: 5.0.1
 URL: https://github.com/JohnCoene/graphTweets
 BugReports: https://github.com/JohnCoene/graphTweets/issues
+Suggests: testthat
