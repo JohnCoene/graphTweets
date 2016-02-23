@@ -1,3 +1,8 @@
+# startUpMessage -------------------------------
+.onAttach <- function(libname, pkgname = "fbAdsInsightsR") {
+  packageStartupMessage("See ?getEdges for documentation")
+}
+
 # clean handles
 cleanHandles <- function(handles) {
   # remove unwanted punctuation
