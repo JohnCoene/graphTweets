@@ -6,6 +6,7 @@ env: _R_CHECK_CRAN_INCOMING_=FALSE
 
 r_packages:
   - reshape2
+  - covr
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
