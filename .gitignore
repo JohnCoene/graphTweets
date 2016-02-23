@@ -1,3 +1,6 @@
 .Rproj.user
 .Rhistory
 .RData
+.httr-oauth
+.Rbuildignore
+GraphTweets.Rproj
