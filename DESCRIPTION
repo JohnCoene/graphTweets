@@ -1,13 +1,14 @@
 Package: GraphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 1.1
+Version: 0.1
 Date: 2014-09-30
 Author: John Coene
 Maintainer: John Coene <jcoenep@gmail.com>
-Description: Allows building an edge table from data frame of tweets, also
-    provides function to build vertices (meta-data).
-License: MIT
-Depends:
-    plyr,
-    dplyr
+Description: Allows building an edge table from data frame of tweets, also provides function to build vertices (meta-data).
+License: MIT + file LICENSE
+Imports:
+    reshape2
+RoxygenNote: 5.0.1
+URL: https://github.com/JohnCoene/graphTweets
+BugReports: https://github.com/JohnCoene/graphTweets/issues
