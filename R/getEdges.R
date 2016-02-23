@@ -64,11 +64,11 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
   if (class(data) != "data.frame") {
     stop("tweet_df is not data.frame")
-  } else if (missing(text)) {
-    stop("missing text column")
+  } else if (missing(tweets)) {
+    stop("missing tweets column")
   } else if (missing(source)) {
     stop("missing source column")
-  } else if (class(data[, text]) != "character"){
+  } else if (class(data[, tweets]) != "character"){
     stop("text must be of class character")
   } else if (class(data[, source]) != "character"){
     stop("ScreenName must be of class character")
@@ -98,7 +98,9 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   if(!is.null(str.length)){
     
     # cut screenName
-    handles <- substring(handles, 0, str.length)
+    handles <- lapply(handles, function(x) {
+      substring(x, 0, str.length)
+    })
     
   }
   
@@ -114,9 +116,6 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   args <- unlist(list(...))
   
   if(length(args)) {
-    
-    
-    edg_lst <- list(targets = handles, source = source, args = ext)
     
     ext <- as.data.frame(data[, args])
     
@@ -134,14 +133,14 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
         # rename
         names(sub) <- c("source", "target")
         
-        sub_edges <- cbind.data.frame(sub, ext[i,])
+        sub_edges <- cbind.data.frame(sub, ext[i,], row.names = NULL)
         
         edges <- rbind.data.frame(edges, sub_edges)
       }
     }
     
     # rename 
-    names(edges)[3:length(args)] <- args
+    names(edges)[3:ncol(edges)] <- args
     
   } else {
     
