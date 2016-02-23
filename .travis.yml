@@ -1,7 +1,11 @@
-language: R
+language: r
+
+sudo: required
+
+env: _R_CHECK_CRAN_INCOMING_=FALSE
 
 r_packages:
-  - covr
+  - reshape2
 
 after_success:
   - Rscript -e 'library(covr); codecov()'
