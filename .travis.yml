@@ -2,9 +2,7 @@ language: r
 
 r_packages:
   - reshape2
-  
-r_github_packages:
-  - jimhester/covr
+  - covr
 
 after_success:
   - Rscript -e 'covr::codecov()'
