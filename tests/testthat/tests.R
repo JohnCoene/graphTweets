@@ -2,16 +2,23 @@ library(graphTweets)
 library(testthat)
 
 test_that("test getEdges errors", {
+  
   tweets <- get(load("test_dat.RData"))
   
   # test required
-  expect_error(edges(tweets))
+  expect_error(getEdges(tweets))
+  
+  # test str.Length
+  expect_error(getEdges(tweets, "text", "screenName", str.length = "error"))
   
   # test classes
-  tweets$text <- as.factor(paste(tweets$text))
-  expect_error(edges(tweets, "text", "screenName"))
-  tweets$screenName <- as.factor(paste(tweets$screenName))
-  expect_error(edges(tweets, "text", "screenName"))
+  txt <- tweets
+  txt$text <- as.factor(paste(txt$text))
+  expect_error(getEdges(txt, "text", "screenName"))
+  
+  src <- tweets
+  src$screenName <- as.factor(paste(src$screenName))
+  expect_error(getEdges(src, "text", "screenName"))
   
   # test object class
   tweets <- list(tweets)
@@ -19,6 +26,7 @@ test_that("test getEdges errors", {
 })
 
 test_that("test getEdges no additional arguments", {
+  
   tweets <- get(load("test_dat.RData"))
   
   # names
@@ -33,6 +41,7 @@ test_that("test getEdges no additional arguments", {
 })
 
 test_that("test getEdges additional arguments", {
+  
   tweets <- get(load("test_dat.RData"))
   
   # names
@@ -47,4 +56,18 @@ test_that("test getEdges additional arguments", {
   expect_equal(names(edges), c("source", "target", "text", "favorited"))
   
   expect_equal(nrow(edges), 238)
+})
+
+test_that("test str.Length", {
+  
+  tweets <- get(load("test_dat.RData"))
+  
+  edges5 <- getEdges(tweets, "text", "screenName", str.length = 5)
+  
+  for(i in 1:nrow(edges5)) {
+    
+    expect_true(length(edges5$source[i]) <= 5)
+    expect_true(length(edges5$target[i]) <= 5)
+  }
+  
 })
