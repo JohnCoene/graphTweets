@@ -12,7 +12,11 @@ cleanHandles <- function(handles) {
   handles <- gsub(">", "",handles)
   handles <- gsub("<", "",handles)
   handles <- gsub("\\...", "",handles)
-  handles <- substring(handles, 2)
+  
+  # remove @@
+  if(length(grep("@", handles))){
+    handles <- substring(handles, 2)
+  }
   
   return(handles)
 }
