@@ -63,8 +63,10 @@
 getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
   if (class(data) != "data.frame") {
-    stop("tweet_df is not data.frame")
-  } else if (missing(tweets)) {
+    stop("data must be a data.frame")
+  } 
+  
+  if (missing(tweets)) {
     stop("missing tweets column")
   } else if (missing(source)) {
     stop("missing source column")
