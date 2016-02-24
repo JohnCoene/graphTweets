@@ -8,6 +8,10 @@ test_that("test getEdges errors", {
   # test required
   expect_error(getEdges(tweets))
   
+  # test missing source or text
+  expect_error(getEdges(tweets, tweets = "text"))
+  expect_error(getEdges(tweets, source = "screenName"))
+  
   # test str.Length
   expect_error(getEdges(tweets, "text", "screenName", str.length = "error"))
   
