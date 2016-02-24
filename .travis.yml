@@ -1,12 +1,10 @@
 language: r
-sudo: required
-env: _R_CHECK_CRAN_INCOMING_=FALSE
+
 r_packages:
   - reshape2
   
 r_github_packages:
   - jimhester/covr
-  - JohnCoene/graphTweets
 
 after_success:
   - Rscript -e 'covr::codecov()'
