@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.httr-oauth$
+.travis.yml
+appveyor.yml
