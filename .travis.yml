@@ -2,6 +2,7 @@ language: r
 
 r_packages:
   - reshape2
+  - dplyr
   - covr
 
 after_success:
