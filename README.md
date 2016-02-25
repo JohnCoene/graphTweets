@@ -28,6 +28,8 @@ tweets <- searchTwitter("rstats", n = 200)
 # unlist to data.frame
 tweets <- twListToDF(tweets)
 
+library(graphTweets)
+
 # get edges
 edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
 
