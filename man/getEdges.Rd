@@ -11,16 +11,15 @@ getEdges(data, tweets, source, str.length = NULL, ...)
 \code{\link[twitteR]{searchTwitter}}, required}
 
 \item{tweets}{Column name of tweets within \code{data}, must be a 
-\code{character}, required.}
+\code{character} string, required.}
 
 \item{source}{User names or ID column of \code{tweets} author, must be a 
-\code{character}, required.}
+\code{character} string, required.}
 
 \item{str.length}{Defaults to \code{NULL}. Shorten length of @tags 
 (see details), to a maximum number of characters, optional.}
 
-\item{...}{Any other columns to be passed on to the edges, 
-optional.}
+\item{...}{Any other columns to be passed on to the edges.}
 }
 \description{
 Builds a table of edges (source, target) from a list of tweets 

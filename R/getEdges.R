@@ -6,13 +6,12 @@
 #' @param data \code{data.frame} of tweets, typically returned by 
 #' \code{\link[twitteR]{searchTwitter}}, required
 #' @param tweets Column name of tweets within \code{data}, must be a 
-#' \code{character}, required.
+#' \code{character} string, required.
 #' @param source User names or ID column of \code{tweets} author, must be a 
-#' \code{character}, required.
+#' \code{character} string, required.
 #' @param str.length Defaults to \code{NULL}. Shorten length of @@tags 
 #' (see details), to a maximum number of characters, optional.
-#' @param ... Any other columns to be passed on to the edges, 
-#' optional.
+#' @param ... Any other columns to be passed on to the edges.
 #' 
 #' @details The edges function takes in a data frame of tweets, typically 
 #' obtained from the twitter Search or Streaming API, scrapes the content of 
@@ -71,11 +70,11 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   } else if (missing(source)) {
     stop("missing source column")
   } else if (class(data[, tweets]) != "character"){
-    stop("text must be of class character")
+    stop("tweets must be of class character")
   } else if (class(data[, source]) != "character"){
-    stop("ScreenName must be of class character")
+    stop("source must be of class character")
   } else if (!is.null(str.length) && class(str.length) != "numeric") {
-    stop("strLength must be numeric")
+    stop("str.length must be numeric")
   }
   
   # cut source
