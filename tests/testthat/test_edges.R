@@ -1,5 +1,6 @@
 library(graphTweets)
-library(testthat)
+
+context("getEdges tests")
 
 test_that("test getEdges errors", {
   
