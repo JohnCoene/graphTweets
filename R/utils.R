@@ -1,6 +1,6 @@
 # startUpMessage -------------------------------
 .onAttach <- function(libname, pkgname = "fbAdsInsightsR") {
-  packageStartupMessage("See ?getEdges for documentation")
+  packageStartupMessage("See ?getEdges and ?getNodes for examples")
 }
 
 # clean handles
