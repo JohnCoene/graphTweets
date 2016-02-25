@@ -27,7 +27,7 @@ test_that("test getEdges errors", {
   
   # test object class
   tweets <- list(tweets)
-  expect_error(edges(data, "text", "screenName"))
+  expect_error(edges(tweets, "text", "screenName"))
 })
 
 test_that("test getEdges no additional arguments", {

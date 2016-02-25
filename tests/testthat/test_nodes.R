@@ -18,6 +18,9 @@ test_that("getNodes error", {
   expect_error(getNodes(edges))
   
   expect_error(getNodes())
+  
+  lst <- list(tweets)
+  expect_error(getNodes(lst))
 })
 
 test_that("getNodes tests", {
