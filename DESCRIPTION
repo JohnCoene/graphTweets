@@ -3,7 +3,9 @@ Type: Package
 Title: Visualise Twitter Interactions
 Version: 0.2
 Date: 2014-09-30
-Author: John Coene
+Authors@R:
+    person("John", "Coene", email = "jcoenep@gmail.com", 
+    role = c("aut", "cre"))
 Maintainer: John Coene <jcoenep@gmail.com>
 Description: Allows building an edge table from data frame of tweets, also provides function to build vertices (meta-data).
 License: MIT + file LICENSE
