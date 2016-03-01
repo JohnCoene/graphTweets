@@ -13,6 +13,11 @@ Features only *one* functions:
 
 Build edge table and vertices to plot social network.
 
+## Documentation ##
+
+* [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
+* [Manual](https://cran.r-project.org/web/packages/graphTweets/)
+
 ## Examples ##
 
 ```
@@ -45,3 +50,7 @@ g <- graph.data.frame(edges, directed=TRUE, vertices = nodes)
 
 plot(g)
 ```
+
+## Other Projects ##
+
+See my other projects at [http://johncoene.github.io/projects/](http://johncoene.github.io/projects/)
