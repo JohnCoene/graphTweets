@@ -8,10 +8,11 @@
 
 Visualise networks of Twitter interactions
 
-Features only *one* functions:
+Features only *three* functions:
 
 * `getEdges`: build edge table from tweets
 * `getNodes`: get nodes from edges
+* `dynamise`: make a temporal graph
 
 Build edge table and vertices to plot social network.
 
