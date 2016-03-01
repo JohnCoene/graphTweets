@@ -41,7 +41,7 @@ defaults to working directory.}
 \href{Gephi}{https://gephi.org/}.}
 }
 \description{
-Create dynamic graph from tweets and, optionally, open them in 
+Create dynamic graph from tweets and, optionally, open it in 
 \href{Gephi}{https://gephi.org/}
 }
 \details{
