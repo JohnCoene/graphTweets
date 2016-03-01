@@ -3,6 +3,9 @@
   packageStartupMessage("Run package?graphTweets for examples")
 }
 
+# global variables to avoid R CMD CHECK note (timeNodes) 
+globalVariables(c("start.stamp", "end.stamp"))
+
 # clean handles
 cleanHandles <- function(handles) {
   # remove unwanted punctuation
