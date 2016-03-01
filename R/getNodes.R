@@ -12,24 +12,18 @@
 #' @param ... Any other columns to be passed on to the \code{source} nodes - 
 #' will not be applied to \code{target} nodes.
 #' 
-#' @details Duplicate values are dropped, additional arguments (\code{...}) are 
-#' only applied to nodes from \code{source}.
+#' @details One must keep in mind that nodes need to be unique therefore 
+#' duplicate values are dropped.
 #' 
 #' @examples 
 #' \dontrun{
-#' # load twitteR
-#' library(twitteR)
+#' # load sample data (200 tweets on #rstats)
+#' data("tweets")
 #' 
 #' # authenticate
 #' token <- setup_twitter_oauth(consumer_key, consumer_secret, 
 #'                              access_token=NULL, access_secret=NULL)
 #'                              
-#' # search tweets
-#' tweets <- searchTwitter("rstats", n = 200)
-#' 
-#' # unlist to data.frame
-#' tweets <- twListToDF(tweets)
-#' 
 #' # get edges
 #' edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
 #' 
@@ -40,7 +34,7 @@
 #' library(igraph)
 #' 
 #' # plot
-#' g <- graph.data.frame(edges, directed=TRUE, vertices = nodes)
+#' g <- graph.data.frame(edges, directed = TRUE, vertices = nodes)
 #' 
 #' plot(g)
 #' }
@@ -55,21 +49,13 @@ getNodes <- function(edges, source = "source", target = "target", ...) {
     stop("edges must be a data.frame")
   } 
   
-  if (class(edges[, source]) != "character"){
-    stop("source must be of class character")
-  }
-  
-  if (class(edges[, target]) != "character"){
-    stop("target must be of class character")
-  } 
-  
   args <- unlist(list(...))
   
   if(length(args)) {
     
     # split
     src <- unique(edges[, c(source, args)])
-    tgt <- data.frame(target = as.character(unique(edges[, target])))
+    tgt <- data.frame(target = unique(edges[, target]))
     
     # remove duplicates
     src <- src[!duplicated(src[, source]),]
@@ -81,7 +67,7 @@ getNodes <- function(edges, source = "source", target = "target", ...) {
     # anti_join
     tgt <- dplyr::anti_join(tgt, src, by = c(target = source))
     
-    # adds ards
+    # adds args
     tgt[, args] <- NA
     
     # rename for bind
@@ -93,7 +79,7 @@ getNodes <- function(edges, source = "source", target = "target", ...) {
     names(nodes)[1] <- "nodes"
     
     # order
-    nodes[order(nodes$nodes),]
+    nodes <- nodes[order(nodes$nodes),]
     
   } else {
     
@@ -103,6 +89,8 @@ getNodes <- function(edges, source = "source", target = "target", ...) {
     nodes <- unique(nodes)
     
     nodes <- nodes[order(nodes)]
+    
+    nodes <- data.frame(nodes = nodes)
   }
   
   return(nodes)
