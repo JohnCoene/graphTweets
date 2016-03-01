@@ -2,6 +2,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/t37a595yg5eb2sx6/branch/master?svg=true)](https://ci.appveyor.com/project/JohnCoene/graphtweets/branch/master)
 [![codecov.io](https://codecov.io/github/JohnCoene/graphTweets/coverage.svg?branch=master)](https://codecov.io/github/JohnCoene/graphTweets?branch=master)
 
+![gephi.gif](https://github.com/JohnCoene/docs/raw/master/output.gif)
+
 # GraphTweets #
 
 Visualise networks of Twitter interactions
