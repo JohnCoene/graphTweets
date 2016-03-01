@@ -19,7 +19,7 @@ Build edge table and vertices to plot social network.
 ## Documentation ##
 
 * [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
-* [Manual](https://cran.r-project.org/web/packages/graphTweets/)
+* [Manual](http://johncoene.github.io/projects/docs/GraphTweets.pdf)
 
 ## Examples ##
 
