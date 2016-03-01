@@ -38,8 +38,16 @@ This is useful for non-latin alphabet where nodes may be wrongly identified
 }
 \examples{
 \dontrun{
-# load sample data (200 tweets on #rstats)
-data("tweets")
+# load twitteR package to get data
+library(twitteR)
+
+# replace with your details
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, 
+                    access_secret)
+                    
+# fetch tweets on rstats
+tweets <- searchTwitter("rstats", n = 200)
+tweets <- twListToDF(tweets)
 
 # get edges
 edges <- getEdges(data = tweets, tweets = "text", source = "screenName")

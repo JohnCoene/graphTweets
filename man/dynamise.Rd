@@ -63,8 +63,16 @@ Valid values for \code{format}:
 }
 \examples{
 \dontrun{
-# load sample data (200 tweets on #rstats)
-data("tweets")
+# load twitteR package to get data
+library(twitteR)
+
+# replace with your details
+setup_twitter_oauth(consumer_key, consumer_secret, access_token, 
+                    access_secret)
+                    
+# fetch tweets on rstats
+tweets <- searchTwitter("rstats", n = 200)
+tweets <- twListToDF(tweets)
 
 # create dynamic graph
 dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
