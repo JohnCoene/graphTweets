@@ -6,7 +6,7 @@ test_that("errors", {
   
   expect_error(dynamise())
   
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   
   # not data.frame
   lst <- as.list(tweets)
@@ -21,7 +21,7 @@ test_that("errors", {
 
 test_that("test return", {
   
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   
   dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
                   start.stamp = "created")

@@ -5,7 +5,7 @@ context("getNodes tests")
 test_that("getNodes error", {
   
   # setup
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   edges <- getEdges(tweets, "text", "screenName")
   
   expect_error(getNodes())
@@ -17,7 +17,7 @@ test_that("getNodes error", {
 test_that("getNodes tests", {
   
   # setup
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   edges <- getEdges(tweets, "text", "screenName")
   
   # class

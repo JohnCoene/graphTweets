@@ -4,7 +4,7 @@ context("getEdges tests")
 
 test_that("test getEdges errors", {
   
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   
   # test required
   expect_error(getEdges(tweets))
@@ -32,7 +32,7 @@ test_that("test getEdges errors", {
 
 test_that("test getEdges no additional arguments", {
   
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   
   # names
   edges <- getEdges(tweets, "text", "screenName")
@@ -47,7 +47,7 @@ test_that("test getEdges no additional arguments", {
 
 test_that("test getEdges additional arguments", {
   
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   
   # names
   edges <- getEdges(data = tweets, tweets = "text", source = "screenName",
@@ -65,7 +65,7 @@ test_that("test getEdges additional arguments", {
 
 test_that("test str.Length", {
   
-  data("tweets")
+  tweets <- get(load("tweets.RData"))
   
   edges5 <- getEdges(tweets, "text", "screenName", str.length = 5)
   
