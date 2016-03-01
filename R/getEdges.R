@@ -4,7 +4,7 @@
 #' by subsetting @@tags from the text.
 #' 
 #' @param data \code{data.frame} of tweets, typically returned by 
-#' \code{\link[twitteR]{searchTwitter}}, required
+#' \code{\link[twitteR]{searchTwitter}}, required.
 #' @param tweets Column name of tweets within \code{data}, must be a 
 #' \code{character} string, required.
 #' @param source User names or ID column of \code{tweets} author, must be a 
@@ -19,26 +19,18 @@
 #' are subsets of regular expressions between at-signs (@@) and first 
 #' space (" "). 
 #' Note that the table of edges returned is meant for a directed graph.
-#' Node labels can be shortened using the strLength parameters. 
-#' This is useful for non-latin alphabet where nodes may be wrongly identified. 
+#' Node labels can be shortened using the \code{str.length} parameters. 
+#' This is useful for non-latin alphabet where nodes may be wrongly identified 
+#' (i.e.: Chinese Sina Weibo data). 
 #' 
 #' @seealso \href{http://cran.r-project.org/web/packages/twitteR/twitteR.pdf}{twitteR} 
-#' and \href{http://cran.r-project.org/web/packages/streamR/streamR.pdf}{streamR} packages wherefrom the data (tweets_df) can be obtained.
+#' and \href{http://cran.r-project.org/web/packages/streamR/streamR.pdf}{streamR} 
+#' packages wherefrom the data (\code{data}) can be obtained.
 #' 
 #' @examples 
 #' \dontrun{
-#' # load twitteR
-#' library(twitteR)
-#' 
-#' # authenticate
-#' token <- setup_twitter_oauth(consumer_key, consumer_secret, 
-#'                              access_token=NULL, access_secret=NULL)
-#'                              
-#' # search tweets
-#' tweets <- searchTwitter("rstats", n = 200)
-#' 
-#' # unlist to data.frame
-#' tweets <- twListToDF(tweets)
+#' # load sample data (200 tweets on #rstats)
+#' data("tweets")
 #' 
 #' # get edges
 #' edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
@@ -118,7 +110,7 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
   if(length(args)) {
     
-    ext <- as.data.frame(data[, args])
+    ext <- as.data.frame(data[, c(args)])
     
     edges <- data.frame()
     
@@ -154,6 +146,9 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
     # rename
     names(edges) <- c("source", "target")
   }
+  
+  edges$source <- as.character(edges$source)
+  edges$target <- as.character(edges$target)
   
   return(edges)
 }
