@@ -24,24 +24,18 @@ get nodes from a data.frame of edges as typically returned by
 \code{\link{getEdges}}
 }
 \details{
-Duplicate values are dropped, additional arguments (\code{...}) are 
-only applied to nodes from \code{source}.
+One must keep in mind that nodes need to be unique therefore 
+duplicate values are dropped.
 }
 \examples{
 \dontrun{
-# load twitteR
-library(twitteR)
+# load sample data (200 tweets on #rstats)
+data("tweets")
 
 # authenticate
 token <- setup_twitter_oauth(consumer_key, consumer_secret, 
                              access_token=NULL, access_secret=NULL)
                              
-# search tweets
-tweets <- searchTwitter("rstats", n = 200)
-
-# unlist to data.frame
-tweets <- twListToDF(tweets)
-
 # get edges
 edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
 
@@ -52,7 +46,7 @@ nodes <- getNodes(edges)
 library(igraph)
 
 # plot
-g <- graph.data.frame(edges, directed=TRUE, vertices = nodes)
+g <- graph.data.frame(edges, directed = TRUE, vertices = nodes)
 
 plot(g)
 }
