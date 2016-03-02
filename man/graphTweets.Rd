@@ -16,7 +16,7 @@
 \dontrun{
 # authenticate
 token <- twitteR::setup_twitter_oauth(consumer_key, consumer_secret, 
-                                      access_token=NULL, access_secret=NULL)
+                                      access_token, access_secret)
                              
 # search tweets
 tweets <- twitteR::searchTwitter("rstats", n = 200)
@@ -35,8 +35,21 @@ library(igraph)
 
 # plot
 g <- graph.data.frame(edges, directed=TRUE)
-
 plot(g)
+
+# add attributes to vertices
+edges <- getEdges(data = tweets, tweets = "text", source = "screenName", 
+                  "retweetCount")
+nodes <- getNodes(edges, source = "source", target = "target", 
+                  "retweetCount")
+                  
+g <- graph.data.frame(edges, directed=TRUE, vertices = nodes)
+
+plot(g, vertex.size = V(g)$retweetCount)
+
+# create dynamic graph and open in Gephi
+dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
+                time.stamp = "created", write = TRUE, open = TRUE)
 }
 
 }
