@@ -25,6 +25,10 @@ test_that("test getEdges errors", {
   src$screenName <- as.factor(paste(src$screenName))
   expect_error(getEdges(src, "text", "screenName"))
   
+  # invalid columns
+  expect_error(getEdges(tweets, tweets = "error", source = "screenName"))
+  expect_error(getEdges(tweets, tweets = "text", source = "error"))
+  
   # test object class
   tweets <- list(tweets)
   expect_error(getEdges(tweets))

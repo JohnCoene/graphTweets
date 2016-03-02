@@ -65,6 +65,12 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
     stop("data must be a data.frame")
   } 
   
+  if (!tweets %in% names(data)) {
+    stop(paste0("tweets: no column named '", tweets, "' found in data"))
+  } else if (!source %in% names(data)) {
+    stop(paste0("source: no column named '", source, "' found in data"))
+  }
+  
   if (missing(tweets)) {
     stop("missing tweets column")
   } else if (missing(source)) {
@@ -75,7 +81,7 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
     stop("source must be of class character")
   } else if (!is.null(str.length) && class(str.length) != "numeric") {
     stop("str.length must be numeric")
-  }
+  } 
   
   # cut source
   if(!is.null(str.length)){

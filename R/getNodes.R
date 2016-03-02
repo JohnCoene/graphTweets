@@ -53,6 +53,14 @@ getNodes <- function(edges, source = "source", target = "target", ...) {
     stop("edges must be a data.frame")
   } 
   
+  if (!source %in% names(edges)) {
+    stop(paste0("no column named '", source, "' found in data"))
+  } 
+  
+  if (!target %in% names(edges)) {
+    stop(paste0("no column named '", target, "' found in data"))
+  }
+  
   args <- unlist(list(...))
   
   if(length(args)) {

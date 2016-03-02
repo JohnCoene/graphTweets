@@ -12,11 +12,17 @@ test_that("errors", {
   lst <- as.list(tweets)
   expect_error(dynamise(lst))
   
-  # wrong inputs
+  # wrong columns names
   expect_error(dynamise(tweets, tweets = "error"))
   expect_error(dynamise(tweets, tweets = "text", source = "error"))
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
                         start.stamp = "error"))
+  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
+                        start.stamp = "created", end.stamp = "error"))
+  
+  # end.stamp and start.stamp different classes
+  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
+                        start.stamp = "created", end.stamp = "retweetCount"))
 })
 
 test_that("test return", {

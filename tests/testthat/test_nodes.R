@@ -10,6 +10,10 @@ test_that("getNodes error", {
   
   expect_error(getNodes())
   
+  # test invalid source and target
+  expect_error(getNodes(tweets, source = "error"))
+  expect_error(getNodes(tweets, source = "source", target = "error"))
+  
   lst <- list(tweets)
   expect_error(getNodes(lst))
 })

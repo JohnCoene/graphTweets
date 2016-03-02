@@ -75,20 +75,35 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     stop("data must be a data.frame")
   }
   
-  if(!length(data[, tweets])) {
-    stop("invalid tweets column")
+  if(!tweets %in% names(data)) {
+    stop(paste0("tweets: cannot find columns named '", tweets, "' in data"))
   }
   
-  if(!length(data[, source])) {
-    stop("invalid source column name")
+  if(!source %in% names(data)) {
+    stop(paste0("source: cannot find columns named '", source, "' in data"))
   }
   
-  if(!length(data[, start.stamp])) {
-    stop("cannot find start.stamp columns")
+  if(!start.stamp %in% names(data)) {
+    stop(paste0("start.stamp: cannot find columns named '", start.stamp, 
+                "' in data"))
+  }
+  
+  if(!is.null(end.stamp) && !end.stamp %in% names(data)){
+    stop(paste0("end.stamp: cannot find columns named '", end.stamp, 
+                "' in data"))
   }
   
   if(class(data[, start.stamp])[1] == "character") {
     stop("start.stamp cannot be characters")
+  }
+  
+  if(!is.null(end.stamp) && class(data[, start.stamp]) != 
+     class(data[, end.stamp])) {
+    stop(paste0("start.stamp and end.stamp are of different classes,", 
+                " start.stamp: ", 
+                paste0(class(data[, start.stamp]), collapse = " "),
+                " while end.stamp: ", 
+                paste0(class(data[, end.stamp]), collapse = " ")))
   }
   
   if(open == TRUE && write == FALSE) {
