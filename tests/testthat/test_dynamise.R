@@ -23,6 +23,14 @@ test_that("errors", {
   # end.stamp and start.stamp different classes
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
                         start.stamp = "created", end.stamp = "retweetCount"))
+  
+  tweets$start <- as.character(tweets$created)
+  
+  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
+                        start.stamp = "start"))
+  
+  expect_warning(dynamise(tweets, tweets = "text", source = "screenName", 
+                        start.stamp = "created", write = FALSE, open = TRUE))
 })
 
 test_that("test return", {
