@@ -17,7 +17,7 @@ getEdges(data, tweets, source, str.length = NULL, ...)
 \code{character} string, required.}
 
 \item{str.length}{Defaults to \code{NULL}. Shorten length of @tags 
-(see details), to a maximum number of characters, optional.}
+(see details), to a maximum number of characters.}
 
 \item{...}{Any other columns to be passed on to the edges.}
 }

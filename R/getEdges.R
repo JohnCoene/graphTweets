@@ -10,7 +10,7 @@
 #' @param source User names or ID column of \code{tweets} author, must be a 
 #' \code{character} string, required.
 #' @param str.length Defaults to \code{NULL}. Shorten length of @@tags 
-#' (see details), to a maximum number of characters, optional.
+#' (see details), to a maximum number of characters.
 #' @param ... Any other columns to be passed on to the edges.
 #' 
 #' @details The edges function takes in a data frame of tweets, typically 

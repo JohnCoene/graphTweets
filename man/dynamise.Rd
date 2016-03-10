@@ -22,12 +22,13 @@ dynamise(data, tweets, source, start.stamp, end.stamp = NULL,
 also be an interger or a factor, cannot be a character.}
 
 \item{end.stamp}{The end of the time stamp, or when edges are to leave the 
-graph, defaults to \code{NULL} (edges stay). See details.}
+graph, defaults to \code{NULL} (edges never disappear). See details.}
 
 \item{str.length}{Defaults to \code{NULL}. Shorten length of @tags 
-(see details), to a maximum number of characters, optional.}
+(see details in \code{\link{getEdges}}), to a maximum number of characters, 
+optional.}
 
-\item{write}{if \code{TRUE} save graph as file.}
+\item{write}{if \code{TRUE} saves graph as file.}
 
 \item{format}{if \code{write = TRUE} set format of file, defaults to 
 \code{graphml} (see details for valid formats).}
@@ -41,12 +42,12 @@ defaults to working directory.}
 \href{Gephi}{https://gephi.org/}.}
 }
 \description{
-Create dynamic graph from tweets and, optionally, open it in 
-\href{Gephi}{https://gephi.org/}
+Create a dynamic graph from tweets and, optionally, open it in 
+\href{https://gephi.org/}{Gephi}
 }
 \details{
-\code{end.stamp} how long after an edge appears (tweets is made) is 
-it disapearing.
+\code{end.stamp}: When the edges are to disappear, consider lifetime 
+of a tweet, by default edges stay.
 
 Valid values for \code{format}:
 \itemize{

@@ -1,7 +1,7 @@
 #' Make a dynamic graph
 #' 
-#' @description Create dynamic graph from tweets and, optionally, open it in 
-#' \href{Gephi}{https://gephi.org/}
+#' @description Create a dynamic graph from tweets and, optionally, open it in 
+#' \href{https://gephi.org/}{Gephi}
 #' 
 #' @param data \code{data.frame} of tweets, typically returned by 
 #' \code{\link[twitteR]{searchTwitter}}, required.
@@ -12,10 +12,11 @@
 #' @param start.stamp time.stamp to dynamise, typically a date or time, but may 
 #' also be an interger or a factor, cannot be a character.
 #' @param end.stamp The end of the time stamp, or when edges are to leave the 
-#' graph, defaults to \code{NULL} (edges stay). See details.
+#' graph, defaults to \code{NULL} (edges never disappear). See details.
 #' @param str.length Defaults to \code{NULL}. Shorten length of @@tags 
-#' (see details), to a maximum number of characters, optional.
-#' @param write if \code{TRUE} save graph as file.
+#' (see details in \code{\link{getEdges}}), to a maximum number of characters, 
+#' optional.
+#' @param write if \code{TRUE} saves graph as file.
 #' @param format if \code{write = TRUE} set format of file, defaults to 
 #' \code{graphml} (see details for valid formats).
 #' @param file.dir if \code{write = TRUE} directory where to save the file, 
@@ -24,8 +25,8 @@
 #' @param open if \code{write = TRUE}, \code{open = TRUE} opens file in 
 #' \href{Gephi}{https://gephi.org/}.
 #' 
-#' @details \code{end.stamp} how long after an edge appears (tweets is made) is 
-#' it disapearing.
+#' @details \code{end.stamp}: When the edges are to disappear, consider lifetime 
+#' of a tweet, by default edges stay.
 #' 
 #' Valid values for \code{format}:
 #' \itemize{

@@ -20,12 +20,13 @@ getNodes(edges, source = "source", target = "target", ...)
 will not be applied to \code{target} nodes.}
 }
 \description{
-get nodes from a data.frame of edges as typically returned by 
+Get nodes from a data.frame of edges as typically returned by 
 \code{\link{getEdges}}
 }
 \details{
 One must keep in mind that nodes need to be unique therefore 
-duplicate values are dropped.
+duplicate values (\code{...}) are dropped. Also, the meta-data (\code{...}), 
+only applies to the source of edges; NAs are generated for target nodes.
 }
 \examples{
 \dontrun{
