@@ -1,13 +1,13 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.2
+Version: 0.3
 Date: 2016-02-26
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
 Maintainer: John Coene <jcoenep@gmail.com>
-Description: Allows building an edge table from data frame of tweets, also provides function to build vertices (meta-data).
+Description: Allows building an edge table from data frame of tweets, also provides function to build vertices (meta-data) and create a temporal graph.
 License: MIT + file LICENSE
 Depends:
     R (>= 3.0.0)
