@@ -2,7 +2,7 @@
 % Please edit documentation in R/getNodes.R
 \name{getNodes}
 \alias{getNodes}
-\title{getNodes}
+\title{Build node table from edges}
 \usage{
 getNodes(edges, source = "source", target = "target", ...)
 }

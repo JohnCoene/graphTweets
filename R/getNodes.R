@@ -1,4 +1,4 @@
-#' getNodes
+#' Build node table from edges
 #' 
 #' @description get nodes from a data.frame of edges as typically returned by 
 #' \code{\link{getEdges}}

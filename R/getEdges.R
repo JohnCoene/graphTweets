@@ -1,4 +1,4 @@
-#' getEdges
+#' Build list of edges from tweets
 #' 
 #' @description Builds a table of edges (source, target) from a list of tweets 
 #' by subsetting @@tags from the text.

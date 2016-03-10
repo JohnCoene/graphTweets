@@ -2,7 +2,7 @@
 % Please edit documentation in R/getEdges.R
 \name{getEdges}
 \alias{getEdges}
-\title{getEdges}
+\title{Build list of edges from tweets}
 \usage{
 getEdges(data, tweets, source, str.length = NULL, ...)
 }

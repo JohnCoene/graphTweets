@@ -1,4 +1,4 @@
-#' dynamise
+#' Make a dynamic graph
 #' 
 #' @description Create dynamic graph from tweets and, optionally, open it in 
 #' \href{Gephi}{https://gephi.org/}

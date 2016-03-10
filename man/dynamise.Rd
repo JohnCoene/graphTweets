@@ -2,7 +2,7 @@
 % Please edit documentation in R/dynamize.R
 \name{dynamise}
 \alias{dynamise}
-\title{dynamise}
+\title{Make a dynamic graph}
 \usage{
 dynamise(data, tweets, source, start.stamp, end.stamp = NULL,
   str.length = NULL, write = FALSE, format = "graphml",
