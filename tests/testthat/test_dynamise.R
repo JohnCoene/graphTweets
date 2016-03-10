@@ -53,3 +53,29 @@ test_that("test return", {
   expect_equal(length(igraph::E(g)), nrow(edges))
   
 })
+
+test_that("test end.stamp", {
+  
+  tweets <- get(load("tweets.RData"))
+  
+  dyn1 <- dynamise(tweets, tweets = "text", source = "screenName", 
+                  start.stamp = "created", end.stamp = 3600)
+  
+  tweets$end <- tweets$created + 7200
+  
+  dyn2 <- dynamise(tweets, tweets = "text", source = "screenName", 
+                  start.stamp = "created", end.stamp = "end")
+  
+  tweets$date <- as.Date(tweets$created)
+  
+  dyn3 <- dynamise(tweets, tweets = "text", source = "screenName", 
+                  start.stamp = "date", end.stamp = 1)
+  
+  expect_equal(length(igraph::V(dyn1)), length(igraph::V(dyn2)))
+  expect_equal(length(igraph::V(dyn2)), length(igraph::V(dyn3)))
+  expect_equal(length(igraph::V(dyn3)), length(igraph::V(dyn1)))
+  
+  expect_equal(length(igraph::E(dyn1)), length(igraph::E(dyn2)))
+  expect_equal(length(igraph::E(dyn2)), length(igraph::E(dyn3)))
+  expect_equal(length(igraph::E(dyn3)), length(igraph::E(dyn1)))
+})
