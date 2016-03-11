@@ -134,7 +134,7 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
       
     }
     
-  } else if (is.numeric(end.stamp) || is.factor(end.stamp)){
+  } else if (is.null(end.stamp)){
     
     edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
                                    str.length = str.length, start.stamp)
