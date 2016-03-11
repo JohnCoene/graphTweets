@@ -1,7 +1,7 @@
 #' Build list of edges from tweets
 #' 
-#' @description Builds a table of edges (source, target) from a list of tweets 
-#' by subsetting @@tags from the text.
+#' @description Builds a table of edges (source, target) from a data.frame 
+#' of tweets by subsetting @@tags from the text.
 #' 
 #' @param data \code{data.frame} of tweets, typically returned by 
 #' \code{\link[twitteR]{searchTwitter}}, required.

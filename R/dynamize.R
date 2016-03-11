@@ -34,7 +34,7 @@
 #' \item \code{pajek}
 #' \item \code{ncol}
 #' \item \code{lgl}
-#' \item \code{graphml}
+#' \item \code{graphml} (default)
 #' \item \code{dimacs}
 #' \item \code{gml}
 #' \item \code{dot}
@@ -110,7 +110,7 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
       
       edges$end.stamp <- edges$start.stamp + end.stamp
       
-    } else if(!is.numeric(end.stamp)){
+    } else if(!is.numeric(end.stamp) && !is.factor(end.stamp)){
       
       x <- tryCatch(data[,end.stamp], error = function(e) e)
       
@@ -134,7 +134,7 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
       
     }
     
-  } else if (is.null(end.stamp)){
+  } else if (is.numeric(end.stamp) || is.factor(end.stamp)){
     
     edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
                                    str.length = str.length, start.stamp)

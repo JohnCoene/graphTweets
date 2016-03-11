@@ -22,8 +22,8 @@ getEdges(data, tweets, source, str.length = NULL, ...)
 \item{...}{Any other columns to be passed on to the edges.}
 }
 \description{
-Builds a table of edges (source, target) from a list of tweets 
-by subsetting @tags from the text.
+Builds a table of edges (source, target) from a data.frame 
+of tweets by subsetting @tags from the text.
 }
 \details{
 The edges function takes in a data frame of tweets, typically 

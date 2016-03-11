@@ -55,7 +55,7 @@ Valid values for \code{format}:
 \item \code{pajek}
 \item \code{ncol}
 \item \code{lgl}
-\item \code{graphml}
+\item \code{graphml} (default)
 \item \code{dimacs}
 \item \code{gml}
 \item \code{dot}
