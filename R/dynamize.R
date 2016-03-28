@@ -65,6 +65,8 @@
 #' 
 #' @export
 #' 
+#' @importFrom methods is
+#' 
 #' @author John Coene \email{jcoenep@@gmail.com}
 dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL, 
                      str.length = NULL, write = FALSE, format = "graphml", 
