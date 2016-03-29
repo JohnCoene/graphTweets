@@ -5,4 +5,9 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
+0 errors | 0 warnings | 0 notes
+
+## FIX ##
+
+* "your package does not work under R < 3.2.0 [...] Please fix or declare a proper version dependency on R"
+  R dependency declared
