@@ -6,7 +6,6 @@ Date: 2016-03-29
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
-Maintainer: John Coene <john.coene@gmail.com>
 Description: Allows building an edge table from data frame of tweets, 
   also provides function to build nodes and another create a temporal graph.
 License: MIT + file LICENSE
