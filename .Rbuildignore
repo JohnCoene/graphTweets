@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.httr-oauth$
-.travis.yml
-appveyor.yml
-^NEWS\.md$
+^\.travis\.yml$
+^appveyor\.yml$
+^cran-comments\.md$
