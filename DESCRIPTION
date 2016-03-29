@@ -19,6 +19,5 @@ Imports:
 RoxygenNote: 5.0.1
 URL: https://github.com/JohnCoene/graphTweets
 BugReports: https://github.com/JohnCoene/graphTweets/issues
-Suggests: 
-    testthat,
-    twitteR
+Suggests: testthat
+LinkingTo: twitteR
