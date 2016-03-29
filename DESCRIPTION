@@ -1,13 +1,14 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.3
-Date: 2016-02-26
+Version: 0.3.1
+Date: 2016-03-29
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
-Maintainer: John Coene <jcoenep@gmail.com>
-Description: Allows building an edge table from data frame of tweets, also provides function to build vertices (meta-data) and create a temporal graph.
+Maintainer: John Coene <john.coene@cmcm.com>
+Description: Allows building an edge table from data frame of tweets, 
+  also provides function to build nodes and another create a temporal graph.
 License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0)
@@ -19,6 +20,6 @@ Imports:
 RoxygenNote: 5.0.1
 URL: https://github.com/JohnCoene/graphTweets
 BugReports: https://github.com/JohnCoene/graphTweets/issues
-Suggests: 
+Suggests:
     testthat,
     twitteR
