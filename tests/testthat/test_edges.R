@@ -5,11 +5,7 @@ context("getEdges tests")
 test_that("test getEdges errors", {
   
   # setup
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   # test required
   expect_error(getEdges(tweets))
@@ -42,11 +38,7 @@ test_that("test getEdges errors", {
 test_that("test getEdges no additional arguments", {
   
   # setup
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   # names
   edges <- getEdges(tweets, "text", "screenName")
@@ -62,11 +54,7 @@ test_that("test getEdges no additional arguments", {
 test_that("test getEdges additional arguments", {
   
   # setup
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   # names
   edges <- getEdges(data = tweets, tweets = "text", source = "screenName",
@@ -85,11 +73,7 @@ test_that("test getEdges additional arguments", {
 test_that("test str.Length", {
   
   # setup
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   edges5 <- getEdges(tweets, "text", "screenName", str.length = 5)
   

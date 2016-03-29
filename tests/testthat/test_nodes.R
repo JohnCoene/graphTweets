@@ -5,11 +5,7 @@ context("getNodes tests")
 test_that("getNodes error", {
   
   # setup
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   edges <- getEdges(tweets, "text", "screenName")
   
   expect_error(getNodes())
@@ -25,11 +21,7 @@ test_that("getNodes error", {
 test_that("getNodes tests", {
   
   # setup
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   edges <- getEdges(tweets, "text", "screenName")
   
   # class

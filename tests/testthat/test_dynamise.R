@@ -6,11 +6,7 @@ test_that("errors", {
   
   expect_error(dynamise())
   
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   # not data.frame
   lst <- as.list(tweets)
@@ -39,11 +35,7 @@ test_that("errors", {
 
 test_that("test return", {
   
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
                   start.stamp = "created")
@@ -72,11 +64,7 @@ test_that("test return", {
 
 test_that("test end.stamp", {
   
-  tweets <- read.csv(paste0("https://raw.githubusercontent.com/JohnCoene/", 
-                            "projects/gh-pages/data/tweets.csv"),
-                     stringsAsFactors = FALSE)
-  
-  tweets$created <- as.Date(tweets$created)
+  tweets <- get(load("tweets.RData"))
   
   dyn1 <- dynamise(tweets, tweets = "text", source = "screenName", 
                   start.stamp = "created", end.stamp = 3600)
