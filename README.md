@@ -18,6 +18,8 @@ Features only *three* functions:
 
 Build edge table and vertices to plot social network.
 
+See `NEWS.md` for changes.
+
 ## Documentation ##
 
 * [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
