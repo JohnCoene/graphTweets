@@ -3,4 +3,4 @@
 export(dynamise)
 export(getEdges)
 export(getNodes)
-importFrom("methods", "is")
+importFrom(methods,is)
