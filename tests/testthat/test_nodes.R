@@ -4,6 +4,8 @@ context("getNodes tests")
 
 test_that("getNodes error", {
   
+  skip_on_cran()
+  
   # setup
   tweets <- get(load("tweets.RData"))
   edges <- getEdges(tweets, "text", "screenName")
@@ -19,6 +21,8 @@ test_that("getNodes error", {
 })
 
 test_that("getNodes tests", {
+  
+  skip_on_cran()
   
   # setup
   tweets <- get(load("tweets.RData"))

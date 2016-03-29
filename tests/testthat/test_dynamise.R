@@ -4,6 +4,8 @@ context("test dynamise")
 
 test_that("errors", {
   
+  skip_on_cran()
+  
   expect_error(dynamise())
   
   tweets <- get(load("tweets.RData"))
@@ -35,6 +37,8 @@ test_that("errors", {
 
 test_that("test return", {
   
+  skip_on_cran()
+  
   tweets <- get(load("tweets.RData"))
   
   dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
@@ -63,6 +67,8 @@ test_that("test return", {
 })
 
 test_that("test end.stamp", {
+  
+  skip_on_cran()
   
   tweets <- get(load("tweets.RData"))
   
