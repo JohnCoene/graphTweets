@@ -3,3 +3,4 @@
 ^\.httr-oauth$
 .travis.yml
 appveyor.yml
+^NEWS\.md$
