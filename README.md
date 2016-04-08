@@ -28,25 +28,16 @@ See `NEWS.md` for changes.
 ## Examples ##
 
 ```
-# load twitteR
+# load twitteR to get tweets
 library(twitteR)
-
-# authenticate
 token <- setup_twitter_oauth(consumer_key, consumer_secret, 
                              access_token=NULL, access_secret=NULL)
-
-# search tweets
 tweets <- searchTwitter("rstats", n = 200)
-
-# unlist to data.frame
 tweets <- twListToDF(tweets)
 
 library(graphTweets)
 
-# get edges
 edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
-
-# get nodes
 nodes <- getNodes(edges)
 
 # load igraph
