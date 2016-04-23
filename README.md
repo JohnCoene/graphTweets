@@ -27,7 +27,7 @@ See `NEWS.md` for changes.
 
 ## Examples ##
 
-```
+```R
 # load twitteR to get tweets
 library(twitteR)
 token <- setup_twitter_oauth(consumer_key, consumer_secret, 
