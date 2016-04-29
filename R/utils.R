@@ -8,13 +8,15 @@ globalVariables(c("start.stamp", "end.stamp"))
 
 # clean handles
 cleanHandles <- function(handles) {
-  # remove unwanted punctuation
-  handles <- gsub(":", "",handles)
-  handles <- gsub(",", "",handles)
-  handles <- gsub(";", "",handles)
-  handles <- gsub(">", "",handles)
-  handles <- gsub("<", "",handles)
-  handles <- gsub("\\...", "",handles)
+  # clean punctuation
+  handles <- trimws(handles) # remove white space
+  handles <- gsub(":", "", handles)
+  handles <- gsub(",", "", handles)
+  handles <- gsub(";", "", handles)
+  handles <- gsub(">", "", handles)
+  handles <- gsub("<", "", handles)
+  handles <- gsub("?", "", handles)
+  handles <- gsub("\\...", "", handles)
   
   # remove @@
   if(length(grep("@", handles))){
