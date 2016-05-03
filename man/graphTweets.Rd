@@ -49,7 +49,7 @@ plot(g, vertex.size = V(g)$retweetCount)
 
 # create dynamic graph and open in Gephi
 dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                time.stamp = "created", write = TRUE, open = TRUE)
+                start.stamp = "created", write = TRUE, open = TRUE)
 }
 
 }
