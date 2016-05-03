@@ -18,7 +18,7 @@ dynamise(data, tweets, source, start.stamp, end.stamp = NULL,
 \item{source}{User names or ID column of \code{tweets} author, must be a 
 \code{character} string, required.}
 
-\item{start.stamp}{time.stamp to dynamise, typically a date or time, but may 
+\item{start.stamp}{Typically a date or time, but may 
 also be an interger or a factor, cannot be a character.}
 
 \item{end.stamp}{The end of the time stamp, or when edges are to leave the 
@@ -46,8 +46,8 @@ Create a dynamic graph from tweets and, optionally, open it in
 \href{https://gephi.org/}{Gephi}
 }
 \details{
-\code{end.stamp}: When the edges are to disappear, consider lifetime 
-of a tweet, by default edges stay.
+\code{end.stamp}: When the edges are to disappear (consider lifetime 
+of a tweet), by default edges stay on the graph forever.
 
 Valid values for \code{format}:
 \itemize{
@@ -77,11 +77,11 @@ tweets <- twListToDF(tweets)
 
 # create dynamic graph
 dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                time.stamp = "created")
+                start.stamp = "created")
                 
 # create dynamic graph and open in Gephi
 dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                time.stamp = "created", write = TRUE, open = TRUE)
+                start.stamp = "created", write = TRUE, open = TRUE)
 }
 
 }

@@ -9,7 +9,7 @@
 #' \code{character} string, required.
 #' @param source User names or ID column of \code{tweets} author, must be a 
 #' \code{character} string, required.
-#' @param start.stamp time.stamp to dynamise, typically a date or time, but may 
+#' @param start.stamp Typically a date or time, but may 
 #' also be an interger or a factor, cannot be a character.
 #' @param end.stamp The end of the time stamp, or when edges are to leave the 
 #' graph, defaults to \code{NULL} (edges never disappear). See details.
@@ -25,8 +25,8 @@
 #' @param open if \code{write = TRUE}, \code{open = TRUE} opens file in 
 #' \href{Gephi}{https://gephi.org/}.
 #' 
-#' @details \code{end.stamp}: When the edges are to disappear, consider lifetime 
-#' of a tweet, by default edges stay.
+#' @details \code{end.stamp}: When the edges are to disappear (consider lifetime 
+#' of a tweet), by default edges stay on the graph forever.
 #' 
 #' Valid values for \code{format}:
 #' \itemize{
@@ -56,11 +56,11 @@
 #' 
 #' # create dynamic graph
 #' dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-#'                 time.stamp = "created")
+#'                 start.stamp = "created")
 #'                 
 #' # create dynamic graph and open in Gephi
 #' dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-#'                 time.stamp = "created", write = TRUE, open = TRUE)
+#'                 start.stamp = "created", write = TRUE, open = TRUE)
 #' }
 #' 
 #' @export
