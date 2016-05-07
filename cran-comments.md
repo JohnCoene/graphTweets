@@ -5,10 +5,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
-
-* checking CRAN incoming feasibility ... NOTE (win-builder R-devel)
-  Cannot figure out the cause
+0 errors | 0 warnings | 0 note
 
 ## FIX ##
 
