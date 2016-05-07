@@ -7,9 +7,17 @@
 
 0 errors | 0 warnings | 0 note
 
-## FIX ##
+* This is a new release.
 
-* "your package does not work under R < 3.2.0 [...] Please fix or declare a proper version dependency on R"
-  R dependency declared
-* test failure
-  tests skipped `testthat::skip_on_cran()`
+## Reverse dependencies
+
+This is a new release, so there are no reverse dependencies.
+
+---
+
+* I have run R CMD check on the NUMBER downstream dependencies.
+  (Summary at ...). 
+  
+* FAILURE SUMMARY
+
+* All revdep maintainers were notified of the release on RELEASE DATE.
