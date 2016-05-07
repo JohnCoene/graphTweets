@@ -1,5 +1,6 @@
 # graphTweets 0.3.2
 
+* documentation corrected
 * Better extract @handles
 * Better cleans @handles (i.e.: white space)
 
