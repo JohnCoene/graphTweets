@@ -29,32 +29,24 @@ duplicate values (\code{...}) are dropped. Also, the meta-data (\code{...}),
 only applies to the source of edges; NAs are generated for target nodes.
 }
 \examples{
-\dontrun{
-# load twitteR package to get data
-library(twitteR)
+# simulate dataset
+tweets <- data.frame(text = c("I tweet @you about @him", 
+                              "I tweet @me about @you"),
+                     screenName = c("me", "him"),
+                     favorited = c(TRUE, FALSE),
+                     stringsAsFactors = FALSE)
 
-# replace with your details
-setup_twitter_oauth(consumer_key, consumer_secret, access_token, 
-                    access_secret)
-                    
-# fetch tweets on rstats
-tweets <- searchTwitter("rstats", n = 200)
-tweets <- twListToDF(tweets)
-                             
 # get edges
-edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
+edges <- getEdges(data = tweets, tweets = "text", source = "screenName", 
+                  str.length = NULL, "favorited")
 
 # get nodes
-nodes <- getNodes(edges)
-
-# load igraph
-library(igraph)
+nodes <- getNodes(edges, source = "source", target = "target", 
+                  "favorited")
 
 # plot
-g <- graph.data.frame(edges, directed = TRUE, vertices = nodes)
-
-plot(g)
-}
+g <- igraph::graph.data.frame(edges, directed = TRUE, vertices = nodes)
+plot(g, vertex.color = igraph::V(g)$favorited)
 
 }
 \author{

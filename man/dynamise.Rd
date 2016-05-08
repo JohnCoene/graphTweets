@@ -63,26 +63,19 @@ Valid values for \code{format}:
 }
 }
 \examples{
-\dontrun{
-# load twitteR package to get data
-library(twitteR)
-
-# replace with your details
-setup_twitter_oauth(consumer_key, consumer_secret, access_token, 
-                    access_secret)
-                    
-# fetch tweets on rstats
-tweets <- searchTwitter("rstats", n = 200)
-tweets <- twListToDF(tweets)
+tweets <- data.frame(text = c("I tweet @you about @him",
+                              "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       created = as.Date(c("2016-01-01", "2016-02-02")),
+                       stringsAsFactors = FALSE)
 
 # create dynamic graph
 dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
                 start.stamp = "created")
                 
-# create dynamic graph and open in Gephi
+# create dynamic graph with 60 min lasting edges
 dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                start.stamp = "created", write = TRUE, open = TRUE)
-}
+                start.stamp = "created", end = 3600)
 
 }
 \author{

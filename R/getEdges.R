@@ -28,33 +28,18 @@
 #' packages wherefrom the data (\code{data}) can be obtained.
 #' 
 #' @examples 
-#' \dontrun{
-#' # load twitteR package to get data
-#' library(twitteR)
-#' 
-#' # replace with your details
-#' setup_twitter_oauth(consumer_key, consumer_secret, access_token, 
-#'                     access_secret)
-#'                     
-#' # fetch tweets on rstats
-#' tweets <- searchTwitter("rstats", n = 200)
-#' tweets <- twListToDF(tweets)
+#' # simulate dataset
+#' tweets <- data.frame(text = c("I tweet @you about @him", 
+#'                               "I tweet @me about @you"),
+#'                      screenName = c("me", "him"),
+#'                      stringsAsFactors = FALSE)
 #' 
 #' # get edges
 #' edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
 #' 
-#' # get edges with coordinates
-#' edges <- getEdges(data = tweets, tweets = "text", source = "screenName", 
-#'                   "longitude", "latitude")
-#'                   
-#' # load igraph
-#' library(igraph)
-#' 
-#' # plot
-#' g <- graph.data.frame(edges, directed=TRUE)
-#' 
+#' # use igraph to make graph object
+#' g <- igraph::graph.data.frame(edges)
 #' plot(g)
-#' }
 #' 
 #' @author John Coene \email{john.coene@@gmail.com}
 #' 
