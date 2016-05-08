@@ -11,7 +11,7 @@
 
 Visualise networks of Twitter interactions
 
-Features only *three* functions:
+Features *three* functions:
 
 * `getEdges`: build edge table from tweets
 * `getNodes`: get nodes from edges
@@ -41,11 +41,8 @@ library(graphTweets)
 edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
 nodes <- getNodes(edges)
 
-# load igraph
-library(igraph)
-
 # plot
-g <- graph.data.frame(edges, directed=TRUE, vertices = nodes)
+g <- igraph::graph.data.frame(edges, directed=TRUE, vertices = nodes)
 
 plot(g)
 ```
