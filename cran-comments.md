@@ -7,7 +7,6 @@
 
 0 errors | 0 warnings | 0 note
 
-* Removed all but one `\dontrun{}` as required
+* Removed `\dontrun{}` as required by previous sub feedback
 * tests use simulated data and should pass
-
-* No issue
+* (Thanks for your patience Uwe)
