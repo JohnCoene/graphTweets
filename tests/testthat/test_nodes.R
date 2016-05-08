@@ -4,10 +4,11 @@ context("getNodes tests")
 
 test_that("getNodes error", {
   
-  skip_on_cran()
-  
-  # setup
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       favorited = c(TRUE, FALSE),
+                       stringsAsFactors = FALSE)
   edges <- getEdges(tweets, "text", "screenName")
   
   expect_error(getNodes())
@@ -22,10 +23,11 @@ test_that("getNodes error", {
 
 test_that("getNodes tests", {
   
-  skip_on_cran()
-  
-  # setup
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       favorited = c(TRUE, FALSE),
+                       stringsAsFactors = FALSE)
   edges <- getEdges(tweets, "text", "screenName")
   
   # class
@@ -37,13 +39,13 @@ test_that("getNodes tests", {
   
   # args
   e_edges <- getEdges(tweets, "text", str.length = NULL, "screenName", 
-                      "retweetCount", "isRetweet")
+                      "favorited")
   
   # class
   e_edges$source <- as.character(e_edges$source)
   e_edges$target <- as.character(e_edges$target)  
   n_nodes <- getNodes(e_edges, source = "source", target = "target", 
-                      "retweetCount", "isRetweet")
+                      "favorited")
   
   # tests
   expect_equal(nrow(n_nodes), nrow(nodes))
@@ -55,5 +57,5 @@ test_that("getNodes tests", {
   
   n <- getNodes(edg)
   
-  expect_equal(nrow(n), 8)
+  expect_equal(nrow(n), 4)
 })

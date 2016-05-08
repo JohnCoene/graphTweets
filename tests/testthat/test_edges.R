@@ -7,7 +7,10 @@ test_that("test getEdges errors", {
   skip_on_cran()
   
   # setup
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"), 
+                       stringsAsFactors = FALSE)
   
   # test required
   expect_error(getEdges(tweets))
@@ -39,56 +42,56 @@ test_that("test getEdges errors", {
 
 test_that("test getEdges no additional arguments", {
   
-  skip_on_cran()
-  
-  # setup
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"), 
+                       stringsAsFactors = FALSE)
   
   # names
   edges <- getEdges(tweets, "text", "screenName")
   expect_equal(names(edges), c("source", "target"))
   
-  # nrow
-  samp <- tweets[1:10,]
-  edges <- getEdges(samp, "text", "screenName")
+  edges <- getEdges(tweets, "text", "screenName")
   
-  expect_equal(nrow(edges), 5)
+  expect_equal(nrow(edges), 4)
 })
 
 test_that("test getEdges additional arguments", {
   
-  skip_on_cran()
-  
-  # setup
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       favorited = c(TRUE, FALSE),
+                       stringsAsFactors = FALSE)
   
   # names
   edges <- getEdges(data = tweets, tweets = "text", source = "screenName",
-                    str.length = NULL, "longitude", "latitude")
-  expect_equal(names(edges), c("source", "target", "longitude", "latitude"))
+                    str.length = NULL, "favorited")
+  expect_equal(names(edges), c("source", "target", "favorited"))
   
-  expect_equal(nrow(edges), 238)
+  expect_equal(nrow(edges), 4)
   
   edges <- getEdges(data = tweets, tweets = "text", source = "screenName",
-                    str.length = NULL, "text", "favorited")
-  expect_equal(names(edges), c("source", "target", "text", "favorited"))
+                    str.length = NULL, "favorited")
+  expect_equal(names(edges), c("source", "target", "favorited"))
   
-  expect_equal(nrow(edges), 238)
+  expect_equal(nrow(edges), 4)
 })
 
 test_that("test str.Length", {
   
-  skip_on_cran()
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       favorited = c(TRUE, FALSE),
+                       stringsAsFactors = FALSE)
   
-  # setup
-  tweets <- get(load("tweets.RData"))
-  
-  edges5 <- getEdges(tweets, "text", "screenName", str.length = 5)
+  edges5 <- getEdges(tweets, "text", "screenName", str.length = 2)
   
   for(i in 1:nrow(edges5)) {
     
-    expect_true(length(edges5$source[i]) <= 5)
-    expect_true(length(edges5$target[i]) <= 5)
+    expect_true(length(edges5$source[i]) <= 3)
+    expect_true(length(edges5$target[i]) <= 3)
   }
   
 })

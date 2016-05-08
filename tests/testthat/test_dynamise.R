@@ -4,11 +4,14 @@ context("test dynamise")
 
 test_that("errors", {
   
-  skip_on_cran()
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       start = c(1, 2),
+                       end = c(3, 4),
+                       stringsAsFactors = FALSE)
   
   expect_error(dynamise())
-  
-  tweets <- get(load("tweets.RData"))
   
   # not data.frame
   lst <- as.list(tweets)
@@ -20,29 +23,32 @@ test_that("errors", {
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
                         start.stamp = "error"))
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "created", end.stamp = "error"))
+                        start.stamp = "start", end.stamp = "error"))
   
   # end.stamp and start.stamp different classes
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "created", end.stamp = "retweetCount"))
+                        start.stamp = "start", end.stamp = "text"))
   
-  tweets$start <- as.character(tweets$created)
+  tweets$start <- as.character(tweets$start)
   
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
                         start.stamp = "start"))
   
   expect_warning(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "created", write = FALSE, open = TRUE))
+                        start.stamp = "end", write = FALSE, open = TRUE))
 })
 
 test_that("test return", {
   
-  skip_on_cran()
-  
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       start = c(1, 2),
+                       end = c(3, 4),
+                       stringsAsFactors = FALSE)
   
   dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "created")
+                  start.stamp = "start")
   
   expect_is(dyn, "igraph")
   
@@ -68,19 +74,22 @@ test_that("test return", {
 
 test_that("test end.stamp", {
   
-  skip_on_cran()
-  
-  tweets <- get(load("tweets.RData"))
+  tweets <- data.frame(text = c("I tweet @you about @him",
+                                "I tweet @me about @you"),
+                       screenName = c("me", "him"),
+                       start = c(1, 2),
+                       end = c(3, 4),
+                       stringsAsFactors = FALSE)  
   
   dyn1 <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "created", end.stamp = 3600)
+                  start.stamp = "start", end.stamp = 2)
   
-  tweets$end <- tweets$created + 7200
+  tweets$end <- tweets$start + 1
   
   dyn2 <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "created", end.stamp = "end")
+                  start.stamp = "start", end.stamp = "end")
   
-  tweets$date <- as.Date(tweets$created)
+  tweets$date <- as.Date(c("2016-01-01", "2016-02-02"))
   
   dyn3 <- dynamise(tweets, tweets = "text", source = "screenName", 
                   start.stamp = "date", end.stamp = 1)
