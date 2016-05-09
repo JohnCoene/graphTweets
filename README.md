@@ -3,7 +3,7 @@
 [![codecov.io](https://codecov.io/github/JohnCoene/graphTweets/coverage.svg?branch=master)](https://codecov.io/github/JohnCoene/graphTweets?branch=master)
 [![Coverage Status](https://img.shields.io/coveralls/JohnCoene/graphTweets.svg)](https://coveralls.io/r/JohnCoene/graphTweets?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)](http://cran.r-project.org/package=graphTweets)
-[![CRAN log](http://cranlogs.r-pkg.org/badges/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
+[![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 
 ![gephi.gif](https://github.com/JohnCoene/docs/raw/master/output.gif)
 
