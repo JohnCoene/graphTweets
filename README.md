@@ -21,6 +21,13 @@ Build edge table and vertices to plot social network.
 
 See `NEWS.md` for changes.
 
+## Install
+
+```R
+install.packages("graphTweets") # CRAN release
+devtools::install_github("JohnCoene/graphTweets") # dev version
+```
+
 ## Documentation ##
 
 * [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
