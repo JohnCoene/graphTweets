@@ -6,6 +6,8 @@
 #' \item \code{\link{dynamise}} - create dynamic graphs
 #' }
 #' 
+#' @keywords internal
+#' 
 #' @examples 
 #' \dontrun{
 #' # authenticate
