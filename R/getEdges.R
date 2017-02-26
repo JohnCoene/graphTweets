@@ -20,7 +20,7 @@
 #' space (" "). 
 #' Note that the table of edges returned is meant for a directed graph.
 #' Node labels can be shortened using the \code{str.length} parameters. 
-#' This is useful for non-latin alphabet where nodes may be wrongly identified 
+#' This is useful for non-latin alphabet "tweets" where nodes may be wrongly identified 
 #' (i.e.: Chinese Sina Weibo data). 
 #' 
 #' @seealso \href{http://cran.r-project.org/web/packages/twitteR/twitteR.pdf}{twitteR} 
@@ -46,47 +46,25 @@
 #' @export 
 getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
-  if (class(data) != "data.frame") {
-    stop("data must be a data.frame")
-  } 
+  tweets <- eval(substitute(tweets), data)
+  source <- eval(substitute(source), data)
   
-  if (!tweets %in% names(data)) {
+  if (!length(tweets)) {
     stop(paste0("tweets: no column named '", tweets, "' found in data"))
-  } else if (!source %in% names(data)) {
+  } else if (!length(source)) {
     stop(paste0("source: no column named '", source, "' found in data"))
   }
   
-  if (missing(tweets)) {
-    stop("missing tweets column")
-  } else if (missing(source)) {
-    stop("missing source column")
-  } else if (class(data[, tweets]) != "character"){
-    stop("tweets must be of class character")
-  } else if (class(data[, source]) != "character"){
-    stop("source must be of class character")
-  } else if (!is.null(str.length) && class(str.length) != "numeric") {
-    stop("str.length must be numeric")
-  } 
-  
-  # cut source
-  if(!is.null(str.length)){
-    # cut screenName
-    data[, source] <- substring(data[, source], 0, str.length)
-    
-  }
-  
-  # get handles
-  handles <- lapply(data[, tweets], function(x) {
-    regmatches(x, gregexpr("@[^ ]*", x))[[1]]
-  })
-  
-  # clean handles
-  handles <- lapply(handles, function(x) {
-    cleanHandles(x)
-  })
+  if (missing(tweets)) stop("missing tweets column")
+  if (missing(source)) stop("missing source column")
+  if (class(data[, tweets]) != "character") stop("tweets must be character")
+  if (class(data[, source]) != "character") stop("source must be of class character")
+  if (!is.null(str.length) && class(str.length) != "numeric") stop("str.length must be numeric") 
   
   # cut string
   if(!is.null(str.length)){
+    
+    source <- substring(source, 0, str.length) # cut source
     
     # cut screenName
     handles <- lapply(handles, function(x) {
@@ -95,16 +73,24 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
     
   }
   
-  source <- lapply(data[, source], function(x) {
+  source <- lapply(source, function(x) {
     cleanHandles(x)
   })
   
-  # name handles (indicate source)
+  # get handles
+  handles <- lapply(tweets, function(x) {
+    regmatches(x, gregexpr("@[^ ]*", x))[[1]]
+  })
+  
+  # clean handles
+  handles <- lapply(handles, function(x) {
+    cleanHandles(x)
+  })
+  
   names(handles) <- source
   
-  # additional arguments
-  # get arguments
-  args <- unlist(list(...))
+  # dots
+  args <- dots2df(data, ...)
   
   if(length(args)) {
     

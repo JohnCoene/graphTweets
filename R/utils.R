@@ -53,3 +53,10 @@ timeNodes <- function(data){
   return(nodes)
   
 }
+
+dots2df <- function(x, ...) {
+  dots <- lazyeval::lazy_dots(...)
+  ret <- lazyeval::lazy_eval(dots, x)
+  names(ret) <- eval(substitute(alist(...)))
+  as.data.frame(ret)
+}
