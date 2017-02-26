@@ -70,7 +70,6 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
   # cut source
   if(!is.null(str.length)){
-    
     # cut screenName
     data[, source] <- substring(data[, source], 0, str.length)
     
