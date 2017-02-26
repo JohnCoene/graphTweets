@@ -66,39 +66,32 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
                      file.dir = getwd(), file.name = "graphTweets", 
                      open = FALSE){
   
+  tweets <- eval(tweets, data)
+  source <- eval(substitute(source), edges)
+  start.stamp <- eval(substitute(start.stamp), edges)
+  
+  if(!missing(end.stamp)){
+    end.stamp <- eval(substitute(end.stamp), edges)
+  }
+  
   # check inputs
   if(!is(data, "data.frame")){
     stop("data must be a data.frame")
   }
   
-  if(!tweets %in% names(data)) {
-    stop(paste0("tweets: cannot find column named '", tweets, "' in data"))
-  }
-  
-  if(!source %in% names(data)) {
-    stop(paste0("source: cannot find column named '", source, "' in data"))
-  }
-  
-  if(!start.stamp %in% names(data)) {
-    stop(paste0("start.stamp: cannot find column named '", start.stamp, 
-                "' in data"))
-  }
-  
-  if(class(data[, start.stamp])[1] == "character") {
-    stop("start.stamp cannot be characters")
+  if(class(start.stamp)[1] == "character") {
+    stop("start.stamp cannot character")
   }
   
   if(open == TRUE && write == FALSE) {
     warning("cannot open file since write = FALSE")
   }
   
-  
-  
   if(!is.null(end.stamp)){
     
     if(is.numeric(end.stamp)){
       
-      edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
+      edges <- graphTweets::getEdges(data, tweets, source,
                                      str.length = str.length, start.stamp)
       
       names(edges) <- c("source", "target", "start.stamp")

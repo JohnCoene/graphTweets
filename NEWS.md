@@ -1,3 +1,8 @@
+# graphTweets 0.4.0
+
+* Now uses Non-standard evaluation with `magrittr` pipe
+* handles extraction improved
+
 # graphTweets 0.3.2
 
 * documentation corrected

@@ -20,7 +20,7 @@
 #' space (" "). 
 #' Note that the table of edges returned is meant for a directed graph.
 #' Node labels can be shortened using the \code{str.length} parameters. 
-#' This is useful for non-latin alphabet "tweets" where nodes may be wrongly identified 
+#' This is useful for non-latin alphabet "tweets" where nodes may be wrongly identified due to the mising space.
 #' (i.e.: Chinese Sina Weibo data). 
 #' 
 #' @seealso \href{http://cran.r-project.org/web/packages/twitteR/twitteR.pdf}{twitteR} 

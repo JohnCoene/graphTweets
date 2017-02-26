@@ -33,7 +33,7 @@ are subsets of regular expressions between at-signs (@) and first
 space (" "). 
 Note that the table of edges returned is meant for a directed graph.
 Node labels can be shortened using the \code{str.length} parameters. 
-This is useful for non-latin alphabet where nodes may be wrongly identified 
+This is useful for non-latin alphabet "tweets" where nodes may be wrongly identified due to the mising space.
 (i.e.: Chinese Sina Weibo data).
 }
 \examples{

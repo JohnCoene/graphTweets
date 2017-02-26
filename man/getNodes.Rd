@@ -4,7 +4,7 @@
 \alias{getNodes}
 \title{Build node table from edges}
 \usage{
-getNodes(edges, source = "source", target = "target", ...)
+getNodes(edges, source, target, ...)
 }
 \arguments{
 \item{edges}{data.frame of edges as typically returned by 
@@ -26,7 +26,7 @@ Get nodes from a data.frame of edges as typically returned by
 \details{
 One must keep in mind that nodes need to be unique therefore 
 duplicate values (\code{...}) are dropped. Also, the meta-data (\code{...}), 
-only applies to the source of edges; NAs are generated for target nodes.
+only applies to the source of edges; \code{NA} are generated for target nodes.
 }
 \examples{
 # simulate dataset
