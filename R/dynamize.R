@@ -50,8 +50,7 @@
 #' 
 #' # create dynamic graph
 #' dyn <- tweets %>%
-#'     dynamise(tweets = text, source = screenName, 
-#'         start.stamp = created)
+#'     dynamise(text, screenName, created)
 #'                 
 #' # create dynamic graph with 60 min lasting edges (3600 seconds)
 #' dyn <- tweets %>% 

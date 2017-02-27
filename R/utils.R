@@ -91,13 +91,13 @@ get_edges <- function(data, tweets, source, str.length, nm, dots){
   tweets <- eval(substitute(tweets, parent.frame()), data)
   source <- eval(substitute(source, parent.frame()), data)
   
-  source <- lapply(source, function(x) {
-    cleanHandles(x)
-  })
-  
   # get handles
   handles <- lapply(tweets, function(x) {
     regmatches(x, gregexpr("@[^ ]*", x))[[1]]
+  })
+  
+  source <- lapply(source, function(x) {
+    cleanHandles(x)
   })
   
   # cut string
@@ -117,37 +117,32 @@ get_edges <- function(data, tweets, source, str.length, nm, dots){
     cleanHandles(x)
   })
   
-  names(handles) <- source
-  
   # dots
   args <- dots2df(data, nm, dots)
   
   if(length(args)) {
     
-    edges <- data.frame()
+    names(handles) <- source
+    source <- reshape2::melt(handles)
     
-    for(i in 1:length(handles)) {
-      
-      if(length(handles[[i]])) {
-        
-        sub <- reshape2::melt(handles[i])
-        
-        # reorder source and target
-        sub <- sub[,c(2,1)]
-        
-        # rename
-        names(sub) <- c("source", "target")
-        
-        sub_edges <- cbind.data.frame(sub, args[i,], row.names = NULL)
-        
-        edges <- rbind.data.frame(edges, sub_edges)
-      }
+    edges <- list()
+    edges[[1]] <- source
+    for(i in 1:ncol(args)){
+      names(handles) <- args[,i]
+      edges[[i+1]] <- reshape2::melt(handles)
     }
+    
+    edges <- do.call("cbind.data.frame", lapply(edges, as.data.frame))
+    
+    names(edges)[1:2] <- c("source", "target")
+    edges <- edges[,!grepl("value", names(edges))]
     
     # rename 
     names(edges)[3:ncol(edges)] <- names(args)
     
   } else {
+    
+    names(handles) <- source # name for melt
     
     # to edge data.frame
     edges <- reshape2::melt(handles)

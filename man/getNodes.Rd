@@ -32,20 +32,21 @@ only applies to the source of edges; \code{NA} are generated for target nodes.
 tweets <- data.frame(text = c("I tweet @you about @him", 
                               "I tweet @me about @you"),
                      screenName = c("me", "him"),
-                     favorited = c(TRUE, FALSE),
+                     favorites = c(1, 3),
+                     retweetes = c(2, 1),
                      stringsAsFactors = FALSE)
 
 # get edges
 edges <- tweets \%>\% 
-    getEdges(text, screenName, str.length = NULL, favorited)
+    getEdges(text, screenName, str.length = NULL, favorites, retweetes)
 
 # get nodes
 nodes <- edges \%>\%
-    getNodes(source = source, target = target, favorited)
+    getNodes(source = source, target = target, favorites, retweetes)
 
 # plot
 g <- igraph::graph.data.frame(edges, directed = TRUE, vertices = nodes)
-plot(g, vertex.color = igraph::V(g)$favorited)
+plot(g, vertex.color = igraph::V(g)$favorites)
 
 }
 \author{
