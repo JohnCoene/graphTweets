@@ -12,6 +12,8 @@
 #' @param ... Any other columns to be passed on to the \code{source} nodes - 
 #' will not be applied to \code{target} nodes.
 #' 
+#' @return Returns vector of nodes, if \code{...} passed returns a data frame.
+#' 
 #' @details One must keep in mind that nodes need to be unique therefore 
 #' duplicate values (\code{...}) are dropped. Also, the meta-data (\code{...}), 
 #' only applies to the source of edges; \code{NA} are generated for target nodes.
@@ -59,12 +61,14 @@ getNodes <- function(edges, source, target, ...) {
     src <- unique(src) 
     src <- src[!duplicated(src[,1]),]
     
-    names(src)[1] <- "node" # rename for rbind
+    names(src)[1] <- "nodes" # rename for rbind
     
-    tgt <- target[!target %in% source] # remove targets in source
+    # take unique source and target
+    tgt <- unique(target)
+    tgt <- tgt[!tgt %in% src[, "nodes"]] # remove targets in source
     tgt <- data.frame(node = tgt)
     
-    nodes <- plyr::rbind.fill(x, y)
+    nodes <- plyr::rbind.fill(src, tgt)
     
   } else {
     nodes <- unique(c(source, target))

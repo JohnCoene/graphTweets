@@ -57,9 +57,18 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
   if (missing(tweets)) stop("missing tweets column")
   if (missing(source)) stop("missing source column")
-  if (class(data[, tweets]) != "character") stop("tweets must be character")
-  if (class(data[, source]) != "character") stop("source must be of class character")
+  if (class(tweets) != "character") stop("tweets must be character")
+  if (class(source) != "character") stop("source must be of class character")
   if (!is.null(str.length) && class(str.length) != "numeric") stop("str.length must be numeric") 
+  
+  source <- lapply(source, function(x) {
+    cleanHandles(x)
+  })
+  
+  # get handles
+  handles <- lapply(tweets, function(x) {
+    regmatches(x, gregexpr("@[^ ]*", x))[[1]]
+  })
   
   # cut string
   if(!is.null(str.length)){
@@ -73,15 +82,6 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
     
   }
   
-  source <- lapply(source, function(x) {
-    cleanHandles(x)
-  })
-  
-  # get handles
-  handles <- lapply(tweets, function(x) {
-    regmatches(x, gregexpr("@[^ ]*", x))[[1]]
-  })
-  
   # clean handles
   handles <- lapply(handles, function(x) {
     cleanHandles(x)
@@ -93,8 +93,6 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   args <- dots2df(data, ...)
   
   if(length(args)) {
-    
-    ext <- as.data.frame(data[, c(args)])
     
     edges <- data.frame()
     
@@ -110,14 +108,14 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
         # rename
         names(sub) <- c("source", "target")
         
-        sub_edges <- cbind.data.frame(sub, ext[i,], row.names = NULL)
+        sub_edges <- cbind.data.frame(sub, args[i,], row.names = NULL)
         
         edges <- rbind.data.frame(edges, sub_edges)
       }
     }
     
     # rename 
-    names(edges)[3:ncol(edges)] <- args
+    names(edges)[3:ncol(edges)] <- names(args)
     
   } else {
     

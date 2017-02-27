@@ -18,24 +18,19 @@ test_that("errors", {
   expect_error(dynamise(lst))
   
   # wrong columns names
-  expect_error(dynamise(tweets, tweets = "error"))
-  expect_error(dynamise(tweets, tweets = "text", source = "error"))
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "error"))
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "start", end.stamp = "error"))
+  expect_error(dynamise(tweets, error))
+  expect_error(dynamise(tweets, text, error))
+  expect_error(dynamise(tweets, text, screenName, error))
+  expect_error(dynamise(tweets, text, screenName, start, error))
   
   # end.stamp and start.stamp different classes
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "start", end.stamp = "text"))
+  expect_error(dynamise(tweets, text, screenName, start, text))
   
   tweets$start <- as.character(tweets$start)
   
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "start"))
+  expect_error(dynamise(tweets, text, screenName, start))
   
-  expect_warning(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "end", write = FALSE, open = TRUE))
+  expect_warning(dynamise(tweets, text, screenName, end, write = FALSE, open = TRUE))
 })
 
 test_that("test return", {

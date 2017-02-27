@@ -9,13 +9,14 @@ test_that("getNodes error", {
                        screenName = c("me", "him"),
                        favorited = c(TRUE, FALSE),
                        stringsAsFactors = FALSE)
-  edges <- getEdges(tweets, "text", "screenName")
+  edges <- tweets %>% 
+    getEdges(text, screenName)
   
   expect_error(getNodes())
   
   # test invalid source and target
-  expect_error(getNodes(tweets, source = "error"))
-  expect_error(getNodes(tweets, source = "source", target = "error"))
+  expect_error(getNodes(tweets, error))
+  expect_error(getNodes(tweets, source, error))
   
   lst <- list(tweets)
   expect_error(getNodes(lst))
@@ -28,34 +29,27 @@ test_that("getNodes tests", {
                        screenName = c("me", "him"),
                        favorited = c(TRUE, FALSE),
                        stringsAsFactors = FALSE)
-  edges <- getEdges(tweets, "text", "screenName")
-  
-  # class
-  edges$source <- as.character(edges$source)
-  edges$target <- as.character(edges$target)
+  edges <- getEdges(tweets, text, screenName)
   
   # nodes
-  nodes <- getNodes(edges)
+  nodes <- getNodes(edges, source, target)
   
   # args
-  e_edges <- getEdges(tweets, "text", str.length = NULL, "screenName", 
-                      "favorited")
+  e_edges <- getEdges(tweets, text, screenName, str.length = NULL, screenName, 
+                      favorited)
   
   # class
-  e_edges$source <- as.character(e_edges$source)
-  e_edges$target <- as.character(e_edges$target)  
-  n_nodes <- getNodes(e_edges, source = "source", target = "target", 
-                      "favorited")
+  n_nodes <- getNodes(e_edges, source, target, favorited)
   
   # tests
-  expect_equal(nrow(n_nodes), nrow(nodes))
-  expect_is(nodes, "data.frame")
+  expect_equal(nrow(n_nodes), length(nodes))
+  expect_is(nodes, "character")
   expect_is(n_nodes, "data.frame")
   
   # test length
-  edg <- edges[1:5,]
+  edg <- edges[1:4,]
   
-  n <- getNodes(edg)
+  n <- getNodes(edg, source, target)
   
-  expect_equal(nrow(n), 4)
+  expect_equal(nrow(n), 3)
 })

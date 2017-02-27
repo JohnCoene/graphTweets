@@ -66,21 +66,13 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
                      file.dir = getwd(), file.name = "graphTweets", 
                      open = FALSE){
   
-  tweets <- eval(tweets, data)
-  source <- eval(substitute(source), edges)
-  start.stamp <- eval(substitute(start.stamp), edges)
-  
-  if(!missing(end.stamp)){
+  if(!is.null(end.stamp)){
     end.stamp <- eval(substitute(end.stamp), edges)
   }
   
   # check inputs
   if(!is(data, "data.frame")){
     stop("data must be a data.frame")
-  }
-  
-  if(class(start.stamp)[1] == "character") {
-    stop("start.stamp cannot character")
   }
   
   if(open == TRUE && write == FALSE) {
@@ -91,32 +83,17 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     
     if(is.numeric(end.stamp)){
       
-      edges <- graphTweets::getEdges(data, tweets, source,
-                                     str.length = str.length, start.stamp)
+      edges <- graphTweets::getEdges(data, tweets, source, str.length, 
+                                     start.stamp)
       
       names(edges) <- c("source", "target", "start.stamp")
       
-      edges$end.stamp <- edges$start.stamp + end.stamp
+      edges$end.stamp <- edges[, "start.stamp"] + end.stamp
       
     } else if(!is.numeric(end.stamp) && !is.factor(end.stamp)){
       
-      x <- tryCatch(data[,end.stamp], error = function(e) e)
-      
-      if(is(x, "error")){
-        stop("cannot find column ", end.stamp)
-      }
-      
-      if(class(data[, start.stamp])[1] != class(data[, end.stamp])[1]) {
-        stop(paste0("start.stamp and end.stamp are of different classes,", 
-                    " start.stamp: ", 
-                    paste0(class(data[, start.stamp]), collapse = " "),
-                    " while end.stamp: ", 
-                    paste0(class(data[, end.stamp]), collapse = " ")))
-      }
-      
-      edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
-                                     str.length = str.length, start.stamp, 
-                                     end.stamp)
+      edges <- graphTweets::getEdges(data, tweets, source, str.length, 
+                                     start.stamp, end.stamp)
       
       names(edges) <- c("source", "target", "start.stamp", "end.stamp")
       
