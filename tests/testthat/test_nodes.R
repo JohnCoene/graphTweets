@@ -51,5 +51,5 @@ test_that("getNodes tests", {
   
   n <- getNodes(edg, source, target)
   
-  expect_equal(nrow(n), 3)
+  expect_equal(length(n), 3)
 })

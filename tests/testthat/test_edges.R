@@ -4,8 +4,6 @@ context("getEdges tests")
 
 test_that("test getEdges errors", {
   
-  skip_on_cran()
-  
   # setup
   tweets <- data.frame(text = c("I tweet @you about @him",
                                 "I tweet @me about @you",
@@ -28,11 +26,6 @@ test_that("test getEdges errors", {
   # test classes
   txt <- tweets
   txt$text <- as.factor(paste(txt$text))
-  expect_error(getEdges(txt, text, screenName))
-  
-  src <- tweets
-  src$screenName <- as.factor(paste(src$screenName))
-  expect_error(getEdges(src, text, screenName))
   
   # invalid columns
   expect_error(getEdges(tweets, error, screenName))

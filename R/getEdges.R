@@ -46,91 +46,10 @@
 #' @export 
 getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
-  tweets <- eval(substitute(tweets), data)
-  source <- eval(substitute(source), data)
+  if (!is.null(str.length) && class(str.length) != "numeric") stop("str.length must be numeric or NULL")
   
-  if (!length(tweets)) {
-    stop(paste0("tweets: no column named '", tweets, "' found in data"))
-  } else if (!length(source)) {
-    stop(paste0("source: no column named '", source, "' found in data"))
-  }
+  nm <- eval(substitute(alist(...)))
+  dots <- lazyeval::lazy_dots(...)
   
-  if (missing(tweets)) stop("missing tweets column")
-  if (missing(source)) stop("missing source column")
-  if (class(tweets) != "character") stop("tweets must be character")
-  if (class(source) != "character") stop("source must be of class character")
-  if (!is.null(str.length) && class(str.length) != "numeric") stop("str.length must be numeric") 
-  
-  source <- lapply(source, function(x) {
-    cleanHandles(x)
-  })
-  
-  # get handles
-  handles <- lapply(tweets, function(x) {
-    regmatches(x, gregexpr("@[^ ]*", x))[[1]]
-  })
-  
-  # cut string
-  if(!is.null(str.length)){
-    
-    source <- substring(source, 0, str.length) # cut source
-    
-    # cut screenName
-    handles <- lapply(handles, function(x) {
-      substring(x, 0, str.length)
-    })
-    
-  }
-  
-  # clean handles
-  handles <- lapply(handles, function(x) {
-    cleanHandles(x)
-  })
-  
-  names(handles) <- source
-  
-  # dots
-  args <- dots2df(data, ...)
-  
-  if(length(args)) {
-    
-    edges <- data.frame()
-    
-    for(i in 1:length(handles)) {
-      
-      if(length(handles[[i]])) {
-        
-        sub <- reshape2::melt(handles[i])
-        
-        # reorder source and target
-        sub <- sub[,c(2,1)]
-        
-        # rename
-        names(sub) <- c("source", "target")
-        
-        sub_edges <- cbind.data.frame(sub, args[i,], row.names = NULL)
-        
-        edges <- rbind.data.frame(edges, sub_edges)
-      }
-    }
-    
-    # rename 
-    names(edges)[3:ncol(edges)] <- names(args)
-    
-  } else {
-    
-    # to edge data.frame
-    edges <- reshape2::melt(handles)
-    
-    # reorder source and target
-    edges <- edges[,c(2,1)]
-    
-    # rename
-    names(edges) <- c("source", "target")
-  }
-  
-  edges$source <- as.character(edges$source)
-  edges$target <- as.character(edges$target)
-  
-  return(edges)
+  get_edges(data, tweets, source, str.length = NULL, nm, dots)
 }

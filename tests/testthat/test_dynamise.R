@@ -21,10 +21,6 @@ test_that("errors", {
   expect_error(dynamise(tweets, error))
   expect_error(dynamise(tweets, text, error))
   expect_error(dynamise(tweets, text, screenName, error))
-  expect_error(dynamise(tweets, text, screenName, start, error))
-  
-  # end.stamp and start.stamp different classes
-  expect_error(dynamise(tweets, text, screenName, start, text))
   
   tweets$start <- as.character(tweets$start)
   
@@ -42,24 +38,23 @@ test_that("test return", {
                        end = c(3, 4),
                        stringsAsFactors = FALSE)
   
-  dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "start")
+  dyn <- dynamise(tweets, text, screenName, start)
   
   expect_is(dyn, "igraph")
   
   expect_equal(length(dyn), 10)
   
-  edges <- getEdges(data = tweets, "text", "screenName")
+  edges <- getEdges(tweets, text, screenName)
   
   edges$target <- as.character(edges$target)
   
-  nodes <- getNodes(edges)
+  nodes <- getNodes(edges, source, target)
   
   g <- igraph::graph.data.frame(edges, directed = TRUE)
   
   expect_equal(length(igraph::V(g)), length(igraph::V(dyn)))
   
-  expect_equal(length(igraph::V(dyn)), nrow(nodes))
+  expect_equal(length(igraph::V(dyn)), length(nodes))
   
   expect_equal(length(igraph::E(g)), length(igraph::E(dyn)))
   
@@ -76,18 +71,15 @@ test_that("test end.stamp", {
                        end = c(3, 4),
                        stringsAsFactors = FALSE)  
   
-  dyn1 <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "start", end.stamp = 2)
+  dyn1 <- dynamise(tweets, text, screenName, start, end.stamp = 2)
   
   tweets$end <- tweets$start + 1
   
-  dyn2 <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "start", end.stamp = "end")
+  dyn2 <- dynamise(tweets, text, screenName, start, end)
   
   tweets$date <- as.Date(c("2016-01-01", "2016-02-02"))
   
-  dyn3 <- dynamise(tweets, tweets = "text", source = "screenName", 
-                  start.stamp = "date", end.stamp = 1)
+  dyn3 <- dynamise(tweets, text, screenName, date, end.stamp = 1)
   
   expect_equal(length(igraph::V(dyn1)), length(igraph::V(dyn2)))
   expect_equal(length(igraph::V(dyn2)), length(igraph::V(dyn3)))

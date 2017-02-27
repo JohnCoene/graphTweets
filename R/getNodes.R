@@ -48,32 +48,9 @@ getNodes <- function(edges, source, target, ...) {
     stop("edges must be a data.frame")
   }   
   
-  source <- eval(substitute(source), edges)
-  target <- eval(substitute(target), edges)
+  nm <- eval(substitute(alist(...)))
+  dots <- lazyeval::lazy_dots(...)
   
-  args <- dots2df(edges, ...)
-  
-  if(length(args)) {
-    
-    src <- cbind.data.frame(source, args) # bind
-    
-    # remove duplicates
-    src <- unique(src) 
-    src <- src[!duplicated(src[,1]),]
-    
-    names(src)[1] <- "nodes" # rename for rbind
-    
-    # take unique source and target
-    tgt <- unique(target)
-    tgt <- tgt[!tgt %in% src[, "nodes"]] # remove targets in source
-    tgt <- data.frame(node = tgt)
-    
-    nodes <- plyr::rbind.fill(src, tgt)
-    
-  } else {
-    nodes <- unique(c(source, target))
-  }
-  
-  return(nodes)
+  get_nodes(edges, source, target, nm, dots)
   
 }

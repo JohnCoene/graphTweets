@@ -6,7 +6,7 @@
 \usage{
 dynamise(data, tweets, source, start.stamp, end.stamp = NULL,
   str.length = NULL, write = FALSE, format = "graphml",
-  file.dir = getwd(), file.name = "graphTweets", open = FALSE)
+  file.dir = getwd(), file.name = "graphTweets.kml", open = FALSE)
 }
 \arguments{
 \item{data}{\code{data.frame} of tweets, typically returned by 

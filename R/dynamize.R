@@ -63,12 +63,8 @@
 #' @author John Coene \email{jcoenep@@gmail.com}
 dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL, 
                      str.length = NULL, write = FALSE, format = "graphml", 
-                     file.dir = getwd(), file.name = "graphTweets", 
+                     file.dir = getwd(), file.name = "graphTweets.kml", 
                      open = FALSE){
-  
-  if(!is.null(end.stamp)){
-    end.stamp <- eval(substitute(end.stamp), edges)
-  }
   
   # check inputs
   if(!is(data, "data.frame")){
@@ -83,8 +79,10 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     
     if(is.numeric(end.stamp)){
       
-      edges <- graphTweets::getEdges(data, tweets, source, str.length, 
-                                     start.stamp)
+      nm <- lazyeval::lazy(start)
+      dots <- lazyeval::lazy(start.stamp)
+      
+      edges <- get_edges(data, tweets, source, str.length, nm, dots)
       
       names(edges) <- c("source", "target", "start.stamp")
       
@@ -92,8 +90,13 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
       
     } else if(!is.numeric(end.stamp) && !is.factor(end.stamp)){
       
-      edges <- graphTweets::getEdges(data, tweets, source, str.length, 
-                                     start.stamp, end.stamp)
+      nm <- eval(substitute(alist(start.stamp, end.stamp)))
+      dots <- lapply(nm, function(x){
+        lazyeval::as.lazy(x)
+      })
+      dots <- lazyeval::as.lazy_dots(dots)
+      
+      edges <- get_edges(data, tweets, source, str.length, nm, dots)
       
       names(edges) <- c("source", "target", "start.stamp", "end.stamp")
       
@@ -101,12 +104,14 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     
   } else if (is.null(end.stamp)){
     
-    edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
-                                   str.length = str.length, start.stamp)
+    nm <- lazyeval::lazy(start)
+    dots <- lazyeval::lazy(start.stamp)
+    
+    edges <- get_edges(data, tweets, source, str.length, nm, dots)
     
     names(edges) <- c("source", "target", "start.stamp")
     
-    edges$end.stamp <- max(edges$start.stamp)
+    edges[, "end.stamp"] <- max(edges[, "start.stamp"])
     
   }
 

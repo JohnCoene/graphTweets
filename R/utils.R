@@ -50,9 +50,117 @@ timeNodes <- function(data){
   
 }
 
-dots2df <- function(x, ...) {
-  dots <- lazyeval::lazy_dots(...)
+dots2df <- function(x, nm, dots) {
   ret <- lazyeval::lazy_eval(dots, x)
-  names(ret) <- eval(substitute(alist(...)))
+  names(ret) <- nm
   as.data.frame(ret)
+}
+
+get_nodes <- function(edges, source, target, nm, dots){
+  
+  source <- eval(substitute(source, parent.frame()), edges)
+  target <- eval(substitute(target, parent.frame()), edges)
+  
+  args <- dots2df(edges, nm, dots)
+  
+  if(length(args)) {
+    
+    src <- cbind.data.frame(source, args) # bind
+    
+    # remove duplicates
+    src <- unique(src) 
+    src <- src[!duplicated(src[,1]),]
+    
+    names(src)[1] <- "nodes" # rename for rbind
+    
+    # take unique source and target
+    tgt <- unique(target)
+    tgt <- tgt[!tgt %in% src[, "nodes"]] # remove targets in source
+    tgt <- data.frame(node = tgt)
+    
+    nodes <- plyr::rbind.fill(src, tgt)
+    
+  } else {
+    nodes <- unique(c(source, target))
+  }
+  return(nodes)
+}
+
+get_edges <- function(data, tweets, source, str.length, nm, dots){
+  
+  tweets <- eval(substitute(tweets, parent.frame()), data)
+  source <- eval(substitute(source, parent.frame()), data)
+  
+  source <- lapply(source, function(x) {
+    cleanHandles(x)
+  })
+  
+  # get handles
+  handles <- lapply(tweets, function(x) {
+    regmatches(x, gregexpr("@[^ ]*", x))[[1]]
+  })
+  
+  # cut string
+  if(!is.null(str.length)){
+    
+    source <- substring(source, 0, str.length) # cut source
+    
+    # cut screenName
+    handles <- lapply(handles, function(x) {
+      substring(x, 0, str.length)
+    })
+    
+  }
+  
+  # clean handles
+  handles <- lapply(handles, function(x) {
+    cleanHandles(x)
+  })
+  
+  names(handles) <- source
+  
+  # dots
+  args <- dots2df(data, nm, dots)
+  
+  if(length(args)) {
+    
+    edges <- data.frame()
+    
+    for(i in 1:length(handles)) {
+      
+      if(length(handles[[i]])) {
+        
+        sub <- reshape2::melt(handles[i])
+        
+        # reorder source and target
+        sub <- sub[,c(2,1)]
+        
+        # rename
+        names(sub) <- c("source", "target")
+        
+        sub_edges <- cbind.data.frame(sub, args[i,], row.names = NULL)
+        
+        edges <- rbind.data.frame(edges, sub_edges)
+      }
+    }
+    
+    # rename 
+    names(edges)[3:ncol(edges)] <- names(args)
+    
+  } else {
+    
+    # to edge data.frame
+    edges <- reshape2::melt(handles)
+    
+    # reorder source and target
+    edges <- edges[,c(2,1)]
+    
+    # rename
+    names(edges) <- c("source", "target")
+  }
+  
+  edges$source <- as.character(edges$source)
+  edges$target <- as.character(edges$target)
+  
+  return(edges)
 }

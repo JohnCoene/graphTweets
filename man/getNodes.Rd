@@ -19,6 +19,9 @@ getNodes(edges, source, target, ...)
 \item{...}{Any other columns to be passed on to the \code{source} nodes - 
 will not be applied to \code{target} nodes.}
 }
+\value{
+Returns vector of nodes, if \code{...} passed returns a data frame.
+}
 \description{
 Get nodes from a data.frame of edges as typically returned by 
 \code{\link{getEdges}}
