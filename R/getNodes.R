@@ -5,10 +5,7 @@
 #' 
 #' @param edges data.frame of edges as typically returned by 
 #' \code{\link{getEdges}}
-#' @param source Column of source nodes in \code{edges}, must be a 
-#' \code{character} string, defaults to \code{source}. 
-#' @param target Column of target nodes in \code{edges}, must be a 
-#' \code{character} string, required.
+#' @param source,target source and target columns in \code{edges}. 
 #' @param ... Any other columns to be passed on to the \code{source} nodes - 
 #' will not be applied to \code{target} nodes.
 #' 
@@ -27,12 +24,12 @@
 #'                      stringsAsFactors = FALSE)
 #' 
 #' # get edges
-#' edges <- getEdges(data = tweets, tweets = "text", source = "screenName", 
-#'                   str.length = NULL, "favorited")
+#' edges <- tweets %>% 
+#'     getEdges(text, screenName, str.length = NULL, favorited)
 #' 
 #' # get nodes
-#' nodes <- getNodes(edges, source = "source", target = "target", 
-#'                   "favorited")
+#' nodes <- edges %>%
+#'     getNodes(source = source, target = target, favorited)
 #' 
 #' # plot
 #' g <- igraph::graph.data.frame(edges, directed = TRUE, vertices = nodes)

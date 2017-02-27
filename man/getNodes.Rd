@@ -10,11 +10,7 @@ getNodes(edges, source, target, ...)
 \item{edges}{data.frame of edges as typically returned by 
 \code{\link{getEdges}}}
 
-\item{source}{Column of source nodes in \code{edges}, must be a 
-\code{character} string, defaults to \code{source}.}
-
-\item{target}{Column of target nodes in \code{edges}, must be a 
-\code{character} string, required.}
+\item{source, target}{source and target columns in \code{edges}.}
 
 \item{...}{Any other columns to be passed on to the \code{source} nodes - 
 will not be applied to \code{target} nodes.}
@@ -40,12 +36,12 @@ tweets <- data.frame(text = c("I tweet @you about @him",
                      stringsAsFactors = FALSE)
 
 # get edges
-edges <- getEdges(data = tweets, tweets = "text", source = "screenName", 
-                  str.length = NULL, "favorited")
+edges <- tweets \%>\% 
+    getEdges(text, screenName, str.length = NULL, favorited)
 
 # get nodes
-nodes <- getNodes(edges, source = "source", target = "target", 
-                  "favorited")
+nodes <- edges \%>\%
+    getNodes(source = source, target = target, favorited)
 
 # plot
 g <- igraph::graph.data.frame(edges, directed = TRUE, vertices = nodes)

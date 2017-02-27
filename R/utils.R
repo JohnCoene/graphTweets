@@ -76,7 +76,7 @@ get_nodes <- function(edges, source, target, nm, dots){
     # take unique source and target
     tgt <- unique(target)
     tgt <- tgt[!tgt %in% src[, "nodes"]] # remove targets in source
-    tgt <- data.frame(node = tgt)
+    tgt <- data.frame(nodes = tgt)
     
     nodes <- plyr::rbind.fill(src, tgt)
     

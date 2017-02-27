@@ -28,14 +28,15 @@
 #' packages wherefrom the data (\code{data}) can be obtained.
 #' 
 #' @examples 
-#' # simulate dataset
+#' # create dataset
 #' tweets <- data.frame(text = c("I tweet @you about @him", 
 #'                               "I tweet @me about @you"),
 #'                      screenName = c("me", "him"),
 #'                      stringsAsFactors = FALSE)
 #' 
 #' # get edges
-#' edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
+#' edges <- tweets %>% 
+#'     getEdges(text, screenName)
 #' 
 #' # use igraph to make graph object
 #' g <- igraph::graph.data.frame(edges)
@@ -51,5 +52,5 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   nm <- eval(substitute(alist(...)))
   dots <- lazyeval::lazy_dots(...)
   
-  get_edges(data, tweets, source, str.length = NULL, nm, dots)
+  get_edges(data, tweets, source, str.length, nm, dots)
 }

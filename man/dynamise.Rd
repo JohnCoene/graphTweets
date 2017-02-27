@@ -70,12 +70,14 @@ tweets <- data.frame(text = c("I tweet @you about @him",
                        stringsAsFactors = FALSE)
 
 # create dynamic graph
-dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                start.stamp = "created")
+dyn <- tweets \%>\%
+    dynamise(tweets = text, source = screenName, 
+        start.stamp = created)
                 
-# create dynamic graph with 60 min lasting edges
-dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-                start.stamp = "created", end = 3600)
+# create dynamic graph with 60 min lasting edges (3600 seconds)
+dyn <- tweets \%>\% 
+    dynamise(tweets = text, source = screenName, start.stamp = created, 
+    end = 3600)
 
 }
 \author{

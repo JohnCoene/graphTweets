@@ -49,12 +49,14 @@
 #'                        stringsAsFactors = FALSE)
 #' 
 #' # create dynamic graph
-#' dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-#'                 start.stamp = "created")
+#' dyn <- tweets %>%
+#'     dynamise(tweets = text, source = screenName, 
+#'         start.stamp = created)
 #'                 
-#' # create dynamic graph with 60 min lasting edges
-#' dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
-#'                 start.stamp = "created", end = 3600)
+#' # create dynamic graph with 60 min lasting edges (3600 seconds)
+#' dyn <- tweets %>% 
+#'     dynamise(tweets = text, source = screenName, start.stamp = created, 
+#'     end = 3600)
 #' 
 #' @export
 #' 
@@ -79,7 +81,7 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     
     if(is.numeric(end.stamp)){
       
-      nm <- lazyeval::lazy(start)
+      nm <- lazyeval::lazy(start.stamp)
       dots <- lazyeval::lazy(start.stamp)
       
       edges <- get_edges(data, tweets, source, str.length, nm, dots)
@@ -104,7 +106,7 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     
   } else if (is.null(end.stamp)){
     
-    nm <- lazyeval::lazy(start)
+    nm <- lazyeval::lazy(start.stamp)
     dots <- lazyeval::lazy(start.stamp)
     
     edges <- get_edges(data, tweets, source, str.length, nm, dots)

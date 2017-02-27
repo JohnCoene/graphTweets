@@ -37,14 +37,15 @@ This is useful for non-latin alphabet "tweets" where nodes may be wrongly identi
 (i.e.: Chinese Sina Weibo data).
 }
 \examples{
-# simulate dataset
+# create dataset
 tweets <- data.frame(text = c("I tweet @you about @him", 
                               "I tweet @me about @you"),
                      screenName = c("me", "him"),
                      stringsAsFactors = FALSE)
 
 # get edges
-edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
+edges <- tweets \%>\% 
+    getEdges(text, screenName)
 
 # use igraph to make graph object
 g <- igraph::graph.data.frame(edges)
