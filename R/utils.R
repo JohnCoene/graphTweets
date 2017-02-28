@@ -5,13 +5,9 @@ globalVariables(c("start.stamp", "end.stamp"))
 cleanHandles <- function(handles) {
   # clean punctuation
   handles <- trimws(handles) # remove white space
-  handles <- gsub(":", "", handles)
-  handles <- gsub(",", "", handles)
-  handles <- gsub(";", "", handles)
-  handles <- gsub(">", "", handles)
-  handles <- gsub("<", "", handles)
-  handles <- gsub("?", "", handles)
-  handles <- gsub("\\...", "", handles)
+  handles <- regmatches(handles, gregexpr("[[:alnum:]]|_|@", handles))
+  handles <- lapply(handles, function(x){ paste0(x, collapse = "")})
+  handles <- unlist(handles)
   
   # remove @@
   if(length(grep("@", handles))){
@@ -21,8 +17,21 @@ cleanHandles <- function(handles) {
   return(handles)
 }
 
+cvstamp <- function(data, col, cl){
+  if(cl == "Date"){
+    data[, col] <- as.Date(data[,col])
+  } else if (cl == "POSIXct"){
+    data[, col] <- as.POSIXct(data[,col])
+  } else if (cl == "POSIXlt"){
+    data[, col] <- as.POSIXlt(data[,col])
+  } else if(cl == "numeric" || cl == "integer"){
+    data[, col] <- as.numeric(data[,col])
+  }
+  return(data)
+}
+
 # timeNodes
-timeNodes <- function(data){
+timeNodes <- function(data, esclass, ssclass){
   
   # split
   src <- data[, c("source", "start.stamp", "end.stamp")]

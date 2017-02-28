@@ -22,17 +22,8 @@ test_that("errors", {
   expect_error(dynamise(tweets, tweets = "text", source = "error"))
   expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
                         start.stamp = "error"))
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "start", end.stamp = "error"))
-  
-  # end.stamp and start.stamp different classes
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "start", end.stamp = "text"))
   
   tweets$start <- as.character(tweets$start)
-  
-  expect_error(dynamise(tweets, tweets = "text", source = "screenName", 
-                        start.stamp = "start"))
   
   expect_warning(dynamise(tweets, tweets = "text", source = "screenName", 
                         start.stamp = "end", write = FALSE, open = TRUE))
@@ -64,7 +55,7 @@ test_that("test return", {
   
   expect_equal(length(igraph::V(g)), length(igraph::V(dyn)))
   
-  expect_equal(length(igraph::V(dyn)), nrow(nodes))
+  expect_equal(length(igraph::V(dyn)), length(nodes))
   
   expect_equal(length(igraph::E(g)), length(igraph::E(dyn)))
   

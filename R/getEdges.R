@@ -105,33 +105,28 @@ getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   # additional arguments
   # get arguments
   args <- unlist(list(...))
-  
+
   if(length(args)) {
     
-    ext <- as.data.frame(data[, c(args)])
+    args <- data[, args, drop = FALSE]
     
-    edges <- data.frame()
+    source <- reshape2::melt(handles) # source to target
     
-    for(i in 1:length(handles)) {
-      
-      if(length(handles[[i]])) {
-        
-        sub <- reshape2::melt(handles[i])
-        
-        # reorder source and target
-        sub <- sub[,c(2,1)]
-        
-        # rename
-        names(sub) <- c("source", "target")
-        
-        sub_edges <- cbind.data.frame(sub, ext[i,], row.names = NULL)
-        
-        edges <- rbind.data.frame(edges, sub_edges)
-      }
+    # build source to additional argument
+    edges <- list()
+    edges[[1]] <- source
+    for(i in 1:ncol(args)){
+      names(handles) <- args[,i]
+      edges[[i+1]] <- reshape2::melt(handles)
     }
     
+    edges <- do.call("cbind.data.frame", lapply(edges, as.data.frame))
+    
+    names(edges)[1:2] <- c("source", "target")
+    edges <- edges[,!grepl("value", names(edges))]
+    
     # rename 
-    names(edges)[3:ncol(edges)] <- args
+    names(edges)[3:ncol(edges)] <- names(args)
     
   } else {
     

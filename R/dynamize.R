@@ -84,52 +84,33 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
                 "' in data"))
   }
   
-  if(class(data[, start.stamp])[1] == "character") {
-    stop("start.stamp cannot be characters")
-  }
-  
   if(open == TRUE && write == FALSE) {
     warning("cannot open file since write = FALSE")
   }
   
+  if(is.numeric(end.stamp)){
+    data$end.stamp <- data[, start.stamp] + end.stamp
+    end.stamp <- "end.stamp"
+  }
   
   
   if(!is.null(end.stamp)){
     
-    if(is.numeric(end.stamp)){
-      
-      edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
-                                     str.length = str.length, start.stamp)
-      
-      names(edges) <- c("source", "target", "start.stamp")
-      
-      edges$end.stamp <- edges$start.stamp + end.stamp
-      
-    } else if(!is.numeric(end.stamp) && !is.factor(end.stamp)){
-      
-      x <- tryCatch(data[,end.stamp], error = function(e) e)
-      
-      if(is(x, "error")){
-        stop("cannot find column ", end.stamp)
-      }
-      
-      if(class(data[, start.stamp])[1] != class(data[, end.stamp])[1]) {
-        stop(paste0("start.stamp and end.stamp are of different classes,", 
-                    " start.stamp: ", 
-                    paste0(class(data[, start.stamp]), collapse = " "),
-                    " while end.stamp: ", 
-                    paste0(class(data[, end.stamp]), collapse = " ")))
-      }
-      
-      edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
-                                     str.length = str.length, start.stamp, 
-                                     end.stamp)
-      
-      names(edges) <- c("source", "target", "start.stamp", "end.stamp")
-      
-    }
+    esclass <- class(data[, end.stamp])[1]
+    ssclass <- class(data[, start.stamp])[1]
     
-  } else if (is.null(end.stamp)){
+    edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
+                                   str.length = str.length, start.stamp, 
+                                   end.stamp)
+    
+    names(edges) <- c("source", "target", "start.stamp", "end.stamp")
+    
+    edges <- cvstamp(edges, "start.stamp", ssclass)
+    edges <- cvstamp(edges, "end.stamp", esclass)
+    
+  } else if(is.null(end.stamp)){
+    
+    ssclass <- class(data[, start.stamp])[1]
     
     edges <- graphTweets::getEdges(data, tweets = tweets, source = source,
                                    str.length = str.length, start.stamp)
@@ -137,6 +118,8 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     names(edges) <- c("source", "target", "start.stamp")
     
     edges$end.stamp <- max(edges$start.stamp)
+    
+    edges <- cvstamp(edges, "start.stamp", ssclass)
     
   }
 

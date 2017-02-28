@@ -54,50 +54,34 @@ getNodes <- function(edges, source = "source", target = "target", ...) {
     stop(paste0("no column named '", target, "' found in data"))
   }
   
+  # get additional arguments
   args <- unlist(list(...))
+  
+  source <- edges[, source]
+  target <- edges[, target]
   
   if(length(args)) {
     
-    # split
-    src <- unique(edges[, c(source, args)])
-    tgt <- data.frame(target = unique(edges[, target]))
+    args <- edges[, args, drop = FALSE]
+    
+    src <- cbind.data.frame(source, args) # bind
     
     # remove duplicates
-    src <- src[!duplicated(src[, source]),]
+    src <- unique(src) 
+    src <- src[!duplicated(src[,1]),]
     
-    # to character
-    src[, source] <- as.character(src[, source])
-    tgt[, target] <- as.character(tgt[, target])
+    names(src)[1] <- "nodes" # rename for rbind
     
-    # anti_join
-    tgt <- dplyr::anti_join(tgt, src, by = c(target = source))
+    # take unique source and target
+    tgt <- unique(target)
+    tgt <- tgt[!tgt %in% src[, "nodes"]] # remove targets in source
+    tgt <- data.frame(nodes = tgt)
     
-    # adds args
-    tgt[, args] <- NA
-    
-    # rename for bind
-    names(tgt)[1] <- source
-    
-    # bind
-    nodes <- rbind.data.frame(src, tgt)
-    
-    names(nodes)[1] <- "nodes"
-    
-    # order
-    nodes <- nodes[order(nodes$nodes),]
+    nodes <- plyr::rbind.fill(src, tgt)
     
   } else {
-    
-    nodes <- c(unique(as.character(edges[, source])), 
-               unique(as.character(edges[, target])))
-    
-    nodes <- unique(nodes)
-    
-    nodes <- nodes[order(nodes)]
-    
-    nodes <- data.frame(nodes = nodes)
+    nodes <- unique(c(source, target))
   }
-  
   return(nodes)
   
 }

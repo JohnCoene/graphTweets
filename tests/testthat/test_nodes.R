@@ -48,14 +48,14 @@ test_that("getNodes tests", {
                       "favorited")
   
   # tests
-  expect_equal(nrow(n_nodes), nrow(nodes))
-  expect_is(nodes, "data.frame")
+  expect_equal(nrow(n_nodes), length(nodes))
+  expect_is(nodes, "character")
   expect_is(n_nodes, "data.frame")
   
   # test length
-  edg <- edges[1:5,]
+  edg <- edges[1:4,]
   
   n <- getNodes(edg)
   
-  expect_equal(nrow(n), 4)
+  expect_equal(length(n), 3)
 })

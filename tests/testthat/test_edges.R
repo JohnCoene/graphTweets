@@ -4,8 +4,6 @@ context("getEdges tests")
 
 test_that("test getEdges errors", {
   
-  skip_on_cran()
-  
   # setup
   tweets <- data.frame(text = c("I tweet @you about @him",
                                 "I tweet @me about @you"),
