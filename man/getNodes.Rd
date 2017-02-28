@@ -46,7 +46,7 @@ nodes <- getNodes(edges, source = "source", target = "target",
 
 # plot
 g <- igraph::graph.data.frame(edges, directed = TRUE, vertices = nodes)
-plot(g, vertex.color = igraph::V(g)$favorited)
+plot(g)
 
 }
 \author{

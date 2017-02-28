@@ -117,9 +117,9 @@ dynamise <- function(data, tweets, source, start.stamp, end.stamp = NULL,
     
     names(edges) <- c("source", "target", "start.stamp")
     
-    edges$end.stamp <- max(edges$start.stamp)
-    
     edges <- cvstamp(edges, "start.stamp", ssclass)
+    
+    edges$end.stamp <- max(edges$start.stamp)
     
   }
 

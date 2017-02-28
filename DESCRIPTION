@@ -1,7 +1,7 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.4.0
+Version: 0.3.2
 Date: 2016-05-07
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
@@ -14,6 +14,7 @@ Depends:
 Imports:
     reshape2,
     dplyr,
+    plyr,
     igraph, 
     methods
 RoxygenNote: 5.0.1
