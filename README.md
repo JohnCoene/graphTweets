@@ -30,8 +30,7 @@ devtools::install_github("JohnCoene/graphTweets") # dev version
 
 ## Documentation ##
 
-* [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
-* [Manual](http://johncoene.github.io/projects/docs/GraphTweets.pdf)
+[Site](http://john-coene.com/packages/graphTweets/)
 
 ## Examples ##
 
