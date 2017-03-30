@@ -4,7 +4,7 @@ globalVariables(c("start.stamp", "end.stamp"))
 # clean handles
 cleanHandles <- function(handles) {
   # clean punctuation
-  handles <- trimws(handles) # remove white space
+  handles <- gsub("[[:space:]]", "", handles) # remove white space
   handles <- gsub(":", "", handles)
   handles <- gsub(",", "", handles)
   handles <- gsub(";", "", handles)
