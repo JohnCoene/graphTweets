@@ -53,7 +53,3 @@ g <- igraph::graph.data.frame(edges, directed=TRUE, vertices = nodes)
 
 plot(g)
 ```
-
-## Other Projects ##
-
-See my other projects at [http://johncoene.github.io/projects/](http://johncoene.github.io/projects/)
