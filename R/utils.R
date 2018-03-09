@@ -1,5 +1,5 @@
 # global variables to avoid R CMD CHECK note (timeNodes) 
-globalVariables(c("start.stamp", "end.stamp"))
+globalVariables(c("start.stamp", "end.stamp", "."))
 
 # clean handles
 clean_handles <- function(handles) {
@@ -16,6 +16,28 @@ clean_handles <- function(handles) {
 
 extract_handles <- function(x) {
   regmatches(x, gregexpr("@[^ ]*", x))[[1]]
+}
+
+construct <- function(tweets, edges, nodes = NULL){
+  if(is.null(nodes)){
+    data <- list(
+      tweets = tweets,
+      edges = edges
+    )
+  } else {
+    data <- list(
+      tweets = tweets,
+      edges = edges,
+      nodes = nodes
+    )
+  }
+  attr(data, "hidden") <- c("tweets")
+  structure(data, class = "graphTweets")
+}
+
+test_input <- function(gt){
+  if (inherits(gt, "graphTweets")) 
+    stop("gt is not of class graphTweets", call. = FALSE)
 }
 
 # clean handles
