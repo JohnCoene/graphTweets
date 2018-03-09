@@ -81,4 +81,3 @@ dyn <- dynamise(tweets, tweets = "text", source = "screenName",
 \author{
 John Coene \email{jcoenep@gmail.com}
 }
-

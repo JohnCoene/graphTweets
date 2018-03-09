@@ -46,6 +46,8 @@
 #' @export 
 getEdges <- function(data, tweets, source, str.length = NULL, ...) {
   
+  .Deprecated("gt_edges")
+  
   if (class(data) != "data.frame") {
     stop("data must be a data.frame")
   } 

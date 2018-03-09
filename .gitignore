@@ -4,3 +4,4 @@
 *.httr-oauth
 *.Rproj
 .Rproj.user
+twitter_token.rds

@@ -52,4 +52,3 @@ plot(g, vertex.color = igraph::V(g)$favorited)
 \author{
 John Coene \email{jcoenep@gmail.com}
 }
-

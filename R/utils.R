@@ -2,6 +2,23 @@
 globalVariables(c("start.stamp", "end.stamp"))
 
 # clean handles
+clean_handles <- function(handles) {
+  # clean punctuation
+  handles <- gsub("[[:space:]]|:|,|;|>|<|?|\\.*", "", handles) # remove white space
+  
+  # remove @
+  if(length(grep("@", handles))){
+    handles <- substring(handles, 2)
+  }
+  
+  return(handles)
+}
+
+extract_handles <- function(x) {
+  regmatches(x, gregexpr("@[^ ]*", x))[[1]]
+}
+
+# clean handles
 cleanHandles <- function(handles) {
   # clean punctuation
   handles <- gsub("[[:space:]]", "", handles) # remove white space

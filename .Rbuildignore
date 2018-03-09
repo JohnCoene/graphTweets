@@ -5,3 +5,5 @@
 ^appveyor\.yml$
 ^cran-comments\.md$
 ^revdep$
+^twitter_token\.rds$
+^test\.R$

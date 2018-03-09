@@ -51,12 +51,11 @@ g <- igraph::graph.data.frame(edges)
 plot(g)
 
 }
-\author{
-John Coene \email{john.coene@gmail.com}
-}
 \seealso{
 \href{http://cran.r-project.org/web/packages/twitteR/twitteR.pdf}{twitteR} 
 and \href{http://cran.r-project.org/web/packages/streamR/streamR.pdf}{streamR} 
 packages wherefrom the data (\code{data}) can be obtained.
 }
-
+\author{
+John Coene \email{john.coene@gmail.com}
+}

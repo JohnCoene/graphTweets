@@ -41,6 +41,8 @@
 #' @export
 getNodes <- function(edges, source = "source", target = "target", ...) {
   
+  .Deprecated("gt_nodes")
+  
   # check inputs
   if (class(edges) != "data.frame") {
     stop("edges must be a data.frame")

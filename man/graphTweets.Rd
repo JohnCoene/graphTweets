@@ -53,4 +53,4 @@ dyn <- dynamise(tweets, tweets = "text", source = "screenName",
 }
 
 }
-
+\keyword{internal}
