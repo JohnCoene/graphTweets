@@ -15,7 +15,7 @@ Visualise networks of Twitter interactions.
 * [Documentation](#documentaition)
 * [Examples](#examples)
 
-**In the process of updating the package to better suit `rtweets`** (see intall), see *`v4`* (WIP) from ~~v3~~
+**In the process of updating the package to better suit `rtweets`** (see intall & examples), see *`v4`* (WIP---report issues) from ~~v3~~
 
 Features *three* functions:
 
