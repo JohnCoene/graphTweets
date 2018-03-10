@@ -35,6 +35,13 @@ construct <- function(tweets, edges, nodes = NULL){
   structure(data, class = "graphTweets")
 }
 
+deconstruct <- function(gt){
+  list(
+    edges = gt[["edges"]],
+    nodes = gt[["nodes"]]
+  )
+}
+
 test_input <- function(gt){
   if (!inherits(gt, "graphTweets")) 
     stop("gt is not of class graphTweets", call. = FALSE)
