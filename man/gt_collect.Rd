@@ -10,8 +10,25 @@ gt_collect(gt)
 \item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
 }
 \value{
-A list of 1) edges and 2) nodes as \link[dlyr]{tibble}.
+A named list of \link[dlyr]{tibble} 1) edges and 2) nodes.
 }
 \description{
 Collect
+}
+\examples{
+# simulate dataset
+tweets <- data.frame(
+  text = c("I tweet @you about @him", 
+           "I tweet @me about @you"),
+  screen_name = c("me", "him"),
+  retweet_count = c(19, 5),
+  status_id = c(1, 2),
+  stringsAsFactors = FALSE
+)
+
+tweets \%>\% 
+  gt_edges(text, screen_name) \%>\% 
+  gt_nodes() \%>\% 
+  gt_collect() -> net
+
 }
