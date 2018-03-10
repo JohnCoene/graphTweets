@@ -5,11 +5,13 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)](http://cran.r-project.org/package=graphTweets)
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 
-![gephi.gif](https://github.com/JohnCoene/docs/raw/master/output.gif)
-
 # GraphTweets #
 
-Visualise networks of Twitter interactions
+![gephi.gif](https://github.com/JohnCoene/docs/raw/master/output.gif)
+
+Visualise networks of Twitter interactions.
+
+**In the process of updating the package to better suit `rtweets`** (see intall)
 
 Features *three* functions:
 
@@ -26,6 +28,9 @@ See `NEWS.md` for changes.
 ```R
 install.packages("graphTweets") # CRAN release
 devtools::install_github("JohnCoene/graphTweets") # dev version
+
+# install rtweet version
+devtools::install_github("JohnCoene/graphTweets", ref = "rtweet")
 ```
 
 ## Documentation ##
