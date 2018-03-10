@@ -124,12 +124,61 @@ gt_nodes <- function(gt, meta = FALSE){
 #' 
 #' @param gt An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.
 #' 
+#' @examples 
+#' # simulate dataset
+#' tweets <- data.frame(
+#'   text = c("I tweet @you about @him", 
+#'            "I tweet @me about @you"),
+#'   screen_name = c("me", "him"),
+#'   retweet_count = c(19, 5),
+#'   status_id = c(1, 2),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' tweets %>% 
+#'   gt_edges(text, screen_name) %>% 
+#'   gt_nodes() %>% 
+#'   gt_collect() -> net
 #' 
-#' @return A list of 1) edges and 2) nodes as \link[dlyr]{tibble}. 
+#' @return A named list of \link[dlyr]{tibble} 1) edges and 2) nodes. 
 #' 
 #' @export
 gt_collect <- function(gt){
   test_input(gt)
   
   deconstruct(gt)
+}
+
+#' Graph
+#' 
+#' @inherit gt_collect
+#' 
+#' @examples 
+#' # simulate dataset
+#' tweets <- data.frame(
+#'   text = c("I tweet @you about @him", 
+#'            "I tweet @me about @you"),
+#'   screen_name = c("me", "him"),
+#'   retweet_count = c(19, 5),
+#'   status_id = c(1, 2),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' tweets %>% 
+#'   gt_edges(text, screen_name) %>% 
+#'   gt_nodes() %>% 
+#'   gt_graph() -> net
+#' 
+#' @return An object of class \code{igraph}.
+#' 
+#' @export
+gt_graph <- function(gt){
+  test_input(gt)
+  
+  if(!"nodes" %in% names(gt)){
+    igraph::graph.data.frame(gt[["edges"]], directed = TRUE)
+  } else {
+    igraph::graph.data.frame(gt[["edges"]], directed = TRUE, vertices = gt[["nodes"]])
+  }
+  
 }
