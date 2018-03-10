@@ -30,7 +30,7 @@ Features *three* functions:
 - `gt_edges`
 - `gt_nodes`
 - `gt_dyn`
-= `gt_graph`
+- `gt_graph`
 - `gt_save`
 - `gt_collect`
 
