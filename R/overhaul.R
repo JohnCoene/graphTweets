@@ -140,7 +140,7 @@ gt_nodes <- function(gt, meta = FALSE){
 #'   gt_nodes() %>% 
 #'   gt_collect() -> net
 #' 
-#' @return A named list of \link[dlyr]{tibble} 1) edges and 2) nodes. 
+#' @return A named list of \link[dplyr]{tibble} 1) edges and 2) nodes. 
 #' 
 #' @export
 gt_collect <- function(gt){
@@ -181,4 +181,104 @@ gt_graph <- function(gt){
     igraph::graph.data.frame(gt[["edges"]], directed = TRUE, vertices = gt[["nodes"]])
   }
   
+}
+
+#' Dynamise
+#' 
+#' Create a dynamic graph to import in Gephi.
+#' 
+#' @inheritParams gt_collect
+#' @param lifetime Lifetime of a tweet in milliseconds, defaults to \code{Inf}.
+#' 
+#' @examples 
+#' \dontrun{
+#' # simulate dataset
+#' tweets <- data.frame(
+#'   text = c("I tweet @you about @him", 
+#'            "I tweet @me about @you"),
+#'   screen_name = c("me", "him"),
+#'   retweet_count = c(19, 5),
+#'   created_at = c(Sys.time(), Sys.time() + 15000),
+#'   status_id = c(1, 2),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' tweets %>% 
+#'   gt_edges(text, screen_name, "created_at") %>% 
+#'   gt_nodes(TRUE) %>% 
+#'   gt_dyn() -> net
+#' }
+#' 
+#' @rdname dyn
+#' @export
+gt_dyn <- function(gt, lifetime = Inf){
+  test_input(gt)
+  
+  if(!"created_at" %in% names(gt[["edges"]]))
+    stop("missing created_at column", call. = FALSE)
+  
+  if(is.infinite(lifetime))
+    lifetime <- 0
+  
+  gt[["created_at"]] <- gt[["created_at"]] + lifetime
+  
+  src <- gt[["edges"]][, c("source", "created_at")]
+  tgt <- gt[["edges"]][, c("target", "created_at")]
+  
+  names(tgt)[1] <- c("source")
+  
+  nodes <- src %>% 
+    dplyr::bind_rows(tgt) %>% 
+    dplyr::group_by(source) %>% 
+    unique() %>% 
+    dplyr::summarise(
+      start = min(created_at),
+      end = max(created_at)
+    ) %>% 
+    dplyr::ungroup() %>% 
+    dplyr::inner_join(gt[["nodes"]], by = c("source" = "nodes"))
+  
+  if(nrow(nodes) != nrow(gt[["nodes"]]))
+    warning("incorrect number of nodes", call. = FALSE)
+
+  construct(gt[["tweets"]], gt[["edges"]], nodes)
+}
+
+#' Write
+#' 
+#' Save the graph to file.
+#' 
+#' @inheritParams gt_collect
+#' @param file File name including extension (\code{format}).
+#' @param format Format file format, see \link[igraph]{write_graph}.
+#' @param ... Any other param to pass to \link[igraph]{write_graph}.
+#' 
+#' @examples 
+#' \dontrun{
+#' # simulate dataset
+#' tweets <- data.frame(
+#'   text = c("I tweet @you about @him", 
+#'            "I tweet @me about @you"),
+#'   screen_name = c("me", "him"),
+#'   retweet_count = c(19, 5),
+#'   created_at = c(Sys.time(), Sys.time() + 15000),
+#'   status_id = c(1, 2),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' tweets %>% 
+#'   gt_edges(text, screen_name, "created_at") %>% 
+#'   gt_nodes(TRUE) %>% 
+#'   gt_dyn() %>% 
+#'   gt_write()
+#' }
+#' 
+#' @export
+gt_save <- function(gt, file = "graphTweets.graphml", format = "graphml"){
+  if("nodes" %in% names(gt)){
+    g <- igraph::graph.data.frame(gt[["edges"]], TRUE, gt[["nodes"]])
+  } else {
+    g <- igraph::graph.data.frame(gt[["edges"]], TRUE)
+  }
+  igraph::write_graph(g, file = file, format = format)
 }
