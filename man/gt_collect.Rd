@@ -10,7 +10,7 @@ gt_collect(gt)
 \item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
 }
 \value{
-A named list of \link[dlyr]{tibble} 1) edges and 2) nodes.
+A named list of \link[dplyr]{tibble} 1) edges and 2) nodes.
 }
 \description{
 Collect
