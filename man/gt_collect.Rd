@@ -9,6 +9,9 @@ gt_collect(gt)
 \arguments{
 \item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
 }
+\value{
+A list of 1) edges and 2) nodes as \link[dlyr]{tibble}.
+}
 \description{
 Collect
 }

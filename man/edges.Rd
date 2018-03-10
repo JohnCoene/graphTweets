@@ -5,7 +5,7 @@
 \alias{gt_edges_}
 \title{Edges}
 \usage{
-gt_edges(data, tweets, source, id, ...)
+gt_edges(data, tweets, source, ...)
 
 gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
   ...)
@@ -17,9 +17,12 @@ gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
 
 \item{source}{Author of tweets.}
 
-\item{id}{tweets unique id.}
-
 \item{...}{any other column name, see examples.}
+
+\item{id}{tweets unique id.}
+}
+\value{
+An object of class \code{graphTweets}.
 }
 \description{
 Get edges from data.frame of tweets.
@@ -40,5 +43,5 @@ tweets \%>\%
   
 tweets \%>\% 
   gt_edges_(RT = "retweet_count") # metadata
-
+  
 }

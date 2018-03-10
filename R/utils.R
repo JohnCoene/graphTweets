@@ -31,12 +31,12 @@ construct <- function(tweets, edges, nodes = NULL){
       nodes = nodes
     )
   }
-  attr(data, "hidden") <- c("tweets")
+  attr(data, "hidden") <- "tweets"
   structure(data, class = "graphTweets")
 }
 
 test_input <- function(gt){
-  if (inherits(gt, "graphTweets")) 
+  if (!inherits(gt, "graphTweets")) 
     stop("gt is not of class graphTweets", call. = FALSE)
 }
 
