@@ -91,8 +91,7 @@ tweets %>%
 # dynamic graph
 tweets %>% 
   gt_edges(text, screen_name, "created_at") %>% # add created time
-  gt_nodes(TRUE) %>% 
-  gt_graph %>% 
+  gt_nodes(TRUE) %>%
   gt_dyn %>% # make dynamic
   gt_save # save as .graphml
 ```

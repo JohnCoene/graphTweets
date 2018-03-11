@@ -229,10 +229,12 @@ gt_dyn <- function(gt, lifetime = Inf){
   if(!"created_at" %in% names(gt[["edges"]]))
     stop("missing created_at column", call. = FALSE)
   
-  if(is.infinite(lifetime))
-    lifetime <- 0
-  
-  gt[["created_at"]] <- gt[["created_at"]] + lifetime
+  if(is.infinite(lifetime)){
+    lifetime <- max(gt[["edges"]][["created_at"]])
+    gt[["edges"]][["end"]] <- lifetime
+  } else {
+    gt[["edges"]][["end"]] <- gt[["edges"]][["created_at"]] + lifetime 
+  }
   
   src <- gt[["edges"]][, c("source", "created_at")]
   tgt <- gt[["edges"]][, c("target", "created_at")]
