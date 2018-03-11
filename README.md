@@ -21,12 +21,6 @@ Visualise networks of Twitter interactions.
 
 ## Features
 
-~~`v3.2`~~
-
-* ~~`getEdges`~~: build edge table from tweets.
-* ~~`getNodes`~~: get nodes from edges.
-* ~~`dynamise`~~: make a temporal graph.
-
 *`v4`*
 
 - `gt_edges` - get edges.
@@ -35,6 +29,12 @@ Visualise networks of Twitter interactions.
 - `gt_graph` - create `igraph` graph object.
 - `gt_save` - save the graph to file
 - `gt_collect` - collect nodes and edges.
+
+~~`v3.2`~~
+
+* ~~`getEdges`~~: build edge table from tweets.
+* ~~`getNodes`~~: get nodes from edges.
+* ~~`dynamise`~~: make a temporal graph.
 
 See `NEWS.md` for changes.
 
@@ -54,7 +54,7 @@ tweets %>%
   plot(., vertex.size = igraph::degree(.) * 10)
 ```
 
-This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: degree like in the example above).
+This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: `degree` like in the example above).
 
 ## Install
 
