@@ -40,11 +40,8 @@ See `NEWS.md` for changes.
 ## Install
 
 ```R
-install.packages("graphTweets") # CRAN release
-devtools::install_github("JohnCoene/graphTweets") # dev version
-
-# install rtweet version
-devtools::install_github("JohnCoene/graphTweets", ref = "rtweet")
+install.packages("graphTweets") # CRAN release v3.2
+devtools::install_github("JohnCoene/graphTweets") # dev version v4
 ```
 
 ## Documentation 
