@@ -2,9 +2,9 @@
 % Please edit documentation in R/overhaul.R
 \name{gt_save}
 \alias{gt_save}
-\title{Write}
+\title{Save}
 \usage{
-gt_save(gt, file = "graphTweets.graphml", format = "graphml")
+gt_save(gt, file = "graphTweets.graphml", format = "graphml", ...)
 }
 \arguments{
 \item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
@@ -13,7 +13,7 @@ gt_save(gt, file = "graphTweets.graphml", format = "graphml")
 
 \item{format}{Format file format, see \link[igraph]{write_graph}.}
 
-\item{...}{Any other param to pass to \link[igraph]{write_graph}.}
+\item{...}{Any other argument to pass to \link[igraph]{write_graph}.}
 }
 \description{
 Save the graph to file.
@@ -35,7 +35,7 @@ tweets \%>\%
   gt_edges(text, screen_name, "created_at") \%>\% 
   gt_nodes(TRUE) \%>\% 
   gt_dyn() \%>\% 
-  gt_write()
+  gt_save()
 }
 
 }

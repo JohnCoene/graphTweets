@@ -30,6 +30,8 @@
 #' @rdname edges
 #' @export
 gt_edges <- function(data, tweets, source, ...){
+  if(missing(data))
+    stop("missing data", call. = FALSE)
   tweets <- dplyr::enquo(tweets)
   source <- dplyr::enquo(source)
   gt_edges_(data, tweets, source, "status_id", ...)
@@ -38,6 +40,12 @@ gt_edges <- function(data, tweets, source, ...){
 #' @rdname edges
 #' @export
 gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "status_id", ...){
+  
+  if(missing(data))
+    stop("missing data", call. = FALSE)
+  
+  if(!inherits(data, "data.frame"))
+    stop("data is not of class data.frame")
   
   ids <- data[[id]]
   
@@ -103,6 +111,9 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "stat
 #' @export
 gt_nodes <- function(gt, meta = FALSE){
   
+  if(missing(gt))
+    stop("missing gt", call. = FALSE)
+  
   test_input(gt)
   
   nodes <- unique(c(gt[["edges"]][["source"]], gt[["edges"]][["target"]]))
@@ -114,7 +125,8 @@ gt_nodes <- function(gt, meta = FALSE){
     usr <- rtweet::users_data(gt$tweets)
     
     nodes %>% 
-      dplyr::left_join(usr, by = c("nodes" = "screen_name")) -> nodes
+      dplyr::left_join(usr, by = c("nodes" = "screen_name")) %>% 
+      unique() -> nodes
   } 
   
   construct(gt[["tweets"]], gt[["edges"]], nodes)
@@ -251,7 +263,7 @@ gt_dyn <- function(gt, lifetime = Inf){
 #' @inheritParams gt_collect
 #' @param file File name including extension (\code{format}).
 #' @param format Format file format, see \link[igraph]{write_graph}.
-#' @param ... Any other param to pass to \link[igraph]{write_graph}.
+#' @param ... Any other argument to pass to \link[igraph]{write_graph}.
 #' 
 #' @examples 
 #' \dontrun{
@@ -274,11 +286,7 @@ gt_dyn <- function(gt, lifetime = Inf){
 #' }
 #' 
 #' @export
-gt_save <- function(gt, file = "graphTweets.graphml", format = "graphml"){
-  if("nodes" %in% names(gt)){
-    g <- igraph::graph.data.frame(gt[["edges"]], TRUE, gt[["nodes"]])
-  } else {
-    g <- igraph::graph.data.frame(gt[["edges"]], TRUE)
-  }
-  igraph::write_graph(g, file = file, format = format)
+gt_save <- function(gt, file = "graphTweets.graphml", format = "graphml", ...){
+  gt_graph(gt) %>% 
+    igraph::write_graph(., file = file, format = format, ...)
 }

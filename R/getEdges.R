@@ -28,6 +28,7 @@
 #' packages wherefrom the data (\code{data}) can be obtained.
 #' 
 #' @examples 
+#' \dontrun{
 #' # simulate dataset
 #' tweets <- data.frame(text = c("I tweet @you about @him", 
 #'                               "I tweet @me about @you"),
@@ -40,6 +41,7 @@
 #' # use igraph to make graph object
 #' g <- igraph::graph.data.frame(edges)
 #' plot(g)
+#' }
 #' 
 #' @author John Coene \email{john.coene@@gmail.com}
 #' 

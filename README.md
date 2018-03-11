@@ -11,28 +11,29 @@
 
 Visualise networks of Twitter interactions.
 
+* [Features](#features)
 * [Install](#install)
 * [Documentation](#documentaition)
 * [Examples](#examples)
 
-**In the process of updating the package to better suit `rtweets`** (see intall & examples), see *`v4`* (WIP---report issues) from ~~v3~~
+**In the process of updating the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) (WIP--report issues) from ~~`v3.2`~~
 
-Features *three* functions:
+## Features
 
-~~`v3`~~
+~~`v3.2`~~
 
-* ~~`getEdges`~~: build edge table from tweets
-* ~~`getNodes`~~: get nodes from edges
-* ~~`dynamise`~~: make a temporal graph
+* ~~`getEdges`~~: build edge table from tweets.
+* ~~`getNodes`~~: get nodes from edges.
+* ~~`dynamise`~~: make a temporal graph.
 
 *`v4`*
 
-- `gt_edges`
-- `gt_nodes`
-- `gt_dyn`
-- `gt_graph`
-- `gt_save`
-- `gt_collect`
+- `gt_edges` - get edges.
+- `gt_nodes` - get nodes, with or without metadata.
+- `gt_dyn` - create dynamic graph.
+- `gt_graph` - create `igraph` graph object.
+- `gt_save` - save the graph to file
+- `gt_collect` - collect nodes and edges.
 
 See `NEWS.md` for changes.
 
@@ -58,20 +59,29 @@ devtools::install_github("JohnCoene/graphTweets", ref = "rtweet")
 ```R
 library(rtweet)
 
-Sys.setlocale("LC_TIME", "English")
+# Sys.setlocale("LC_TIME", "English")
 
 tweets <- search_tweets("#rstats")
 
 library(graphTweets)
 
+# simple network
 tweets %>% 
-  gt_edges(text, screen_name, "created_at") %>% 
-  gt_nodes(TRUE) %>% 
+  gt_edges(text, screen_name) %>% 
+  gt_nodes %>% 
   gt_graph %>% 
   plot(.)
+
+# dynamic graph
+tweets %>% 
+  gt_edges(text, screen_name, "created_at") %>% # add created time
+  gt_nodes(TRUE) %>% 
+  gt_graph %>% 
+  gt_dyn %>% 
+  gt_save # save as .graphml
 ```
 
-~~`v3`~~
+~~`v3.2`~~
 
 ```R
 # load twitteR to get tweets

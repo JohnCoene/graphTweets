@@ -29,6 +29,7 @@ duplicate values (\code{...}) are dropped. Also, the meta-data (\code{...}),
 only applies to the source of edges; NAs are generated for target nodes.
 }
 \examples{
+\dontrun{
 # simulate dataset
 tweets <- data.frame(text = c("I tweet @you about @him", 
                               "I tweet @me about @you"),
@@ -47,6 +48,7 @@ nodes <- getNodes(edges, source = "source", target = "target",
 # plot
 g <- igraph::graph.data.frame(edges, directed = TRUE, vertices = nodes)
 plot(g, vertex.color = igraph::V(g)$favorited)
+}
 
 }
 \author{

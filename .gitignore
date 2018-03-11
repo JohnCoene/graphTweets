@@ -6,3 +6,4 @@
 .Rproj.user
 twitter_token.rds
 .httr-oauth
+test.R

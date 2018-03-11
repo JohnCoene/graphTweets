@@ -42,6 +42,7 @@
 #' }
 #' 
 #' @examples 
+#' \dontrun{
 #' tweets <- data.frame(text = c("I tweet @you about @him",
 #'                               "I tweet @me about @you"),
 #'                        screenName = c("me", "him"),
@@ -55,6 +56,7 @@
 #' # create dynamic graph with 60 min lasting edges
 #' dyn <- dynamise(tweets, tweets = "text", source = "screenName", 
 #'                 start.stamp = "created", end = 3600)
+#' }
 #' 
 #' @export
 #' 
