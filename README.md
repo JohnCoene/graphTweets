@@ -12,6 +12,7 @@
 Visualise networks of Twitter interactions.
 
 * [Features](#features)
+* [Rationale](#rationale)
 * [Install](#install)
 * [Documentation](#documentaition)
 * [Examples](#examples)
@@ -36,6 +37,24 @@ Visualise networks of Twitter interactions.
 - `gt_collect` - collect nodes and edges.
 
 See `NEWS.md` for changes.
+
+## Rationale
+
+Functions are meant to be run in a specific order.
+
+1. Extract edges
+2. Extract the nodes
+
+One can only know the nodes of a network based on the edges, so run them in that order. However, you can build a graph based on edges alone:
+
+```R
+tweets %>% 
+  gt_edges(text, screen_name) %>% 
+  gt_graph() %>% 
+  plot(., vertex.size = igraph::degree(.) * 10)
+```
+
+This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: degree like in the example above).
 
 ## Install
 
@@ -64,9 +83,9 @@ library(graphTweets)
 
 # simple network
 tweets %>% 
-  gt_edges(text, screen_name) %>% 
-  gt_nodes %>% 
-  gt_graph %>% 
+  gt_edges(text, screen_name) %>% # get edges
+  gt_nodes %>% # get nodes
+  gt_graph %>% # build igraph object
   plot(.)
 
 # dynamic graph
@@ -74,7 +93,7 @@ tweets %>%
   gt_edges(text, screen_name, "created_at") %>% # add created time
   gt_nodes(TRUE) %>% 
   gt_graph %>% 
-  gt_dyn %>% 
+  gt_dyn %>% # make dynamic
   gt_save # save as .graphml
 ```
 
