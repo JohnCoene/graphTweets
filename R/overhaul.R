@@ -244,7 +244,7 @@ gt_dyn <- function(gt, lifetime = Inf){
   construct(gt[["tweets"]], gt[["edges"]], nodes)
 }
 
-#' Write
+#' Save
 #' 
 #' Save the graph to file.
 #' 
@@ -270,7 +270,7 @@ gt_dyn <- function(gt, lifetime = Inf){
 #'   gt_edges(text, screen_name, "created_at") %>% 
 #'   gt_nodes(TRUE) %>% 
 #'   gt_dyn() %>% 
-#'   gt_write()
+#'   gt_save()
 #' }
 #' 
 #' @export
