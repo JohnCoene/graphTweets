@@ -17,7 +17,7 @@ Visualise networks of Twitter interactions.
 * [Rationale](#rationale)
 * [Examples](#examples)
 
-**In the process of updating the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) (WIP--report issues) from ~~`v3.2`~~
+**Updated the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) from ~~`v3.2`~~: performance improved (~30%)
 
 ## Install
 
