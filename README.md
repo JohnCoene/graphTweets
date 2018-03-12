@@ -11,13 +11,25 @@
 
 Visualise networks of Twitter interactions.
 
+* [Install](#install)
+* [Documentation](#documentation)
 * [Features](#features)
 * [Rationale](#rationale)
-* [Install](#install)
-* [Documentation](#documentaition)
 * [Examples](#examples)
 
 **In the process of updating the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) (WIP--report issues) from ~~`v3.2`~~
+
+## Install
+
+```R
+install.packages("graphTweets") # CRAN release v3.2
+devtools::install_github("JohnCoene/graphTweets") # dev version v4
+```
+
+## Documentation 
+
+* [Examples](http://john-coene.com/packages/graphTweets/)
+* [Manual](https://cran.r-project.org/web/packages/graphTweets/graphTweets.pdf) (~~`v3.2`~~)
 
 ## Features
 
@@ -54,21 +66,17 @@ tweets %>%
   plot(., vertex.size = igraph::degree(.) * 10)
 ```
 
-This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: `degree` like in the example above).
-
-## Install
+This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: `degree` like in the example above). If you need meta data on the nodes use `gt_nodes`.
 
 ```R
-install.packages("graphTweets") # CRAN release v3.2
-devtools::install_github("JohnCoene/graphTweets") # dev version v4
+tweets %>% 
+  gt_edges(text, screen_name) %>% 
+  gt_nodes(meta = TRUE) %>% # set meta to TRUE
+  gt_graph() %>% 
+  plot(., vertex.size = v(.)$followers_count) # size nodes by follower count.
 ```
 
-## Documentation 
-
-* [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
-* [Manual](http://johncoene.github.io/projects/docs/GraphTweets.pdf)
-
-## Examples ##
+## Examples
 
 *`v4`*
 
