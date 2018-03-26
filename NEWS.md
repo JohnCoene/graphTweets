@@ -5,6 +5,8 @@ Major release: overhaul to 1) make computations much faster, 2) make the whole p
 * `getEdges` & `getNodes` are now deprecated in favour of `gt_edges` and `gt_nodes`
 * `dynamise` deprecated in favour of `gt_dyn`
 * `magrittr` pipe added.
+* `gt_collect` added: use to get to collect edges and nodes as list.
+* `gt_graph` added: use to convert to igraph object.
 
 Performance
 
