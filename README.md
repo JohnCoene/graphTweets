@@ -7,7 +7,7 @@
 
 # GraphTweets #
 
-![gephi.gif](https://github.com/JohnCoene/docs/raw/master/output.gif)
+![gephi.gif](http://john-coene.com/img/graphTweets.png)
 
 Visualise networks of Twitter interactions.
 
