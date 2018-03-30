@@ -1,23 +1,35 @@
 [![Build Status](https://travis-ci.org/JohnCoene/graphTweets.svg?branch=master)](https://travis-ci.org/JohnCoene/graphTweets)
 [![Build status](https://ci.appveyor.com/api/projects/status/t37a595yg5eb2sx6/branch/master?svg=true)](https://ci.appveyor.com/project/JohnCoene/graphtweets/branch/master)
 [![codecov.io](https://codecov.io/github/JohnCoene/graphTweets/coverage.svg?branch=master)](https://codecov.io/github/JohnCoene/graphTweets?branch=master)
-[![Coverage Status](https://img.shields.io/coveralls/JohnCoene/graphTweets.svg)](https://coveralls.io/r/JohnCoene/graphTweets?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/JohnCoene/graphTweets/badge.svg?branch=master)](https://coveralls.io/github/JohnCoene/graphTweets?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)](http://cran.r-project.org/package=graphTweets)
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 
 # GraphTweets #
 
-![gephi.gif](https://github.com/JohnCoene/docs/raw/master/output.gif)
+![gephi.gif](http://john-coene.com/img/graphTweets.png)
 
 Visualise networks of Twitter interactions.
 
+* [Install](#install)
+* [Documentation](#documentation)
 * [Features](#features)
 * [Rationale](#rationale)
-* [Install](#install)
-* [Documentation](#documentaition)
 * [Examples](#examples)
 
-**In the process of updating the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) (WIP--report issues) from ~~`v3.2`~~
+**Updated the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) from ~~`v3.2`~~: performance improved (~30%)
+
+## Install
+
+```R
+install.packages("graphTweets") # CRAN release v3.2
+devtools::install_github("JohnCoene/graphTweets") # dev version v4
+```
+
+## Documentation 
+
+* [Examples](http://john-coene.com/packages/graphTweets/)
+* [Manual](https://cran.r-project.org/web/packages/graphTweets/graphTweets.pdf) (~~`v3.2`~~)
 
 ## Features
 
@@ -54,21 +66,17 @@ tweets %>%
   plot(., vertex.size = igraph::degree(.) * 10)
 ```
 
-This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: `degree` like in the example above).
-
-## Install
+This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: `degree` like in the example above). If you need meta data on the nodes use `gt_nodes`.
 
 ```R
-install.packages("graphTweets") # CRAN release v3.2
-devtools::install_github("JohnCoene/graphTweets") # dev version v4
+tweets %>% 
+  gt_edges(text, screen_name) %>% 
+  gt_nodes(meta = TRUE) %>% # set meta to TRUE
+  gt_graph() %>% 
+  plot(., vertex.size = v(.)$followers_count) # size nodes by follower count.
 ```
 
-## Documentation 
-
-* [Examples](http://johncoene.github.io/projects/ex/graphTweets_examples.html)
-* [Manual](http://johncoene.github.io/projects/docs/GraphTweets.pdf)
-
-## Examples ##
+## Examples
 
 *`v4`*
 

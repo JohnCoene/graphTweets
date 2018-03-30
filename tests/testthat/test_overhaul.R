@@ -38,10 +38,14 @@ test_that("nodes & edges & dyn", {
   )
   
   expect_is(gt_edges_(tweets), "graphTweets")
-  expect_is(gt_edges(tweets, screen_name, text), "graphTweets")
+  expect_is(gt_edges(tweets, screen_name, text, status_id), "graphTweets")
   expect_is(gt_edges_(tweets, RT = "retweet_count"), "graphTweets")
-  expect_is(gt_edges(tweets, screen_name, text, "retweet_count"), "graphTweets")
+  expect_is(gt_edges(tweets, screen_name, text, status_id, "retweet_count"), "graphTweets")
   edges <- gt_edges_(tweets)
   
   expect_is(gt_nodes(edges), "graphTweets")
+  
+  expect_is(tweets %>% gt_edges_() %>% gt_collect(), "list")
+  expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_collect(), "list")
+  expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_graph(), "igraph")
 })

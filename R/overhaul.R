@@ -20,7 +20,7 @@
 #' )
 #'
 #' tweets %>% 
-#'   gt_edges(text, screen_name)
+#'   gt_edges(text, screen_name, status_id)
 #'   
 #' tweets %>% 
 #'   gt_edges_(RT = "retweet_count") # metadata
@@ -29,12 +29,13 @@
 #' 
 #' @rdname edges
 #' @export
-gt_edges <- function(data, tweets, source, ...){
+gt_edges <- function(data, tweets, source, id, ...){
   if(missing(data))
     stop("missing data", call. = FALSE)
   tweets <- dplyr::enquo(tweets)
   source <- dplyr::enquo(source)
-  gt_edges_(data, tweets, source, "status_id", ...)
+  id <- deparse(substitute(id))
+  gt_edges_(data, tweets, source, id, ...)
 }
 
 #' @rdname edges
@@ -103,7 +104,7 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "stat
 #' )
 #'
 #' tweets %>% 
-#'   gt_edges(text, screen_name) %>% 
+#'   gt_edges(text, screen_name, status_id) %>% 
 #'   gt_nodes() -> net
 #'   
 #' @return An object of class \code{graphTweets}.
@@ -148,7 +149,7 @@ gt_nodes <- function(gt, meta = FALSE){
 #' )
 #'
 #' tweets %>% 
-#'   gt_edges(text, screen_name) %>% 
+#'   gt_edges(text, screen_name, status_id) %>% 
 #'   gt_nodes() %>% 
 #'   gt_collect() -> net
 #' 
@@ -177,7 +178,7 @@ gt_collect <- function(gt){
 #' )
 #'
 #' tweets %>% 
-#'   gt_edges(text, screen_name) %>% 
+#'   gt_edges(text, screen_name, status_id) %>% 
 #'   gt_nodes() %>% 
 #'   gt_graph() -> net
 #' 
@@ -216,7 +217,7 @@ gt_graph <- function(gt){
 #' )
 #'
 #' tweets %>% 
-#'   gt_edges(text, screen_name, "created_at") %>% 
+#'   gt_edges(text, screen_name, status_id, "created_at") %>% 
 #'   gt_nodes(TRUE) %>% 
 #'   gt_dyn() -> net
 #' }

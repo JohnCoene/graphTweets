@@ -27,7 +27,7 @@ tweets <- data.frame(
 )
 
 tweets \%>\% 
-  gt_edges(text, screen_name) \%>\% 
+  gt_edges(text, screen_name, status_id) \%>\% 
   gt_nodes() \%>\% 
   gt_graph() -> net
 
