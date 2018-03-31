@@ -23,10 +23,6 @@
 #' This is useful for non-latin alphabet where nodes may be wrongly identified 
 #' (i.e.: Chinese Sina Weibo data). 
 #' 
-#' @seealso \href{http://cran.r-project.org/web/packages/twitteR/twitteR.pdf}{twitteR} 
-#' and \href{http://cran.r-project.org/web/packages/streamR/streamR.pdf}{streamR} 
-#' packages wherefrom the data (\code{data}) can be obtained.
-#' 
 #' @examples 
 #' \dontrun{
 #' # simulate dataset

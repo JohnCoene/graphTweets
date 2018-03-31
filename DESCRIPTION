@@ -2,7 +2,7 @@ Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
 Version: 0.4.0
-Date: 2016-05-07
+Date: 2018-03-31
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
