@@ -17,13 +17,13 @@ Visualise networks of Twitter interactions.
 * [Rationale](#rationale)
 * [Examples](#examples)
 
-**Updated the package to better suit `rtweets`**, see *`v4`* [install](#install) & [examples](#examples) from ~~`v3.2`~~: performance improved (~30%)
+**Updated the package to better suit `rtweets`**
 
 ## Install
 
 ```R
-install.packages("graphTweets") # CRAN release v3.2
-devtools::install_github("JohnCoene/graphTweets") # dev version v4
+install.packages("graphTweets") # CRAN release v0.4
+devtools::install_github("JohnCoene/graphTweets") # dev version
 ```
 
 ## Documentation 
