@@ -53,20 +53,28 @@ Functions are meant to be run in a specific order.
 One can only know the nodes of a network based on the edges, so run them in that order. However, you can build a graph based on edges alone:
 
 ```R
+library(igraph) # for plot
+
 tweets %>% 
-  gt_edges(text, screen_name) %>% 
+  gt_edges(text, screen_name, status_id) %>% 
   gt_graph() %>% 
-  plot(., vertex.size = igraph::degree(.) * 10)
+  plot(., vertex.size = degree(.) * 10)
 ```
 
 This is useful if you are building a large graph and don't need any meta data on the nodes (other than those you can compute from the graph, i.e.: `degree` like in the example above). If you need meta data on the nodes use `gt_nodes`.
 
 ```R
+library(igraph) # for plot
+
 tweets %>% 
-  gt_edges(text, screen_name) %>% 
+  gt_edges(text, screen_name, status_id) %>% 
   gt_nodes(meta = TRUE) %>% # set meta to TRUE
-  gt_graph() %>% 
-  plot(., vertex.size = v(.)$followers_count) # size nodes by follower count.
+  gt_graph() -> g 
+
+# replace NAs
+V(g)$followers_count <- ifelse(!is.na(V(g)$followers_count), V(g)$followers_count, 1)
+  
+plot(g, vertex.size = log1p(V(g)$followers_count)) # size nodes by follower count.
 ```
 
 ## Examples
