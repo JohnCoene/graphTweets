@@ -32,14 +32,14 @@
 #' 
 #' # simple network
 #' tweets %>% 
-#'   gt_edges(text, screen_name) %>% # get edges
+#'   gt_edges(text, screen_name, status_id) %>% # get edges
 #'   gt_nodes %>% # get nodes
 #'   gt_graph %>% # build igraph object
 #'   plot(.)
 #'   
 #' # dynamic graph
 #' tweets %>% 
-#'   gt_edges(text, screen_name, "created_at") %>% # add created time
+#'   gt_edges(text, screen_name, status_id, "created_at") %>% # add created time
 #'   gt_nodes(TRUE) %>% 
 #'   gt_graph %>% 
 #'   gt_dyn %>% # make dynamic
