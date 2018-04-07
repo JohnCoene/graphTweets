@@ -1,5 +1,9 @@
 # graphTweets 0.4.0
 
+* `gt_nodes` returns number of `n_edges`, the number of edges the node is present in.
+
+# graphTweets 0.4.0
+
 Major release: overhaul to 1) make computations much faster, 2) make the whole package more tidyverse friendly and 3) switch to `rtweet` as main source.
 
 * `getEdges` & `getNodes` are now deprecated in favour of `gt_edges` and `gt_nodes`

@@ -1,3 +1,5 @@
+# GraphTweets
+
 [![Build Status](https://travis-ci.org/JohnCoene/graphTweets.svg?branch=master)](https://travis-ci.org/JohnCoene/graphTweets)
 [![Build status](https://ci.appveyor.com/api/projects/status/t37a595yg5eb2sx6/branch/master?svg=true)](https://ci.appveyor.com/project/JohnCoene/graphtweets/branch/master)
 [![codecov.io](https://codecov.io/github/JohnCoene/graphTweets/coverage.svg?branch=master)](https://codecov.io/github/JohnCoene/graphTweets?branch=master)
@@ -5,9 +7,7 @@
 ![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 
-# GraphTweets #
-
-![gephi.gif](http://john-coene.com/img/graphTweets.png)
+![](http://john-coene.com/img/graphTweets.png)
 
 Visualise networks of Twitter interactions.
 
@@ -78,8 +78,6 @@ plot(g, vertex.size = log1p(V(g)$followers_count)) # size nodes by follower coun
 ```
 
 ## Examples
-
-*`v4`*
 
 ```R
 library(rtweet)
