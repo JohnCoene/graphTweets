@@ -7,3 +7,4 @@
 twitter_token.rds
 .httr-oauth
 test.R
+inst/doc

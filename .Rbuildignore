@@ -7,3 +7,4 @@
 ^revdep$
 ^twitter_token\.rds$
 ^test\.R$
+index.Rmd
