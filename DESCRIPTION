@@ -26,6 +26,5 @@ BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
     testthat,
     knitr,
-    rmarkdown,
-    echarts4r
+    rmarkdown
 VignetteBuilder: knitr
