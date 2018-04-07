@@ -46,6 +46,7 @@
 #'   gt_save # save as .graphml
 #' }
 #' 
+#' @importFrom dplyr n
 #' @name graphTweets
 #' @docType package
 NULL

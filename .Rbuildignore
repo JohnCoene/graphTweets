@@ -8,3 +8,5 @@
 ^twitter_token\.rds$
 ^test\.R$
 index.Rmd
+docs
+_pkgdown.yml

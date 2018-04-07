@@ -27,5 +27,6 @@ Suggests:
     testthat,
     twitteR,
     knitr,
-    rmarkdown
+    rmarkdown,
+    echarts4r
 VignetteBuilder: knitr
