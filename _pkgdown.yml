@@ -1,0 +1,33 @@
+url: http://graphtweets.john-coene.com
+
+template:
+  params:
+    bootswatch: journal
+    ganalytics: UA-74544116-1
+
+articles:
+  - title: "Usage"
+    desc: >
+      Get Familiar with echarts4r.
+    contents:
+    - get_started
+
+development:
+  mode: release
+
+navbar:
+  title: "graphTweets"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Get Started"
+      href: articles/get_started.html
+    - text: "Reference"
+      href: "reference/"
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/JohnCoene/graphTweets
+
+authors:
+  John Coene:
+    href: http://john-coene.com
