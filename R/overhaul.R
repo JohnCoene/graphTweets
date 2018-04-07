@@ -107,7 +107,7 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "stat
 #'   gt_edges(text, screen_name, status_id) %>% 
 #'   gt_nodes() -> net
 #'   
-#' @return An object of class \code{graphTweets}.
+#' @return An object of class \code{graphTweets}, adds \code{nodes}.
 #' 
 #' @export
 gt_nodes <- function(gt, meta = FALSE){
@@ -117,10 +117,15 @@ gt_nodes <- function(gt, meta = FALSE){
   
   test_input(gt)
   
-  nodes <- unique(c(gt[["edges"]][["source"]], gt[["edges"]][["target"]]))
+  nodes <- c(gt[["edges"]][["source"]], gt[["edges"]][["target"]])
   nodes <- dplyr::tibble(
     nodes = nodes
-  )
+  ) %>% 
+    dplyr::group_by(nodes) %>% 
+    dplyr::summarise(
+      n_edges = n()
+    ) %>% 
+    dplyr::ungroup()
   
   if(isTRUE(meta)){
     usr <- rtweet::users_data(gt$tweets)
