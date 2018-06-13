@@ -7,7 +7,7 @@
 ![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 
-![](http://john-coene.com/img/graphTweets.png)
+![](https://raw.githubusercontent.com/JohnCoene/projects/master/img/graphTweets.png)
 
 Visualise networks of Twitter interactions.
 
