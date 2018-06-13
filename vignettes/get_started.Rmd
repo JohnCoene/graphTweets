@@ -17,7 +17,8 @@ knitr::opts_chunk$set(
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
-tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token)
+tweets <- search_tweets("#rstats", n = 500, include_rts = FALSE, token = token, lang = "en")
+tweets$text <- iconv(tweets$text, to = "utf8")
 ```
 
 `graphTweets` 4.0 has been redisigned to work hand-in-hand with [`rtweet`](http://rtweet.info/). Let's start by getting some tweets. *If you're unsure how to get started, head over to the rtweet website, everything is very well explained.* We'll get 1,000 tweets on [#rstats](https://twitter.com/search?q=%23rstats), exluding re-tweets.
@@ -25,11 +26,8 @@ tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token)
 ```{r, eval = FALSE}
 library(rtweet)
 
-# create a token
-token <- create_token("Your App", "XxxXXxX", "XxXXX-XXXxxXXxxX")
-
 # 1'000 tweets on #rstats, excluding retweets
-tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token)
+tweets <- search_tweets("#rstats", n = 500, include_rts = FALSE)
 ```
 
 Now we can start using `graphTweets`.

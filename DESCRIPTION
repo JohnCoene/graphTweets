@@ -2,7 +2,7 @@ Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
 Version: 0.4.1
-Date: 2018-03-31
+Date: 2018-06-13
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
@@ -21,7 +21,7 @@ Imports:
     magrittr,
     splitstackshape
 RoxygenNote: 6.0.1
-URL: https://github.com/JohnCoene/graphTweets
+URL: http://graphTweets.john-coene.com
 BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
     testthat,

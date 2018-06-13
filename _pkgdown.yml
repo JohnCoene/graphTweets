@@ -2,7 +2,7 @@ url: http://graphtweets.john-coene.com
 
 template:
   params:
-    bootswatch: journal
+    bootswatch: cosmo
     ganalytics: UA-74544116-1
 
 articles:
@@ -16,17 +16,25 @@ development:
   mode: release
 
 navbar:
+  type: inverse
   title: "graphTweets"
   left:
-    - text: "Home"
+    - icon: fa-home
       href: index.html
-    - text: "Get Started"
+    - icon: fa-rocket
+      text: "Get Started"
       href: articles/get_started.html
-    - text: "Reference"
+    - icon: fa-wrench
+      text: "Reference"
       href: "reference/"
+    - icon: fa-newspaper-o
+      text: "Changelog"
+      href: news/index.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/JohnCoene/graphTweets
+    - icon: fa-bitbucket fa-lg
+      href: https://bitbucket.org/JohnCoene/graphtweets
 
 authors:
   John Coene:
