@@ -17,8 +17,8 @@ knitr::opts_chunk$set(
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
-tweets <- search_tweets("#rstats", n = 500, include_rts = FALSE, token = token, lang = "en")
-tweets$text <- iconv(tweets$text, to = "utf8")
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
 `graphTweets` 4.0 has been redisigned to work hand-in-hand with [`rtweet`](http://rtweet.info/). Let's start by getting some tweets. *If you're unsure how to get started, head over to the rtweet website, everything is very well explained.* We'll get 1,000 tweets on [#rstats](https://twitter.com/search?q=%23rstats), exluding re-tweets.
@@ -27,7 +27,7 @@ tweets$text <- iconv(tweets$text, to = "utf8")
 library(rtweet)
 
 # 1'000 tweets on #rstats, excluding retweets
-tweets <- search_tweets("#rstats", n = 500, include_rts = FALSE)
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE)
 ```
 
 Now we can start using `graphTweets`.
@@ -110,9 +110,10 @@ gt$nodes$name <- ifelse(is.na(gt$nodes$name), gt$nodes$nodes, gt$nodes$name)
 gt$nodes$followers_count <- ifelse(is.na(gt$nodes$followers_count), 0, gt$nodes$followers_count)
 
 e_charts() %>% 
-  e_graph_gl() %>% # use graph GL for performances
+  e_graph() %>% # use graph GL for performances
   e_graph_edges(gt$edges, source, target) %>% 
-  e_graph_nodes(gt$nodes, name, followers_count, n_edges) 
+  e_graph_nodes(gt$nodes, name, followers_count, n_edges) %>% 
+  e_theme("wonderland")
 ```
 
 Let's look at communities, we'll return an `igraph` object with `gt_graph` so we can easily run a community finding algorithm from the `igraph` package.
