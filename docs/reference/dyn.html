@@ -91,6 +91,13 @@
   </a>
 </li>
 <li>
+  <a href="../articles/dynamic.html">
+    <span class="fa fa-spinner fa-pulse fa-fw"></span>
+     
+    Dynamic
+  </a>
+</li>
+<li>
   <a href="../reference/">
     <span class="fa fa-wrench"></span>
      
@@ -173,8 +180,9 @@
 
 <span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='edges.html'>gt_edges</a></span>(<span class='no'>text</span>, <span class='no'>screen_name</span>, <span class='no'>status_id</span>, <span class='st'>"created_at"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt_nodes.html'>gt_nodes</a></span>(<span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_dyn</span>() <span class='kw'>-&gt;</span> <span class='no'>net</span>
+  <span class='fu'><a href='gt_nodes.html'>gt_nodes</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>gt_dyn</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt_collect.html'>gt_collect</a></span>() <span class='kw'>-&gt;</span> <span class='no'>net</span>
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
