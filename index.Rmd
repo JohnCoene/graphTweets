@@ -7,13 +7,18 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)](https://cran.r-project.org/package=graphTweets)
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 
-<img src="https://raw.githubusercontent.com/JohnCoene/projects/master/img/graphTweets.png" alt="graphTweets" style="max-height:230px;" align="left" />
+<img src="https://raw.githubusercontent.com/JohnCoene/projects/master/img/graphTweets.png" alt="graphTweets" style="max-height:280px;" align="left" />
 
 *Visualise networks of Twitter interactions.*
 
-<a class="btn btn-prinmary" href="articles/get_started.html">
+<a class="btn btn-primary" href="articles/get_started.html">
   <i class="fa fa-rocket"></i>
   Get Started
+</a>
+
+<a class="btn btn-primary" href="articles/dynamic.html">
+  <i class="fa fa-spinner fa-pulse fa-fw"></i>
+  Dynamic
 </a>
 
 ## Install

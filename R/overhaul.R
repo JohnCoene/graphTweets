@@ -1,3 +1,5 @@
+utils::globalVariables(c("start"))
+
 #' Edges
 #' 
 #' Get edges from data.frame of tweets.
@@ -223,8 +225,9 @@ gt_graph <- function(gt){
 #'
 #' tweets %>% 
 #'   gt_edges(text, screen_name, status_id, "created_at") %>% 
-#'   gt_nodes(TRUE) %>% 
-#'   gt_dyn() -> net
+#'   gt_nodes() %>% 
+#'   gt_dyn() %>% 
+#'   gt_collect() -> net
 #' }
 #' 
 #' @rdname dyn
@@ -252,10 +255,12 @@ gt_dyn <- function(gt, lifetime = Inf){
     dplyr::group_by(source) %>% 
     unique() %>% 
     dplyr::summarise(
-      start = min(created_at),
-      end = max(created_at)
+      start = min(created_at)
     ) %>% 
     dplyr::ungroup() %>% 
+    dplyr::mutate(
+      end = max(start)
+    ) %>% 
     dplyr::inner_join(gt[["nodes"]], by = c("source" = "nodes"))
   
   if(nrow(nodes) != nrow(gt[["nodes"]]))

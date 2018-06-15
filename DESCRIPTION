@@ -19,12 +19,16 @@ Imports:
     rtweet,
     purrr,
     magrittr,
-    splitstackshape
+    splitstackshape,
+    utils
 RoxygenNote: 6.0.1
 URL: http://graphTweets.john-coene.com
 BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    sigmajs,
+    echarts4r
 VignetteBuilder: knitr
+Remotes: JohnCoene/sigmajs, JohnCoene/echarts4r

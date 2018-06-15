@@ -1,0 +1,88 @@
+---
+title: "Dynamic Graphs"
+author: "John Coene"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Dynamic Graphs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(graphTweets)
+library(rtweet)
+token <- readRDS("../twitter_token.rds")
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
+```
+
+## What
+
+What is a dynamic graph? A graph that includes an additional dimension which renders is dynamic. Here we'll create a temporal graph
+
+## How
+
+Start by making the graph, see "Get Started" vignette if you do not know how to get tweets.
+
+```{r}
+tweets %>% 
+  gt_edges(text, screen_name, status_id, "created_at") %>% 
+  gt_nodes() %>% 
+  gt_dyn() %>% 
+  gt_collect() -> net
+```
+
+A few things to note.
+
+1. We pass `created_at` in `gt_edges` as we want to know the time at which the edge is created.
+2. We get the nodes with `gt_nodes`
+3. We use `gt_dyn` (short for "dynamic") to get the dynamic graph.
+
+Let's look at the output.
+
+```{r}
+knitr::kable(head(net$edges))
+```
+
+The edges include the `created_at` column (date time when the tweet is posted).
+
+```{r}
+knitr::kable(head(net$nodes))
+```
+
+The nodes include `start` and `end` column, this is added by the `gt_dyn` function; which, in effect, simply computes when the node should appear on the graph.
+
+I use [sigmajs](http://sigmajs.john-coene.com/) to visualise the dynamic graph, please see the website if you want to understand the code below, being a different package I do not get into this here. In brief, I convert date time to numeric and rescale edge appearances between 0 and 5000 milliseconds.
+
+```{r}
+library(sigmajs)
+
+# convert to numeric & rescale
+edges <- net$edges %>% 
+  dplyr::mutate( 
+    id = 1:n(),
+    created_at = as.numeric(created_at),
+    created_at = (created_at - min(created_at)) / (max(created_at) - min(created_at)),
+    created_at = created_at * 5000
+  )
+
+nodes <- net$nodes %>% 
+  dplyr::mutate(
+    id = source,
+    size = n_edges
+  )
+
+mx <- max(edges$created_at) + 500
+
+sigmajs() %>% 
+  sg_force_start() %>% 
+  sg_nodes(nodes, id, size) %>% 
+  sg_add_edges(edges, created_at, id, source, target, cumsum = FALSE) %>% 
+  sg_force_stop(delay = mx) %>% 
+  sg_settings(defaultNodeColor = "#98D3A5")
+```
