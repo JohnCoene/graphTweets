@@ -81,7 +81,11 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "stat
       target = "handles",
       ...
       ) %>% 
-    dplyr::as_tibble()-> edges
+    dplyr::as_tibble() %>% 
+    dplyr::filter(
+      source != "",
+      target != ""
+    ) -> edges
   
   construct(data, edges, NULL)
   

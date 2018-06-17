@@ -14,11 +14,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(igraph)
+library(dplyr)
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
-tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
-tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
+tweets <- search_tweets("#rstats", n = 500, include_rts = FALSE, token = token, lang = "en")
+#tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
 `graphTweets` 4.0 has been redisigned to work hand-in-hand with [`rtweet`](http://rtweet.info/). Let's start by getting some tweets. *If you're unsure how to get started, head over to the rtweet website, everything is very well explained.* We'll get 1,000 tweets on [#rstats](https://twitter.com/search?q=%23rstats), exluding re-tweets.
@@ -27,7 +29,7 @@ tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 library(rtweet)
 
 # 1'000 tweets on #rstats, excluding retweets
-tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE)
+tweets <- search_tweets("#rstats", n = 500, include_rts = FALSE)
 ```
 
 Now we can start using `graphTweets`.
@@ -95,25 +97,35 @@ tweets %>%
 
 Before we plot out graph, we're going to modify some of the meta-data, a lot of `NA` are returned (where the meta-data was not available \*). 
 
-Here I use [echarts4r](http://echarts4r.john-coene.com) to plot the graph.
+Here I use [sigmajs](http://sigmajs.john-coene.com) to plot the graph.
 
 ```{r}
-library(echarts4r) # for plots
+library(dplyr)
+library(sigmajs) # for plots
 
 tweets %>% 
   gt_edges(text, screen_name, status_id, datetime = "created_at") %>% 
   gt_nodes(meta = TRUE) %>% 
   gt_collect() -> gt
 
-# replace NAs
-gt$nodes$name <- ifelse(is.na(gt$nodes$name), gt$nodes$nodes, gt$nodes$name)
-gt$nodes$followers_count <- ifelse(is.na(gt$nodes$followers_count), 0, gt$nodes$followers_count)
+nodes <- gt$nodes %>% 
+  mutate(
+    id = nodes,
+    label = ifelse(is.na(name), nodes, name),
+    size = n_edges,
+    color = "#1967be"
+  ) 
 
-e_charts() %>% 
-  e_graph() %>% # use graph GL for performances
-  e_graph_edges(gt$edges, source, target) %>% 
-  e_graph_nodes(gt$nodes, name, followers_count, n_edges) %>% 
-  e_theme("wonderland")
+edges <- gt$edges %>% 
+  mutate(
+    id = 1:n()
+  )
+
+sigmajs() %>% 
+  sg_force_start() %>% 
+  sg_nodes(nodes, id, label, size, color) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_force_stop(10000)
 ```
 
 Let's look at communities, we'll return an `igraph` object with `gt_graph` so we can easily run a community finding algorithm from the `igraph` package.

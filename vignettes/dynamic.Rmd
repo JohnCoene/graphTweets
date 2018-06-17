@@ -84,5 +84,5 @@ sigmajs() %>%
   sg_nodes(nodes, id, size) %>% 
   sg_add_edges(edges, created_at, id, source, target, cumsum = FALSE) %>% 
   sg_force_stop(delay = mx) %>% 
-  sg_settings(defaultNodeColor = "#98D3A5")
+  sg_settings(defaultNodeColor = "#1967be")
 ```
