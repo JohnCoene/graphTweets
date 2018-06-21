@@ -57,7 +57,7 @@ knitr::kable(head(net$nodes))
 
 The nodes include `start` and `end` column, this is added by the `gt_dyn` function; which, in effect, simply computes when the node should appear on the graph.
 
-I use [sigmajs](http://sigmajs.john-coene.com/) to visualise the dynamic graph, please see the website if you want to understand the code below, being a different package I do not get into this here. In brief, I convert date time to numeric and rescale edge appearances between 0 and 10 seconds.
+I use [sigmajs](http://sigmajs.john-coene.com/) to visualise the dynamic graph, please see the website if you want to understand the code below, being a different package I do not get into this here. In brief, I convert date time to numeric and rescale edge appearances between 0 and 10 seconds (so that the animation lasts 10 seconds), I then add 5 seconds so that the animation starts after 5 seconds (to give you a chance to see it in action).
 
 *Note that by the time you reach this section the graph might have entirely rendered, refresh the page.*
 
@@ -70,7 +70,8 @@ edges <- net$edges %>%
     id = 1:n(),
     created_at = as.numeric(created_at),
     created_at = (created_at - min(created_at)) / (max(created_at) - min(created_at)),
-    created_at = created_at * 10000
+    created_at = created_at * 10000,
+    created_at = created_at + 5000
   )
 
 nodes <- net$nodes %>% 
