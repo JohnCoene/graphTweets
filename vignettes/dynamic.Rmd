@@ -59,6 +59,8 @@ The nodes include `start` and `end` column, this is added by the `gt_dyn` functi
 
 I use [sigmajs](http://sigmajs.john-coene.com/) to visualise the dynamic graph, please see the website if you want to understand the code below, being a different package I do not get into this here. In brief, I convert date time to numeric and rescale edge appearances between 0 and 10 seconds.
 
+*Note that by the time you reach this section the graph might have entirely rendered, refresh the page.*
+
 ```{r}
 library(sigmajs)
 
@@ -79,14 +81,16 @@ nodes <- net$nodes %>%
   )
 
 # graph layout 
-l <- sg_get_layout(nodes, edges)
+l <- suppressMessages(sg_get_layout(nodes, edges))
 nodes$x <- l$x
 nodes$y <- l$y
 
+nodes <- sg_get_cluster(nodes, edges, colors = c("#2780e3", "#d3d3d3")) # cluster
+
 sigmajs() %>% 
-  sg_nodes(nodes, id, size, label, x, y) %>% 
+  sg_nodes(nodes, id, size, label, x, y, color) %>% 
   sg_add_edges(edges, created_at, id, source, target, 
-               cumsum = FALSE) %>% 
+               cumsum = FALSE, refresh = TRUE) %>% 
   sg_settings(defaultNodeColor = "#1967be")
 ```
 
