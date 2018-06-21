@@ -61,7 +61,7 @@ I use [sigmajs](http://sigmajs.john-coene.com/) to visualise the dynamic graph, 
 
 *Note that by the time you reach this section the graph might have entirely rendered, refresh the page.*
 
-```{r}
+```{r, warning=FALSE,message=FALSE}
 library(sigmajs)
 
 # convert to numeric & rescale
