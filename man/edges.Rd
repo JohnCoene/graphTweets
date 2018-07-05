@@ -3,12 +3,18 @@
 \name{gt_edges}
 \alias{gt_edges}
 \alias{gt_edges_}
+\alias{gt_edges_hash}
+\alias{gt_edges_hash_}
 \title{Edges}
 \usage{
 gt_edges(data, tweets, source, id, ...)
 
 gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
   ...)
+
+gt_edges_hash(data, hashtags, source, ...)
+
+gt_edges_hash_(data, hashtags = "hashtags", source = "screen_name", ...)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}
@@ -20,6 +26,8 @@ gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
 \item{id}{tweets unique id.}
 
 \item{...}{any other column name, see examples.}
+
+\item{hashtags}{Column containing hashtags.}
 }
 \value{
 An object of class \code{graphTweets}.

@@ -1,6 +1,7 @@
-# graphTweets 0.4.0
+# graphTweets 0.4.1
 
 * `gt_nodes` returns number of `n_edges`, the number of edges the node is present in.
+* `gt_edges_hash` and respective escape hatch added! 
 
 # graphTweets 0.4.0
 

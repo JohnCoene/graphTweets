@@ -1,0 +1,54 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(graphTweets)
+library(rtweet)
+token <- readRDS("../twitter_token.rds")
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
+```
+
+graphTweets not only allows to build graphs of interactions between users. It also lets you visualise which user uses which hashtag.
+
+```{r}
+net <- tweets %>% 
+  gt_edges_hash(hashtags, screen_name) %>% 
+  gt_nodes() %>% 
+  gt_collect()
+```
+
+Prepare the data.
+
+```{r}
+edges <- net$edges
+nodes <- net$nodes
+
+edges$id <- seq(1, nrow(edges))
+nodes$id <- nodes$nodes
+nodes$size <- nodes$n_edges
+```
+
+Visualise
+
+```{r}
+library(sigmajs)
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, size) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_cluster() %>% 
+  sg_layout()
+```

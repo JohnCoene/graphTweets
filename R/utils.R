@@ -1,5 +1,5 @@
 # global variables to avoid R CMD CHECK note (timeNodes) 
-globalVariables(c("start.stamp", "end.stamp", ".", "created_at"))
+globalVariables(c("start.stamp", "end.stamp", ".", "created_at", "target"))
 
 # clean handles
 clean_handles <- function(handles) {
@@ -63,6 +63,8 @@ cleanHandles <- function(handles) {
   if(length(grep("@", handles))){
     handles <- substring(handles, 2)
   }
+  
+  handles <- trimws(handles)
   
   return(handles)
 }

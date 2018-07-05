@@ -8,6 +8,7 @@ utils::globalVariables(c("start"))
 #' @param tweets Column containing tweets.
 #' @param source Author of tweets.
 #' @param id tweets unique id.
+#' @param hashtags Column containing hashtags.
 #' @param ... any other column name, see examples.
 #' 
 #' @examples 
@@ -32,8 +33,8 @@ utils::globalVariables(c("start"))
 #' @rdname edges
 #' @export
 gt_edges <- function(data, tweets, source, id, ...){
-  if(missing(data))
-    stop("missing data", call. = FALSE)
+  if(missing(data) || missing(tweets) || missing(source) || missing(id))
+    stop("missing data, tweets, source, or id", call. = FALSE)
   tweets <- dplyr::enquo(tweets)
   source <- dplyr::enquo(source)
   id <- deparse(substitute(id))
@@ -42,7 +43,7 @@ gt_edges <- function(data, tweets, source, id, ...){
 
 #' @rdname edges
 #' @export
-gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "status_id", ...){
+gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "status_id", ...){
   
   if(missing(data))
     stop("missing data", call. = FALSE)
@@ -89,6 +90,30 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name",  id = "stat
   
   construct(data, edges, NULL)
   
+}
+
+#' @rdname edges
+#' @export
+gt_edges_hash <- function(data, hashtags, source, ...){
+  if(missing(data) || missing(hashtags) || missing(source))
+    stop("missing data, hashtags, or source", call. = FALSE)
+  hashtags <- deparse(substitute(hashtags))
+  source <- deparse(substitute(source))
+  gt_edges_hash_(data, hashtags, source, ...)
+}
+
+#' @rdname edges
+#' @export
+gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", ...){
+  edges <- data %>% 
+    dplyr::select_(hashtags, source, ...) %>% 
+    tidyr::unnest_("hashtags") %>% 
+    dplyr::group_by_("screen_name", "hashtags", ...) %>% 
+    dplyr::count() %>% 
+    dplyr::ungroup() 
+  
+  names(edges)[1:3] <- c("source", "target", "n_tweets")
+  construct(data, edges, NULL)
 }
 
 #' Nodes
