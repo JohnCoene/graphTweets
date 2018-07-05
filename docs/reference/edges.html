@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">graphTweets</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1.9000</span>
       </span>
     </div>
 
@@ -90,6 +90,13 @@
     <span class="fa fa-rocket"></span>
      
     Get Started
+  </a>
+</li>
+<li>
+  <a href="../articles/hashtags.html">
+    <span class="fa fa-hashtag"></span>
+     
+    Hashtags
   </a>
 </li>
 <li>
@@ -154,7 +161,11 @@
     <pre class="usage"><span class='fu'>gt_edges</span>(<span class='no'>data</span>, <span class='no'>tweets</span>, <span class='no'>source</span>, <span class='no'>id</span>, <span class='no'>...</span>)
 
 <span class='fu'>gt_edges_</span>(<span class='no'>data</span>, <span class='kw'>tweets</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"status_id"</span>,
-  <span class='no'>...</span>)</pre>
+  <span class='no'>...</span>)
+
+<span class='fu'>gt_edges_hash</span>(<span class='no'>data</span>, <span class='no'>hashtags</span>, <span class='no'>source</span>, <span class='no'>...</span>)
+
+<span class='fu'>gt_edges_hash_</span>(<span class='no'>data</span>, <span class='kw'>hashtags</span> <span class='kw'>=</span> <span class='st'>"hashtags"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,11 +190,23 @@
       <th>...</th>
       <td><p>any other column name, see examples.</p></td>
     </tr>
+    <tr>
+      <th>hashtags</th>
+      <td><p>Column containing hashtags.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>graphTweets</code>.</p>
+    
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+    <ul>
+<li><p><code>gt_edges</code> - Build networks of users.</p></li>
+<li><p><code>gt_edges_hash</code> - Build networks of users to hashtags.</p></li>
+</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -225,6 +248,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#functions">Functions</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

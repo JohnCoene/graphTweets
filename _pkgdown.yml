@@ -24,6 +24,9 @@ navbar:
     - icon: fa-rocket
       text: "Get Started"
       href: articles/get_started.html
+    - icon: fa-hashtag
+      text: "Hashtags"
+      href: articles/hashtags.html
     - icon: fa-spinner fa-pulse fa-fw
       text: "Dynamic"
       href: articles/dynamic.html

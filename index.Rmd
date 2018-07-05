@@ -16,6 +16,11 @@
   Get Started
 </a>
 
+<a class="btn btn-primary" href="articles/hashtags.html">
+  <i class="fa fa-hashtag"></i>
+  Hashtags
+</a>
+
 <a class="btn btn-primary" href="articles/dynamic.html">
   <i class="fa fa-spinner fa-pulse fa-fw"></i>
   Dynamic

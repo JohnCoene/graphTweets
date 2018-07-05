@@ -4,6 +4,7 @@ pkgdown_sha: ~
 articles:
   dynamic: dynamic.html
   get_started: get_started.html
+  hashtags: hashtags.html
 urls:
   reference: http://graphtweets.john-coene.com/reference
   article: http://graphtweets.john-coene.com/articles

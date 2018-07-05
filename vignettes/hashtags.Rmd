@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -21,7 +23,9 @@ tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token,
 tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
-graphTweets not only allows to build graphs of interactions between users. It also lets you visualise which user uses which hashtag.
+graphTweets not only allows to build graphs of interactions between users. It also lets you visualise what hashtag users use in their tweets.
+
+The same principles follow, we simply use `gt_edges_hash` and pass the `hashtags` column as returned by rtweet. This creates a `tibble` of edges from `screen_name` to `hashtags` used in each tweet.
 
 ```{r}
 net <- tweets %>% 
@@ -30,7 +34,13 @@ net <- tweets %>%
   gt_collect()
 ```
 
-Prepare the data.
+We'll visualise the graph with [sigmajs](http://sigmajs.john-coene.com/). Let's prepare the data to meet the library's requirements.
+
+* We add `id` to both nodes and edges
+* We add rename a few columns to meet sigmajs' convention
+* We color the nodes by `type` (hashtag or user)
+
+_Apologies for not getting into details here but sigmajs is very well documented, check the [website](http://sigmajs.john-coene.com/) if you want to understand it all_.
 
 ```{r}
 edges <- net$edges
@@ -38,17 +48,25 @@ nodes <- net$nodes
 
 edges$id <- seq(1, nrow(edges))
 nodes$id <- nodes$nodes
+nodes$label <- nodes$nodes
 nodes$size <- nodes$n_edges
+nodes$color <- ifelse(nodes$type == "user", "#0084b4", "#1dcaff")
 ```
 
-Visualise
+Let's visualise it.
 
 ```{r}
 library(sigmajs)
 
 sigmajs() %>% 
-  sg_nodes(nodes, id, size) %>% 
+  sg_nodes(nodes, id, size, color, label) %>% 
   sg_edges(edges, id, source, target) %>% 
-  sg_cluster() %>% 
-  sg_layout()
+  sg_layout(layout = igraph::layout_components) %>% 
+  sg_settings(
+    edgeColor = "default",
+    defaultEdgeColor = "#d3d3d3"
+  ) %>% 
+  sg_neighbours()
 ```
+
+We use `sg_layout` to layout the graph and `sg_neightbours` to highlight nodes on click.

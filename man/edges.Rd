@@ -35,6 +35,14 @@ An object of class \code{graphTweets}.
 \description{
 Get edges from data.frame of tweets.
 }
+\section{Functions}{
+
+\itemize{
+  \item{\code{gt_edges} - Build networks of users.}
+  \item{\code{gt_edges_hash} - Build networks of users to hashtags.}
+}
+}
+
 \examples{
 # simulate dataset
 tweets <- data.frame(

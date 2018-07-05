@@ -29,7 +29,6 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    sigmajs,
-    echarts4r
+    sigmajs
 VignetteBuilder: knitr
-Remotes: JohnCoene/sigmajs, JohnCoene/echarts4r
+Remotes: JohnCoene/sigmajs

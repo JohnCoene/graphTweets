@@ -11,6 +11,12 @@ utils::globalVariables(c("start"))
 #' @param hashtags Column containing hashtags.
 #' @param ... any other column name, see examples.
 #' 
+#' @section Functions:
+#' \itemize{
+#'   \item{\code{gt_edges} - Build networks of users.}
+#'   \item{\code{gt_edges_hash} - Build networks of users to hashtags.}
+#' }
+#' 
 #' @examples 
 #' # simulate dataset
 #' tweets <- data.frame(
@@ -105,12 +111,17 @@ gt_edges_hash <- function(data, hashtags, source, ...){
 #' @rdname edges
 #' @export
 gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", ...){
+  
+  if(missing(data))
+    stop("missing data", call. = FALSE)
+  
   edges <- data %>% 
     dplyr::select_(hashtags, source, ...) %>% 
     tidyr::unnest_("hashtags") %>% 
     dplyr::group_by_("screen_name", "hashtags", ...) %>% 
     dplyr::count() %>% 
-    dplyr::ungroup() 
+    dplyr::ungroup() %>% 
+    dplyr::mutate(hashtags = paste0("#", hashtags))
   
   names(edges)[1:3] <- c("source", "target", "n_tweets")
   construct(data, edges, NULL)
@@ -149,10 +160,20 @@ gt_nodes <- function(gt, meta = FALSE){
   test_input(gt)
   
   nodes <- c(gt[["edges"]][["source"]], gt[["edges"]][["target"]])
+  
+  if("n_tweets" %in% names(gt[["edges"]]))
+    type <- c(
+      rep("user", nrow(gt[["edges"]])),
+      rep("hashtag", nrow(gt[["edges"]]))
+    )
+  else
+    type <- "user"
+  
   nodes <- dplyr::tibble(
-    nodes = nodes
+    nodes = nodes,
+    type = type
   ) %>% 
-    dplyr::group_by(nodes) %>% 
+    dplyr::group_by(nodes, type) %>% 
     dplyr::summarise(
       n_edges = n()
     ) %>% 
