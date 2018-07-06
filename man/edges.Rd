@@ -12,10 +12,10 @@ gt_edges(data, tweets, source, id, ...)
 gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
   ...)
 
-gt_edges_hash(data, hashtags, source, ..., tl = FALSE)
+gt_edges_hash(data, hashtags, source, ..., tl = TRUE)
 
 gt_edges_hash_(data, hashtags = "hashtags", source = "screen_name", ...,
-  tl = FALSE)
+  tl = TRUE)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}
