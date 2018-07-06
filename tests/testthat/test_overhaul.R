@@ -19,6 +19,7 @@ test_that("errors", {
   
   lst <- list(tweets)
   expect_error(gt_edges(lst))
+  expect_error(gt_edges_(lst))
   expect_error(gt_edges_())
   expect_error(gt_edges_hash())
   expect_error(gt_edges_hash_())
@@ -40,11 +41,13 @@ test_that("nodes & edges & dyn", {
     screen_name = c("me", "him"),
     retweet_count = c(19, 5),
     status_id = c(1, 2),
+    created_at = c(Sys.time(), Sys.time() + 15000),
     stringsAsFactors = FALSE
   )
   
   expect_is(gt_edges_hash(tweets, hashtags, screen_name), "graphTweets")
   expect_is(gt_edges_hash(tweets, "hashtags", "screen_name"), "graphTweets")
+  expect_is(gt_edges_hash(tweets, "hashtags", "screen_name") %>% gt_nodes(), "graphTweets")
   
   expect_is(gt_edges_(tweets), "graphTweets")
   expect_is(gt_edges(tweets, screen_name, text, status_id), "graphTweets")
@@ -57,4 +60,18 @@ test_that("nodes & edges & dyn", {
   expect_is(tweets %>% gt_edges_() %>% gt_collect(), "list")
   expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_collect(), "list")
   expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_graph(), "igraph")
+  expect_is(tweets %>% gt_edges_() %>% gt_graph(), "igraph")
+  tweets %>% 
+    gt_edges(text, screen_name, status_id, "created_at") %>% 
+    gt_nodes() %>% 
+    gt_dyn() %>% 
+    gt_collect() %>% 
+    expect_is("list")
+  
+  tweets %>% 
+    gt_edges(text, screen_name, status_id, "created_at") %>% 
+    gt_nodes() %>% 
+    gt_dyn(5000) %>% 
+    gt_collect() %>% 
+    expect_is("list")
 })

@@ -12,9 +12,10 @@ gt_edges(data, tweets, source, id, ...)
 gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
   ...)
 
-gt_edges_hash(data, hashtags, source, ...)
+gt_edges_hash(data, hashtags, source, ..., tl = FALSE)
 
-gt_edges_hash_(data, hashtags = "hashtags", source = "screen_name", ...)
+gt_edges_hash_(data, hashtags = "hashtags", source = "screen_name", ...,
+  tl = FALSE)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}
@@ -28,12 +29,18 @@ gt_edges_hash_(data, hashtags = "hashtags", source = "screen_name", ...)
 \item{...}{any other column name, see examples.}
 
 \item{hashtags}{Column containing hashtags.}
+
+\item{tl}{Set to \code{TRUE} to convert hashtags to lower case.}
 }
 \value{
 An object of class \code{graphTweets}.
 }
 \description{
 Get edges from data.frame of tweets.
+}
+\details{
+The \code{tl} arguments stands for \code{\link{tolower}} and allows converting the #hashtags to lower case as 
+these often duplicated, i.e.: #python #Python.
 }
 \section{Functions}{
 
@@ -51,6 +58,7 @@ tweets <- data.frame(
   screen_name = c("me", "him"),
   retweet_count = c(19, 5),
   status_id = c(1, 2),
+  hashtags = c("rstats", "python"),
   stringsAsFactors = FALSE
 )
 
@@ -58,6 +66,11 @@ tweets \%>\%
   gt_edges(text, screen_name, status_id)
   
 tweets \%>\% 
-  gt_edges_(RT = "retweet_count") # metadata
-  
+  gt_edges_(RT = "retweet_count") \%>\% 
+  gt_nodes()
+ 
+tweets \%>\% 
+  gt_edges_hash(hashtags, screen_name) \%>\% 
+  gt_nodes()
+    
 }
