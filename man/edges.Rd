@@ -58,7 +58,7 @@ tweets <- data.frame(
   screen_name = c("me", "him"),
   retweet_count = c(19, 5),
   status_id = c(1, 2),
-  hashtags = c("rstats", "python"),
+  hashtags = c("rstats", "Python"),
   stringsAsFactors = FALSE
 )
 

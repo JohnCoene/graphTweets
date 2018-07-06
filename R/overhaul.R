@@ -29,7 +29,7 @@ utils::globalVariables(c("start"))
 #'   screen_name = c("me", "him"),
 #'   retweet_count = c(19, 5),
 #'   status_id = c(1, 2),
-#'   hashtags = c("rstats", "python"),
+#'   hashtags = c("rstats", "Python"),
 #'   stringsAsFactors = FALSE
 #' )
 #'
@@ -110,7 +110,7 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "statu
 
 #' @rdname edges
 #' @export
-gt_edges_hash <- function(data, hashtags, source, ..., tl = FALSE){
+gt_edges_hash <- function(data, hashtags, source, ..., tl = TRUE){
   if(missing(data) || missing(hashtags) || missing(source))
     stop("missing data, hashtags, or source", call. = FALSE)
   hashtags <- deparse(substitute(hashtags))
@@ -120,7 +120,7 @@ gt_edges_hash <- function(data, hashtags, source, ..., tl = FALSE){
 
 #' @rdname edges
 #' @export
-gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", ..., tl = FALSE){
+gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", ..., tl = TRUE){
   
   if(missing(data))
     stop("missing data", call. = FALSE)
@@ -128,7 +128,12 @@ gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", 
   edges <- data %>% 
     dplyr::select_(hashtags, source, ...) %>% 
     tidyr::unnest_("hashtags") %>% 
-    dplyr::mutate_(hashtags = ifelse(tl == TRUE, tolower("hashtags"), "hashtags")) %>% 
+    dplyr::mutate(
+      hashtags = dplyr::case_when(
+        tl == TRUE ~ tolower(hashtags),
+        TRUE ~ hashtags
+      )
+    ) %>% 
     dplyr::group_by_("screen_name", "hashtags", ...) %>% 
     dplyr::count() %>% 
     dplyr::ungroup() %>% 

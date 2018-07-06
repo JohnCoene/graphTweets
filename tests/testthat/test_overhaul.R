@@ -46,8 +46,9 @@ test_that("nodes & edges & dyn", {
   )
   
   expect_is(gt_edges_hash(tweets, hashtags, screen_name), "graphTweets")
-  expect_is(gt_edges_hash(tweets, "hashtags", "screen_name"), "graphTweets")
-  expect_is(gt_edges_hash(tweets, "hashtags", "screen_name") %>% gt_nodes(), "graphTweets")
+  expect_is(gt_edges_hash_(tweets, "hashtags", "screen_name"), "graphTweets")
+  expect_is(gt_edges_hash_(tweets, "hashtags", "screen_name") %>% gt_nodes(), "graphTweets")
+  expect_is(gt_edges_hash_(tweets, "hashtags", "screen_name", tl = FALSE) %>% gt_nodes(), "graphTweets")
   
   expect_is(gt_edges_(tweets), "graphTweets")
   expect_is(gt_edges(tweets, screen_name, text, status_id), "graphTweets")
