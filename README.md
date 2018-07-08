@@ -6,6 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/JohnCoene/graphTweets/badge.svg?branch=master)](https://coveralls.io/github/JohnCoene/graphTweets?branch=master)
 ![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/graphTweets)
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
+[![twinetverse](https://img.shields.io/badge/twinetverse-0.0.2-yellow.svg)](http://twinetverse.john-coene.com/)
 
 ![](https://raw.githubusercontent.com/JohnCoene/projects/master/img/graphTweets.png)
 
