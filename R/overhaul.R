@@ -9,6 +9,7 @@ utils::globalVariables(c("start"))
 #' @param source Author of tweets.
 #' @param id tweets unique id.
 #' @param hashtags Column containing hashtags.
+#' @param tl Set to \code{TRUE} to convert hashtags to lower case.
 #' @param ... any other column name, see examples.
 #' 
 #' @section Functions:
@@ -16,6 +17,9 @@ utils::globalVariables(c("start"))
 #'   \item{\code{gt_edges} - Build networks of users.}
 #'   \item{\code{gt_edges_hash} - Build networks of users to hashtags.}
 #' }
+#' 
+#' @details The \code{tl} arguments stands for \code{\link{tolower}} and allows converting the #hashtags to lower case as 
+#' these often duplicated, i.e.: #python #Python.
 #' 
 #' @examples 
 #' # simulate dataset
@@ -25,6 +29,7 @@ utils::globalVariables(c("start"))
 #'   screen_name = c("me", "him"),
 #'   retweet_count = c(19, 5),
 #'   status_id = c(1, 2),
+#'   hashtags = c("rstats", "Python"),
 #'   stringsAsFactors = FALSE
 #' )
 #'
@@ -32,8 +37,13 @@ utils::globalVariables(c("start"))
 #'   gt_edges(text, screen_name, status_id)
 #'   
 #' tweets %>% 
-#'   gt_edges_(RT = "retweet_count") # metadata
-#'   
+#'   gt_edges_(RT = "retweet_count") %>% 
+#'   gt_nodes()
+#'  
+#' tweets %>% 
+#'   gt_edges_hash(hashtags, screen_name) %>% 
+#'   gt_nodes()
+#'     
 #' @return An object of class \code{graphTweets}.
 #' 
 #' @rdname edges
@@ -100,17 +110,17 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "statu
 
 #' @rdname edges
 #' @export
-gt_edges_hash <- function(data, hashtags, source, ...){
+gt_edges_hash <- function(data, hashtags, source, ..., tl = TRUE){
   if(missing(data) || missing(hashtags) || missing(source))
     stop("missing data, hashtags, or source", call. = FALSE)
   hashtags <- deparse(substitute(hashtags))
   source <- deparse(substitute(source))
-  gt_edges_hash_(data, hashtags, source, ...)
+  gt_edges_hash_(data, hashtags, source, ..., tl = tl)
 }
 
 #' @rdname edges
 #' @export
-gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", ...){
+gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", ..., tl = TRUE){
   
   if(missing(data))
     stop("missing data", call. = FALSE)
@@ -118,6 +128,12 @@ gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", 
   edges <- data %>% 
     dplyr::select_(hashtags, source, ...) %>% 
     tidyr::unnest_("hashtags") %>% 
+    dplyr::mutate(
+      hashtags = dplyr::case_when(
+        tl == TRUE ~ tolower(hashtags),
+        TRUE ~ hashtags
+      )
+    ) %>% 
     dplyr::group_by_("screen_name", "hashtags", ...) %>% 
     dplyr::count() %>% 
     dplyr::ungroup() %>% 

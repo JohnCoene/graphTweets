@@ -64,6 +64,7 @@ cleanHandles <- function(handles) {
     handles <- substring(handles, 2)
   }
   
+  handles <- gsub("@", "", handles)
   handles <- trimws(handles)
   
   return(handles)
