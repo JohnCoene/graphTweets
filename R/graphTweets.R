@@ -1,21 +1,14 @@
 #' \pkg{graphTweets} visualise Twitter Interactions.
 #'  
-#' @section v4:
+#' @section Functions:
 #' \itemize{
 #' \item \code{\link{gt_edges}} \code{\link{gt_edges_}} - get edges from tweets
 #' \item \code{\link{gt_nodes}} - add meta-data to vertices
+#' \item \code{\link{gt_edges_hash}} - hashtags networks
 #' \item \code{\link{gt_dyn}} - create dynamic graphs
 #' \item \code{\link{gt_collect}} - collect edges and nodes
 #' \item \code{\link{gt_graph}} - create graph
 #' \item \code{\link{gt_save}} - save graph to file
-#' }
-#' 
-#'  
-#' @section v3.2:
-#' \itemize{
-#' \item \code{\link{getEdges}} - get edges from tweets
-#' \item \code{\link{getNodes}} - add meta-data to vertices
-#' \item \code{\link{dynamise}} - create dynamic graphs
 #' }
 #' 
 #' @keywords internal

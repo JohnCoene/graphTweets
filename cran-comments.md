@@ -7,5 +7,4 @@
 
 0 errors | 0 warnings | 0 notes
 
-* Date in `DESCRIPTION` updated
-* Possible invalid URLs updated or removed
+* Removed previously deprecated function

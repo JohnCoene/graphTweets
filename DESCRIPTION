@@ -2,7 +2,7 @@ Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
 Version: 0.4.1.9000
-Date: 2018-06-13
+Date: 2018-07-08
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
@@ -12,10 +12,8 @@ License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0)
 Imports:
-    reshape2,
     dplyr,
     igraph, 
-    methods,
     rtweet,
     purrr,
     magrittr,
