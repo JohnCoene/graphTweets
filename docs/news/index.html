@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">graphTweets</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.1.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
 
     <div id="graphtweets-0-4-1" class="section level1">
 <h1 class="page-header">
-<a href="#graphtweets-0-4-1" class="anchor"></a>graphTweets 0.4.1<small> Unreleased </small>
+<a href="#graphtweets-0-4-1" class="anchor"></a>graphTweets 0.4.1<small> 2018-07-08 </small>
 </h1>
 <ul>
 <li>
@@ -188,7 +188,7 @@ tweets &lt;-<span class="st"> </span><span class="kw">search_tweets</span>(<span
 
 rbenchmark<span class="op">::</span><span class="kw">benchmark</span>(
   <span class="st">"v3.2"</span> =<span class="st"> </span>{
-    edges &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getEdges.html">getEdges</a></span>(<span class="kw">as.data.frame</span>(tweets), <span class="st">"screen_name"</span>, <span class="st">"text"</span>)
+    edges &lt;-<span class="st"> </span><span class="kw">getEdges</span>(<span class="kw">as.data.frame</span>(tweets), <span class="st">"screen_name"</span>, <span class="st">"text"</span>)
     g &lt;-<span class="st"> </span>igraph<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/igraph/topics/graph_from_data_frame">graph.data.frame</a></span>(edges, <span class="ot">TRUE</span>)
   },
   <span class="st">"v4"</span> =<span class="st"> </span>{
