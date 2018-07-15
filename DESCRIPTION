@@ -1,8 +1,8 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.4.1
-Date: 2018-07-08
+Version: 0.4.2
+Date: 2018-07-15
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
@@ -17,7 +17,6 @@ Imports:
     rtweet,
     purrr,
     magrittr,
-    splitstackshape,
     utils,
     tidyr
 RoxygenNote: 6.0.1

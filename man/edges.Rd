@@ -53,7 +53,7 @@ these often duplicated, i.e.: #python #Python.
 \examples{
 # simulate dataset
 tweets <- data.frame(
-  text = c("I tweet @you about @him", 
+  text = c("I tweet @you about @him and @her", 
            "I tweet @me about @you"),
   screen_name = c("me", "him"),
   retweet_count = c(19, 5),

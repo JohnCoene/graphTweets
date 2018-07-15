@@ -24,7 +24,7 @@ utils::globalVariables(c("start"))
 #' @examples 
 #' # simulate dataset
 #' tweets <- data.frame(
-#'   text = c("I tweet @you about @him", 
+#'   text = c("I tweet @you about @him and @her", 
 #'            "I tweet @me about @you"),
 #'   screen_name = c("me", "him"),
 #'   retweet_count = c(19, 5),
@@ -91,7 +91,7 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "statu
   
   df %>% 
     dplyr::left_join(data, handles, by = id) %>% 
-    splitstackshape::cSplit(., "handles", ",", direction = "long") %>% 
+    tidyr::separate_rows_("handles") %>% 
     dplyr::mutate(handles = as.character(handles)) %>% 
     dplyr::select_(
       source = source, 
