@@ -1,3 +1,7 @@
+# graphTweets 0.4.2
+
+Removed `splitstackshape` dependency ahead of its archival; now uses `tidyr`.
+
 # graphTweets 0.4.1
 
 * `gt_nodes` returns number of `n_edges`, the number of edges the node is present in.

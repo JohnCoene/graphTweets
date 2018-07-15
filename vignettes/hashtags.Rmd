@@ -19,11 +19,16 @@ knitr::opts_chunk$set(
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
-tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets <- search_tweets("#rstats #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
 tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
 graphTweets not only allows to build graphs of interactions between users. It also lets you visualise what hashtag users use in their tweets.
+
+```{r, eval=FALSE}
+library(rtweet)
+tweets <- search_tweets("#rstats #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
+```
 
 The same principles follow, we simply use `gt_edges_hash` and pass the `hashtags` column as returned by rtweet. This creates a `tibble` of edges from `screen_name` to `hashtags` used in each tweet.
 
