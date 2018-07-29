@@ -1,7 +1,7 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.4.2
+Version: 0.4.3.9000
 Date: 2018-07-15
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 

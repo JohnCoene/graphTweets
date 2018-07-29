@@ -311,28 +311,35 @@ gt_dyn <- function(gt, lifetime = Inf){
     gt[["edges"]][["end"]] <- gt[["edges"]][["created_at"]] + lifetime 
   }
   
-  src <- gt[["edges"]][, c("source", "created_at")]
-  tgt <- gt[["edges"]][, c("target", "created_at")]
+  edges <- gt[["edges"]] %>% 
+    dplyr::group_by_("source", "target") %>% 
+    dplyr::summarise(
+      created_at = min(created_at),
+      end = max(created_at),
+      n_edges = sum(n_edges)
+    ) %>% 
+    dplyr::ungroup() 
+  
+  src <- gt[["edges"]][, c("source", "created_at", "end")]
+  tgt <- gt[["edges"]][, c("target", "created_at", "end")]
   
   names(tgt)[1] <- c("source")
   
   nodes <- src %>% 
     dplyr::bind_rows(tgt) %>% 
     dplyr::group_by(source) %>% 
-    unique() %>% 
+    dplyr::distinct() %>% 
     dplyr::summarise(
-      start = min(created_at)
+      start = min(created_at),
+      end = max(end)
     ) %>% 
     dplyr::ungroup() %>% 
-    dplyr::mutate(
-      end = max(start)
-    ) %>% 
     dplyr::inner_join(gt[["nodes"]], by = c("source" = "nodes"))
   
   if(nrow(nodes) != nrow(gt[["nodes"]]))
     warning("incorrect number of nodes", call. = FALSE)
 
-  construct(gt[["tweets"]], gt[["edges"]], nodes)
+  construct(gt[["tweets"]], edges, nodes)
 }
 
 #' Save

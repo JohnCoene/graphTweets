@@ -1,5 +1,5 @@
 # global variables to avoid R CMD CHECK note (timeNodes) 
-globalVariables(c("start.stamp", "end.stamp", ".", "created_at", "target"))
+globalVariables(c("start.stamp", "end.stamp", ".", "created_at", "target", "end"))
 
 # clean handles
 clean_handles <- function(handles) {
