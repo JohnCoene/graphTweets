@@ -13,10 +13,8 @@
 Visualise networks of Twitter interactions.
 
 * [Install](#install)
-* [Documentation](#documentation)
-* [Features](#features)
-* [Rationale](#rationale)
-* [Examples](#examples)
+* [Documentation](http://graphtweets.john-coene.com/)
+* [Functions](#features)
 
 ## Install
 
@@ -25,13 +23,10 @@ install.packages("graphTweets") # CRAN release v0.4
 devtools::install_github("JohnCoene/graphTweets") # dev version
 ```
 
-## Documentation 
-
-* [Examples](http://graphtweets.john-coene.com/)
-
 ## Functions
 
 - `gt_edges` - get edges.
+- `gt_edges_hash` - get hashtags edges.
 - `gt_nodes` - get nodes, with or without metadata.
 - `gt_dyn` - create dynamic graph.
 - `gt_graph` - create `igraph` graph object.
