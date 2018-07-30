@@ -237,6 +237,8 @@ gt_collect <- function(gt){
 
 #' Graph
 #' 
+#' Build \code{igraph} object.
+#' 
 #' @inherit gt_collect
 #' 
 #' @examples 
@@ -316,12 +318,12 @@ gt_dyn <- function(gt, lifetime = Inf){
     dplyr::summarise(
       created_at = min(created_at),
       end = max(created_at),
-      n_edges = sum(n_edges)
+      n_edges = dplyr::n()
     ) %>% 
     dplyr::ungroup() 
   
-  src <- gt[["edges"]][, c("source", "created_at", "end")]
-  tgt <- gt[["edges"]][, c("target", "created_at", "end")]
+  src <- edges[, c("source", "created_at", "end")]
+  tgt <- edges[, c("target", "created_at", "end")]
   
   names(tgt)[1] <- c("source")
   
@@ -335,6 +337,8 @@ gt_dyn <- function(gt, lifetime = Inf){
     ) %>% 
     dplyr::ungroup() %>% 
     dplyr::inner_join(gt[["nodes"]], by = c("source" = "nodes"))
+  
+  names(nodes)[1] <- "nodes"
   
   if(nrow(nodes) != nrow(gt[["nodes"]]))
     warning("incorrect number of nodes", call. = FALSE)
