@@ -8,24 +8,82 @@
 [![CRAN log](http://cranlogs.r-pkg.org/badges/grand-total/graphTweets)](http://cranlogs.r-pkg.org/badges/graphTweets)
 [![twinetverse](https://img.shields.io/badge/twinetverse-0.0.2-yellow.svg)](http://twinetverse.john-coene.com/)
 
-<img src="logo.png" alt="graphTweets" style="max-height:280px;margin-right:3%;" align="left" />
-
 *Visualise networks of Twitter interactions.*
 
-<a class="btn btn-primary" href="articles/get_started.html">
-  <i class="fa fa-rocket"></i>
-  Get Started
-</a>
+```{r, echo=FALSE}
+library(htmltools)
 
-<a class="btn btn-primary" href="articles/hashtags.html">
-  <i class="fa fa-hashtag"></i>
-  Hashtags
-</a>
+div(
+  class = "row",
+  div(
+    class = "col-md-3",
+    img(
+      src = "logo.png",
+      alt = "graphTweets",
+      style = "max-height:280px;margin-right:3%;",
+      align = "left"
+    )
+  ),
+  div(
+    class = "col-md-9",
+    div(
+      class = "row"
+    ),
+    div(
+      class = "row",
+      div(
+        class = "col-md-2",
+        a(
+          class = "btn btn-primary",
+          href = "articles/get_started.html",
+          tags$i(class = "fa fa-rocket"),
+          "Get Started"
+        )
+      ),
+      div(
+        class = "col-md-2",
+        a(
+          class = "btn btn-default",
+          href = "articles/hashtags.html",
+          tags$i(class = "fa fa-hashtag"),
+          "Hashtags"
+        )
+      ),
+      div(
+        class = "col-md-2",
+        a(
+          class = "btn btn-primary",
+          href = "articles/dynamic.html",
+          tags$i(class = "fa fa-spinner fa-pulse fa-fw"),
+          "Dynamic"
+        )
+      )
+    )
+  )
+)
 
-<a class="btn btn-primary" href="articles/dynamic.html">
-  <i class="fa fa-spinner fa-pulse fa-fw"></i>
-  Dynamic
-</a>
+br()
+
+div(
+  class = "panel panel-default",
+  div(
+    class = "panel-body",
+    div(
+      class = "row",
+      div(
+        class = "col-md-10",
+        "graphTweets is part of the", a("twinetverse,", href = "http://twinetverse.john-coene.com/", target = "_blank"),
+        "a set of packages for Twitter network analysis and visualisation, which comes with a book in which you will",
+        "find even more use cases of sigmajs."
+      ),
+      div(
+        class = "col-md-2",
+        a(tags$i(class = "fa fa-book"), "Read", href = "http://twinetbook.john-coene.com/", target = "_blank", class = "btn btn-default")
+      )
+    )
+  )
+)
+```
 
 ## Install
 
@@ -37,6 +95,7 @@ devtools::install_github("JohnCoene/graphTweets") # dev version
 ## Functions
 
 - `gt_edges` - get edges.
+- `gt_edges_hash` - get hashtags edges.
 - `gt_nodes` - get nodes, with or without metadata.
 - `gt_dyn` - create dynamic graph.
 - `gt_graph` - create `igraph` graph object.

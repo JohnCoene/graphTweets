@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">graphTweets</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.3.9000</span>
       </span>
     </div>
 
@@ -117,16 +117,59 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#graphtweets" class="anchor"></a>GraphTweets</h1></div>
 
-<p><img src="logo.png" alt="graphTweets" style="max-height:280px;margin-right:3%;" align="left"></p>
 <p><em>Visualise networks of Twitter interactions.</em></p>
-<p><a class="btn btn-primary" href="articles/get_started.html"> <i class="fa fa-rocket"></i> Get Started </a></p>
-<p><a class="btn btn-primary" href="articles/hashtags.html"> <i class="fa fa-hashtag"></i> Hashtags </a></p>
-<p><a class="btn btn-primary" href="articles/dynamic.html"> <i class="fa fa-spinner fa-pulse fa-fw"></i> Dynamic </a></p>
+<p></p>
+<div class="row">
+<div class="col-md-3">
+<img src="logo.png" alt="graphTweets" style="max-height:280px;margin-right:3%;" align="left">
+</div>
+<div class="col-md-9">
+<div class="row"></div>
+<div class="row">
+<div class="col-md-2">
+<a class="btn btn-primary" href="articles/get_started.html">
+<i class="fa fa-rocket"></i>
+Get Started
+</a>
+</div>
+<div class="col-md-2">
+<a class="btn btn-default" href="articles/hashtags.html">
+<i class="fa fa-hashtag"></i>
+Hashtags
+</a>
+</div>
+<div class="col-md-2">
+<a class="btn btn-primary" href="articles/dynamic.html">
+<i class="fa fa-spinner fa-pulse fa-fw"></i>
+Dynamic
+</a>
+</div>
+</div>
+</div>
+</div>
+<br><div class="panel panel-default">
+<div class="panel-body">
+<div class="row">
+<div class="col-md-10">
+graphTweets is part of the
+<a href="http://twinetverse.john-coene.com/" target="_blank">twinetverse,</a>
+a set of packages for Twitter network analysis and visualisation, which comes with a book in which you will
+find even more use cases of sigmajs.
+</div>
+<div class="col-md-2">
+<a href="http://twinetbook.john-coene.com/" target="_blank" class="btn btn-default">
+<i class="fa fa-book"></i>
+Read
+</a>
+</div>
+</div>
+</div>
+</div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"graphTweets"</span>) <span class="co"># CRAN release v0.4</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"JohnCoene/graphTweets"</span>) <span class="co"># dev version</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"graphTweets"</span>) <span class="co"># CRAN release v0.4</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"JohnCoene/graphTweets"</span>) <span class="co"># dev version</span></a></code></pre></div>
 </div>
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
@@ -155,14 +198,14 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li>Extract the nodes</li>
 </ol>
 <p>One can only know the nodes of a network based on the edges, so run them in that order. However, you can build a graph based on edges alone:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph) <span class="co"># for plot</span>
-
-tweets &lt;-<span class="st"> </span>rtweet<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtweet/topics/search_tweets">search_tweets</a></span>(<span class="st">"rstats"</span>)
-
-tweets <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="reference/edges.html">gt_edges</a></span>(text, screen_name, status_id) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="reference/gt_graph.html">gt_graph</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">plot</span>()</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(igraph) <span class="co"># for plot</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">tweets &lt;-<span class="st"> </span>rtweet<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtweet/topics/search_tweets">search_tweets</a></span>(<span class="st">"rstats"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">tweets <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="reference/edges.html">gt_edges</a></span>(text, screen_name, status_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="reference/gt_graph.html">gt_graph</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
 <p>This is useful if you are building a large graph and don’t need any meta data on the nodes (other than those you can compute from the graph, i.e.: <code>degree</code> like in the example above). If you need meta data on the nodes use <code>gt_nodes</code>.</p>
 </div>
 </div>
