@@ -19,7 +19,8 @@ Imports:
     magrittr,
     utils,
     tidyr,
-    zeallot
+    zeallot,
+    combinat
 RoxygenNote: 6.0.1
 URL: http://graphTweets.john-coene.com
 BugReports: https://github.com/JohnCoene/graphTweets/issues
