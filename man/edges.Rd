@@ -5,6 +5,8 @@
 \alias{gt_edges_}
 \alias{gt_edges_hash}
 \alias{gt_edges_hash_}
+\alias{gt_edges_hashes}
+\alias{gt_edges_hashes_}
 \title{Edges}
 \usage{
 gt_edges(data, tweets, source, id, ...)
@@ -16,6 +18,10 @@ gt_edges_hash(data, hashtags, source, ..., tl = TRUE)
 
 gt_edges_hash_(data, hashtags = "hashtags", source = "screen_name", ...,
   tl = TRUE)
+
+gt_edges_hashes(data, hashtags, tl = TRUE)
+
+gt_edges_hashes_(data, hashtags = "hashtags", tl = TRUE)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}
@@ -47,6 +53,7 @@ these often duplicated, i.e.: #python #Python.
 \itemize{
   \item{\code{gt_edges} - Build networks of users.}
   \item{\code{gt_edges_hash} - Build networks of users to hashtags.}
+  \item{\code{gt_edges_hashes} - Build networks of hashtags co-mentions.}
 }
 }
 

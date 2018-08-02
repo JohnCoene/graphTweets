@@ -13,7 +13,7 @@ gt_graph(gt)
 An object of class \code{igraph}.
 }
 \description{
-Graph
+Build \code{igraph} object.
 }
 \examples{
 # simulate dataset

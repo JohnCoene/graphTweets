@@ -16,6 +16,7 @@ utils::globalVariables(c("start"))
 #' \itemize{
 #'   \item{\code{gt_edges} - Build networks of users.}
 #'   \item{\code{gt_edges_hash} - Build networks of users to hashtags.}
+#'   \item{\code{gt_edges_hashes} - Build networks of hashtags co-mentions.}
 #' }
 #' 
 #' @details The \code{tl} arguments stands for \code{\link{tolower}} and allows converting the #hashtags to lower case as 
@@ -127,7 +128,7 @@ gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", 
   
   edges <- data %>% 
     dplyr::select_(hashtags, source, ...) %>% 
-    tidyr::unnest_("hashtags") %>% 
+    tidyr::unnest_(hashtags) %>% 
     dplyr::mutate(
       hashtags = dplyr::case_when(
         tl == TRUE ~ tolower(hashtags),
@@ -140,6 +141,54 @@ gt_edges_hash_ <- function(data, hashtags = "hashtags", source = "screen_name", 
     dplyr::mutate(hashtags = paste0("#", hashtags))
   
   names(edges)[1:3] <- c("source", "target", "n_tweets")
+  construct(data, edges, NULL)
+}
+
+#' @rdname edges
+#' @export
+gt_edges_hashes <- function(data, hashtags,  tl = TRUE){
+  if(missing(data) || missing(hashtags))
+    stop("missing data or hashtags", call. = FALSE)
+  hashtags <- deparse(substitute(hashtags))
+  gt_edges_hashes_(data, hashtags, tl = tl)
+}
+
+#' @rdname edges
+#' @export
+gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
+  
+  if(missing(data))
+    stop("missing data", call. = FALSE)
+  
+  b_edges <- function(x){
+    h <- unlist(x)
+    if(length(h) > 1){
+      cbn <- combinat::combn(h, 2, simplify = FALSE) %>% 
+        purrr::map(function(n){
+          names(n) <- c("source", "target")
+          return(n)
+        }) %>% 
+        purrr::map_df(dplyr::bind_rows)
+      return(cbn)
+    }
+  }
+  
+  edges <- purrr::map(data[[hashtags]], b_edges) %>% 
+    purrr::map_df(dplyr::bind_rows) %>% 
+    dplyr::mutate(
+      source = dplyr::case_when(
+        tl == TRUE ~ tolower(source),
+        TRUE ~ source
+      ),
+      target = dplyr::case_when(
+        tl == TRUE ~ tolower(target),
+        TRUE ~ target
+      )
+    ) %>% 
+    dplyr::group_by_("source", "target") %>% 
+    dplyr::summarise(n_comentions = n()) %>% 
+    dplyr::ungroup()
+  
   construct(data, edges, NULL)
 }
 
@@ -182,6 +231,8 @@ gt_nodes <- function(gt, meta = FALSE){
       rep("user", nrow(gt[["edges"]])),
       rep("hashtag", nrow(gt[["edges"]]))
     )
+  else if("n_comentions" %in% names(gt[["edges"]]))
+    type <- "hashtag"
   else
     type <- "user"
   
