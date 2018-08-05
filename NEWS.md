@@ -1,4 +1,4 @@
-# graphTweets 0.4.2
+# graphTweets 0.4.3
 
 * Added `gt_edges_hashes_` and `gt_edges_hashes` to build networks of #hashtags co-mentions.
 * Added `%<-%` from the zeallot package to unpack the nodes and edges.
