@@ -357,14 +357,18 @@ gt_dyn <- function(gt, lifetime = Inf){
   if(!"created_at" %in% names(gt[["edges"]]))
     stop("missing created_at column", call. = FALSE)
   
+  gt[["edges"]] -> edg
+  
   if(is.infinite(lifetime)){
-    lifetime <- max(gt[["edges"]][["created_at"]])
-    gt[["edges"]][["end"]] <- lifetime
+    lifetime <- max(edg[["created_at"]])
+    edg[, "end"] <- lifetime
   } else {
-    gt[["edges"]][["end"]] <- gt[["edges"]][["created_at"]] + lifetime 
+    edg[, "end"] <- gt[["edges"]][["created_at"]] + lifetime 
   }
   
-  edges <- gt[["edges"]] %>% 
+  print(edg)
+  
+  edges <- edg %>% 
     dplyr::group_by_("source", "target") %>% 
     dplyr::summarise(
       created_at = min(created_at),
