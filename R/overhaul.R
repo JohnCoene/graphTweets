@@ -375,7 +375,7 @@ gt_dyn <- function(gt, lifetime = Inf){
     dplyr::bind_rows(tgt) %>%
     dplyr::group_by(source) %>% 
     dplyr::summarise(
-      created_at = min(created_at),
+      start = min(created_at),
       end = max(created_at)
     ) %>% 
     dplyr::ungroup() %>% 
