@@ -7,29 +7,13 @@
 
 0 errors | 0 warnings | 0 notes
 
-Removed `splitstackshape` dependency, see email below.
+Bug fixes and an additional function.
 
-> Dear maintainers,
-> 
-> This concerns the CRAN packages
->
->  Diderot graphTweets rodham sampler splitstackshape
+NEWS.md:
 
-> maintained by one of you:
+> # graphTweets 0.4.3
 >
->  Ananda Mahto <ananda@mahto.info>: splitstackshape
->  Christian Vincenot <christian@vincenot.biz>: Diderot
->  John Coene <jcoenep@gmail.com>: graphTweets rodham
->  Michael Baldassaro <mbaldassaro@gmail.com>: sampler
->
-> We have repeatedly asked for an update fixing the check problems
-> shown on
->   <https://cran.r-project.org/web/checks/check_results_splitstackshape.html>
-> with no reply from the maintainer thus far.
-> 
-> Thus, package splitstackshape is now scheduled for archival on
-> 2018-07-29, and archiving this will necessitate also archiving its
-> strong reverse dependencies.
-> 
-> Please negotiate the necessary actions.
+> * Added `gt_edges_hashes_` and `gt_edges_hashes` to build networks of #hashtags co-mentions.
+> * Added `%<-%` from the zeallot package to unpack the nodes and edges.
+> * Fixed `gt_dyn` bug where lifetime was not working properly.
 
