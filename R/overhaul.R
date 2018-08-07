@@ -282,11 +282,10 @@ gt_graph <- function(gt){
 #' \dontrun{
 #' # simulate dataset
 #' tweets <- data.frame(
-#'   text = c("I tweet @you about @him", 
+#'   text = c("I tweet @you about @him and @her", 
 #'            "I tweet @me about @you"),
 #'   screen_name = c("me", "him"),
-#'   retweet_count = c(19, 5),
-#'   created_at = c(Sys.time(), Sys.time() + 15000),
+#'   created_at = c(Sys.time(), Sys.time() + 10000),
 #'   status_id = c(1, 2),
 #'   stringsAsFactors = FALSE
 #' )
@@ -301,41 +300,45 @@ gt_graph <- function(gt){
 #' @rdname dyn
 #' @export
 gt_dyn <- function(gt, lifetime = Inf){
+  
   test_input(gt)
   
   if(!"created_at" %in% names(gt[["edges"]]))
     stop("missing created_at column", call. = FALSE)
   
+  edges <- gt[["edges"]]
+  
   if(is.infinite(lifetime)){
-    lifetime <- max(gt[["edges"]][["created_at"]])
-    gt[["edges"]][["end"]] <- lifetime
+    lifetime <- max(edges[["created_at"]])
+    edges[["end"]] <- lifetime
   } else {
-    gt[["edges"]][["end"]] <- gt[["edges"]][["created_at"]] + lifetime 
+    edges[["end"]] <- edges[["created_at"]] + lifetime 
   }
   
-  edges <- gt[["edges"]] %>% 
-    dplyr::group_by_("source", "target") %>% 
-    dplyr::summarise(
-      created_at = min(created_at),
-      end = max(created_at),
-      n_edges = dplyr::n()
-    ) %>% 
-    dplyr::ungroup() 
+  src <- edges[, c("source", "created_at")]
+  src2 <- edges[, c("source", "end")]
+  tgt <- edges[, c("target", "created_at")]
+  tgt2 <- edges[, c("target", "end")]
   
-  src <- edges[, c("source", "created_at", "end")]
-  tgt <- edges[, c("target", "created_at", "end")]
+  rename <- function(x){
+    names(x)[1:2] <- c("source", "created_at")
+    return(x)
+  }
   
-  names(tgt)[1] <- c("source")
+  src2 <- rename(src2)
+  tgt <- rename(tgt)
+  tgt2 <- rename(tgt2)
   
   nodes <- src %>% 
-    dplyr::bind_rows(tgt) %>% 
-    dplyr::group_by(source) %>% 
+    dplyr::bind_rows(tgt, tgt2, src2) %>% 
     dplyr::distinct() %>% 
+    dplyr::group_by(source) %>% 
     dplyr::summarise(
       start = min(created_at),
-      end = max(end)
+      end = max(created_at)
     ) %>% 
     dplyr::ungroup() %>% 
+    dplyr::distinct() %>% 
     dplyr::inner_join(gt[["nodes"]], by = c("source" = "nodes"))
   
   names(nodes)[1] <- "nodes"
