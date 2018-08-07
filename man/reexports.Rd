@@ -4,6 +4,8 @@
 \name{reexports}
 \alias{reexports}
 \alias{\%>\%}
+\alias{reexports}
+\alias{\%<-\%}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -12,5 +14,7 @@ below to see their documentation.
 
 \describe{
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
+
+  \item{zeallot}{\code{\link[zeallot]{\%<-\%}}}
 }}
 

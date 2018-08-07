@@ -1,10 +1,10 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Hashtags"
+author: "John Coene"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Hashtags}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -14,20 +14,23 @@ editor_options:
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE
 )
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
 tweets <- search_tweets("#rstats #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
-tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
+#tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
-graphTweets not only allows to build graphs of interactions between users. It also lets you visualise what hashtag users use in their tweets.
+graphTweets not only allows to build graphs of interactions between users. It also lets you visualise what hashtag users use in their tweets and which hashtags are used together in the same tweets.
+
+## Users to Hashtags
 
 ```{r, eval=FALSE}
 library(rtweet)
-tweets <- search_tweets("#rstats #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets <- search_tweets("#rstats OR #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
 ```
 
 The same principles follow, we simply use `gt_edges_hash` and pass the `hashtags` column as returned by rtweet. This creates a `tibble` of edges from `screen_name` to `hashtags` used in each tweet.
@@ -75,3 +78,66 @@ sigmajs() %>%
 ```
 
 We use `sg_layout` to layout the graph and `sg_neightbours` to highlight nodes on click.
+
+## Hashtags Co-mentions
+
+We can also build networks of hashtags co-mentions; when two or more hashtags are used in the same tweet they are connected on the graph.
+
+Let's look at the hashtags associated with #rstats
+
+```{r other tweets, message=FALSE, warning=FALSE}
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+```
+
+For this network use `gt_edges_hashes` and simply pass the `hashtags` column as it's all that is needed.
+
+```{r}
+net <- tweets %>% 
+  gt_edges_hashes(hashtags) %>%
+  gt_nodes() %>% 
+  gt_collect()
+
+c(edges, nodes) %<-% net
+```
+
+Then again, we'll use `sigmajs` for the visualisation. Since we got tweets on `#rstats` we will remove this node, it will be connected to all other hashtags. Make sure you remove it from both nodes and edges
+
+```{r}
+library(dplyr)
+
+edges <- edges %>% 
+  mutate(
+    id = 1:n()
+  ) %>% 
+  filter(source != "rstats") %>% 
+  filter(target != "rstats")
+
+nodes <- nodes %>% 
+  mutate(
+    id = nodes,
+    label = paste0("#", id),
+    size = n_edges
+  ) %>% 
+  filter(id != "rstats") %>% 
+  select(id, label, size)
+  
+library(sigmajs)
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, label, size) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_cluster(
+    colors = c(
+      "#0084b4",
+      "#00aced",
+      "#1dcaff",
+      "#c0deed"
+      )
+  ) %>% 
+  sg_layout() %>% 
+  sg_neighbours() %>% 
+  sg_settings(
+    defaultEdgeColor = "#a3a3a3",
+    edgeColor = "default"
+  )
+```

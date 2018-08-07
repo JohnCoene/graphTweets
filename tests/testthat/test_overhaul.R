@@ -76,3 +76,4 @@ test_that("nodes & edges & dyn", {
     gt_collect() %>% 
     expect_is("list")
 })
+

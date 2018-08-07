@@ -26,7 +26,8 @@ devtools::install_github("JohnCoene/graphTweets") # dev version
 ## Functions
 
 - `gt_edges` - get edges.
-- `gt_edges_hash` - get hashtags edges.
+- `gt_edges_hash` - get users to hashtags edges.
+- `gt_edges_hashes` - get hashtags co-mentions.
 - `gt_nodes` - get nodes, with or without metadata.
 - `gt_dyn` - create dynamic graph.
 - `gt_graph` - create `igraph` graph object.

@@ -19,12 +19,13 @@ extract_handles <- function(x) {
 }
 
 construct <- function(tweets, edges, nodes = NULL){
-  if(is.null(nodes)){
-    data <- list(
-      tweets = tweets,
-      edges = edges
-    )
-  } else {
+  
+  data <- list(
+    tweets = tweets,
+    edges = edges
+  )
+  
+  if(!is.null(nodes)){
     data <- list(
       tweets = tweets,
       edges = edges,

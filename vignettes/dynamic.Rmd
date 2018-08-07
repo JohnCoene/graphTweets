@@ -12,7 +12,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE
 )
 library(graphTweets)
 library(rtweet)
@@ -75,15 +76,13 @@ edges <- net$edges %>%
 
 nodes <- net$nodes %>% 
   dplyr::mutate(
-    id = source,
-    label = source,
+    id = nodes,
+    label = nodes,
     size = n_edges
   )
 
 # graph layout 
-l <- suppressMessages(sg_get_layout(nodes, edges))
-nodes$x <- l$x
-nodes$y <- l$y
+nodes <- sg_get_layout(nodes, edges)
 
 nodes <- sg_get_cluster(nodes, edges, colors = c("#2780e3", "#d3d3d3")) # cluster
 
@@ -95,4 +94,4 @@ sigmajs() %>%
   sg_settings(defaultNodeColor = "#1967be")
 ```
 
-Note that you can also dynamically add nodes.
+Note that you can also dynamically add nodes, much of it explained in the [twinetbook](https://twinetbook.john-coene.com/).
