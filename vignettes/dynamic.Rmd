@@ -89,7 +89,7 @@ nodes <- sg_get_cluster(nodes, edges, colors = c("#2780e3", "#d3d3d3")) # cluste
 sigmajs() %>% 
   sg_nodes(nodes, id, size, label, x, y, color) %>% 
   sg_add_edges(edges, created_at, id, source, target, 
-               cumsum = FALSE, refresh = FALSE) %>% 
+               cumsum = FALSE, refresh = TRUE) %>% 
   sg_button("<i class='fa fa-play'></i>", "add_edges", class = "btn btn-primary") %>% 
   sg_settings(defaultNodeColor = "#1967be")
 ```
