@@ -1,3 +1,11 @@
+# graphTweets 0.5.0
+
+* `gt_co_edges` replaces `gt_edges_hashes`, it now works with other columns than just `hashtags`.
+* `gt_edges_hash` is _deprecated_ in favour of `gt_edges`.
+* Escape hatches, functions ending in `_` are no longer necessary and are thus deprecated.
+
+The origin `gt_edges` functions, first part of the package in 2014, was extracting @tagged users from tweets' text with convoluted regular expressions: it is no longer necessary as `rtweet` now returns `mentions_screen_name`, hence the aforementioned changes.
+
 # graphTweets 0.4.3
 
 * Added `gt_edges_hashes_` and `gt_edges_hashes` to build networks of #hashtags co-mentions.

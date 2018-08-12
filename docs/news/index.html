@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">graphTweets</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
       </span>
     </div>
 
@@ -149,9 +149,22 @@
       
     </div>
 
+    <div id="graphtweets-0-5-0" class="section level1">
+<h1 class="page-header">
+<a href="#graphtweets-0-5-0" class="anchor"></a>graphTweets 0.5.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>
+<code>gt_co_edges</code> replaces <code>gt_edges_hashes</code>, it now works with other columns than just <code>hashtags</code>.</li>
+<li>
+<code>gt_edges_hash</code> is <em>deprecated</em> in favour of <code>gt_edges</code>.</li>
+<li>Escape hatches, functions ending in <code>_</code> are no longer necessary and are thus deprecated.</li>
+</ul>
+<p>The origin <code>gt_edges</code> functions, first part of the package in 2014, was extracting <a href='http://github.com/tagged'>@tagged</a> users from tweets’ text with convoluted regular expressions: it is no longer necessary as <code>rtweet</code> now returns <code>mentions_screen_name</code>, hence the aforementioned changes.</p>
+</div>
     <div id="graphtweets-0-4-3" class="section level1">
 <h1 class="page-header">
-<a href="#graphtweets-0-4-3" class="anchor"></a>graphTweets 0.4.3<small> Unreleased </small>
+<a href="#graphtweets-0-4-3" class="anchor"></a>graphTweets 0.4.3<small> 2018-08-07 </small>
 </h1>
 <ul>
 <li>Added <code>gt_edges_hashes_</code> and <code>gt_edges_hashes</code> to build networks of #hashtags co-mentions.</li>
@@ -247,6 +260,7 @@ rbenchmark<span class="op">::</span><span class="kw">benchmark</span>(
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#graphtweets-0-5-0">0.5.0</a></li>
         <li><a href="#graphtweets-0-4-3">0.4.3</a></li>
         <li><a href="#graphtweets-0-4-2">0.4.2</a></li>
         <li><a href="#graphtweets-0-4-1">0.4.1</a></li>

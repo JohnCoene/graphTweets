@@ -45,11 +45,6 @@ test_that("nodes & edges & dyn", {
     stringsAsFactors = FALSE
   )
   
-  expect_is(gt_edges_hash(tweets, hashtags, screen_name), "graphTweets")
-  expect_is(gt_edges_hash_(tweets, "hashtags", "screen_name"), "graphTweets")
-  expect_is(gt_edges_hash_(tweets, "hashtags", "screen_name") %>% gt_nodes(), "graphTweets")
-  expect_is(gt_edges_hash_(tweets, "hashtags", "screen_name", tl = FALSE) %>% gt_nodes(), "graphTweets")
-  
   expect_is(gt_edges_(tweets), "graphTweets")
   expect_is(gt_edges(tweets, screen_name, text, status_id), "graphTweets")
   expect_is(gt_edges_(tweets, RT = "retweet_count"), "graphTweets")
@@ -63,14 +58,14 @@ test_that("nodes & edges & dyn", {
   expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_graph(), "igraph")
   expect_is(tweets %>% gt_edges_() %>% gt_graph(), "igraph")
   tweets %>% 
-    gt_edges(text, screen_name, status_id, "created_at") %>% 
+    gt_edges(text, screen_name, status_id, created_at) %>% 
     gt_nodes() %>% 
     gt_dyn() %>% 
     gt_collect() %>% 
     expect_is("list")
   
   tweets %>% 
-    gt_edges(text, screen_name, status_id, "created_at") %>% 
+    gt_edges(text, screen_name, status_id, created_at) %>% 
     gt_nodes() %>% 
     gt_dyn(5000) %>% 
     gt_collect() %>% 

@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE
 )
-library(igraph)
 library(dplyr)
 library(graphTweets)
 library(rtweet)
@@ -42,7 +41,7 @@ Now we can start using `graphTweets`.
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id) %>% 
+  gt_edges(screen_name, mentions_screen_name) %>% 
   gt_graph() -> graph
 
 class(graph)
@@ -54,7 +53,7 @@ If you do not want to return an `igraph` object, use `gt_collect`, it will retur
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id) %>% 
+  gt_edges(screen_name, text) %>% 
   gt_collect() -> edges
 
 names(edges)
@@ -66,7 +65,7 @@ So far we only used `gt_edges` to extract the edges, we can also extract the nod
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id) %>% 
+  gt_edges(screen_name, text) %>% 
   gt_nodes() %>% 
   gt_collect() -> graph
 
@@ -91,7 +90,7 @@ Note that you can also pass meta-data to edges if needed.
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id, datetime = "created_at") %>% 
+  gt_edges(screen_name, mentions_screen_name, created_at) %>% 
   gt_nodes(meta = TRUE) %>% 
   gt_collect() -> graph
 ```
@@ -105,14 +104,14 @@ library(dplyr)
 library(sigmajs) # for plots
 
 tweets %>% 
-  gt_edges(text, screen_name, status_id, datetime = "created_at") %>% 
-  gt_nodes(meta = TRUE) %>% 
+  gt_edges(screen_name, mentions_screen_name) %>% 
+  gt_nodes() %>% 
   gt_collect() -> gt
 
 nodes <- gt$nodes %>% 
   mutate(
     id = nodes,
-    label = ifelse(is.na(name), nodes, name),
+    label = nodes,
     size = n_edges,
     color = "#1967be"
   ) 
@@ -132,28 +131,11 @@ sigmajs() %>%
 Let's look at communities, we'll return an `igraph` object with `gt_graph` so we can easily run a community finding algorithm from the `igraph` package.
 
 ```{r}
-library(igraph)
-
 tweets %>% 
   gt_edges(text, screen_name, status_id) %>% 
   gt_graph() -> g
 
-# communities
-wc <- walktrap.community(g)
-V(g)$color <- membership(wc)
-
-# plot
-# tons of arrguments because defaults are awful
-plot(g, 
-     layout = igraph::layout.fruchterman.reingold(g), 
-     vertex.color = V(g)$color,
-     vertex.label.family = "sans",
-     vertex.label.color = hsv(h = 0, s = 0, v = 0, alpha = 0.0),
-     vertex.size = igraph::degree(g), 
-     edge.arrow.size = 0.2, 
-     edge.arrow.width = 0.3, edge.width = 1,
-     edge.color = hsv(h = 1, s = .59, v = .91, alpha = 0.7),
-     vertex.frame.color="#fcfcfc")
+class(g)
 ```
 
 \* Some nodes are mentioned in tweets only and therefore have no meta-data associated.

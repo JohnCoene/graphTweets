@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Edges — gt_edges • graphTweets</title>
+<title>Edges — gt_edges_from_text • graphTweets</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Edges — gt_edges" />
+<meta property="og:title" content="Edges — gt_edges_from_text" />
 
 <meta property="og:description" content="Get edges from data.frame of tweets." />
 
@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">graphTweets</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
       </span>
     </div>
 
@@ -158,15 +158,17 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>gt_edges</span>(<span class='no'>data</span>, <span class='no'>tweets</span>, <span class='no'>source</span>, <span class='no'>id</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>gt_edges_from_text</span>(<span class='no'>data</span>, <span class='no'>id</span>, <span class='no'>source</span>, <span class='no'>tweets</span>, <span class='no'>...</span>)
+
+<span class='fu'>gt_edges_from_text_</span>(<span class='no'>data</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"status_id"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>,
+  <span class='kw'>tweets</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='no'>...</span>)
+
+<span class='fu'>gt_edges</span>(<span class='no'>data</span>, <span class='no'>source</span>, <span class='no'>target</span>, <span class='no'>...</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>gt_edges_</span>(<span class='no'>data</span>, <span class='kw'>tweets</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"status_id"</span>,
   <span class='no'>...</span>)
 
-<span class='fu'>gt_edges_hash</span>(<span class='no'>data</span>, <span class='no'>hashtags</span>, <span class='no'>source</span>, <span class='no'>...</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>gt_edges_hash_</span>(<span class='no'>data</span>, <span class='kw'>hashtags</span> <span class='kw'>=</span> <span class='st'>"hashtags"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>, <span class='no'>...</span>,
-  <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>gt_co_edges</span>(<span class='no'>data</span>, <span class='no'>col</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>gt_edges_hashes</span>(<span class='no'>data</span>, <span class='no'>hashtags</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -180,28 +182,28 @@
       <td><p>Data.frame of tweets, usually returned by the <code>rtweet</code> package.</p></td>
     </tr>
     <tr>
-      <th>tweets</th>
-      <td><p>Column containing tweets.</p></td>
+      <th>id</th>
+      <td><p>tweets unique id.</p></td>
     </tr>
     <tr>
       <th>source</th>
       <td><p>Author of tweets.</p></td>
     </tr>
     <tr>
-      <th>id</th>
-      <td><p>tweets unique id.</p></td>
+      <th>tweets</th>
+      <td><p>Column containing tweets.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>any other column name, see examples.</p></td>
     </tr>
     <tr>
-      <th>hashtags</th>
-      <td><p>Column containing hashtags.</p></td>
-    </tr>
-    <tr>
       <th>tl</th>
       <td><p>Set to <code>TRUE</code> to convert hashtags to lower case.</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>Column containing co-mentions.</p></td>
     </tr>
     </table>
     
@@ -219,8 +221,7 @@ these often duplicated, i.e.: #python #Python.</p>
     
     <ul>
 <li><p><code>gt_edges</code> - Build networks of users.</p></li>
-<li><p><code>gt_edges_hash</code> - Build networks of users to hashtags.</p></li>
-<li><p><code>gt_edges_hashes</code> - Build networks of hashtags co-mentions.</p></li>
+<li><p><code>gt_co_edges</code> - Build networks of users to hashtags.</p></li>
 </ul>
     
 
@@ -237,7 +238,7 @@ these often duplicated, i.e.: #python #Python.</p>
 )
 
 <span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_edges</span>(<span class='no'>text</span>, <span class='no'>screen_name</span>, <span class='no'>status_id</span>)</div><div class='output co'>#&gt; $edges
+  <span class='fu'>gt_edges_from_text</span>(<span class='no'>status_id</span>, <span class='no'>screen_name</span>, <span class='no'>text</span>)</div><div class='output co'>#&gt; $edges
 #&gt; # A tibble: 5 x 2
 #&gt;   source target
 #&gt;   &lt;chr&gt;  &lt;chr&gt; 
@@ -248,44 +249,8 @@ these often duplicated, i.e.: #python #Python.</p>
 #&gt; 5 him    you   
 #&gt; </div><div class='input'>
 <span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_edges_</span>(<span class='kw'>RT</span> <span class='kw'>=</span> <span class='st'>"retweet_count"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt_nodes.html'>gt_nodes</a></span>()</div><div class='output co'>#&gt; $edges
-#&gt; # A tibble: 5 x 3
-#&gt;   source target    RT
-#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;dbl&gt;
-#&gt; 1 me     you       19
-#&gt; 2 me     him       19
-#&gt; 3 me     her       19
-#&gt; 4 him    me         5
-#&gt; 5 him    you        5
-#&gt; 
-#&gt; $nodes
-#&gt; # A tibble: 4 x 3
-#&gt;   nodes type  n_edges
-#&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;
-#&gt; 1 her   user        1
-#&gt; 2 him   user        3
-#&gt; 3 me    user        4
-#&gt; 4 you   user        2
-#&gt; </div><div class='input'>
-<span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_edges_hash</span>(<span class='no'>hashtags</span>, <span class='no'>screen_name</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt_nodes.html'>gt_nodes</a></span>()</div><div class='output co'>#&gt; $edges
-#&gt; # A tibble: 2 x 3
-#&gt;   source target  n_tweets
-#&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;
-#&gt; 1 him    #python        1
-#&gt; 2 me     #rstats        1
-#&gt; 
-#&gt; $nodes
-#&gt; # A tibble: 4 x 3
-#&gt;   nodes   type    n_edges
-#&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;
-#&gt; 1 #python hashtag       1
-#&gt; 2 #rstats hashtag       1
-#&gt; 3 him     user          1
-#&gt; 4 me      user          1
-#&gt; </div><div class='input'>    
+  <span class='fu'>gt_edges</span>(<span class='no'>screen_name</span>, <span class='no'>mentions_screen_name</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='gt_nodes.html'>gt_nodes</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in .f(.x[[i]], ...): object 'mentions_screen_name' not found</span></div><div class='input'>    
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

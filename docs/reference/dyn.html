@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">graphTweets</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.4.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.5.0</span>
       </span>
     </div>
 
@@ -178,11 +178,10 @@
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># simulate dataset</span>
 <span class='no'>tweets</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
-  <span class='kw'>text</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"I tweet @you about @him"</span>,
+  <span class='kw'>text</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"I tweet @you about @him and @her"</span>,
            <span class='st'>"I tweet @me about @you"</span>),
   <span class='kw'>screen_name</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"me"</span>, <span class='st'>"him"</span>),
-  <span class='kw'>retweet_count</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>19</span>, <span class='fl'>5</span>),
-  <span class='kw'>created_at</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fu'>Sys.time</span>(), <span class='fu'>Sys.time</span>() + <span class='fl'>15000</span>),
+  <span class='kw'>created_at</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fu'>Sys.time</span>(), <span class='fu'>Sys.time</span>() + <span class='fl'>10000</span>),
   <span class='kw'>status_id</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
   <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )

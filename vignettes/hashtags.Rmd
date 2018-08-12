@@ -37,7 +37,7 @@ The same principles follow, we simply use `gt_edges_hash` and pass the `hashtags
 
 ```{r}
 net <- tweets %>% 
-  gt_edges_hash(hashtags, screen_name) %>% 
+  gt_edges(screen_name, hashtags) %>% 
   gt_nodes() %>% 
   gt_collect()
 ```
@@ -63,7 +63,7 @@ nodes$color <- ifelse(nodes$type == "user", "#0084b4", "#1dcaff")
 
 Let's visualise it.
 
-```{r}
+```{r, echo=FALSE}
 library(sigmajs)
 
 sigmajs() %>% 
@@ -93,7 +93,7 @@ For this network use `gt_edges_hashes` and simply pass the `hashtags` column as 
 
 ```{r}
 net <- tweets %>% 
-  gt_edges_hashes(hashtags) %>%
+  gt_co_edges(hashtags) %>%
   gt_nodes() %>% 
   gt_collect()
 
@@ -120,8 +120,6 @@ nodes <- nodes %>%
   ) %>% 
   filter(id != "rstats") %>% 
   select(id, label, size)
-  
-library(sigmajs)
 
 sigmajs() %>% 
   sg_nodes(nodes, id, label, size) %>% 

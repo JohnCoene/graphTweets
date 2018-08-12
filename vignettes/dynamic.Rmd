@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
   comment = "#>",
   warning = FALSE
 )
+library(htmltools)
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
 tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
-tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
 ## What
@@ -32,7 +32,7 @@ Start by making the graph, see "Get Started" vignette if you do not know how to 
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id, "created_at") %>% 
+  gt_edges(screen_name, mentions_screen_name, created_at) %>% 
   gt_nodes() %>% 
   gt_dyn() %>% 
   gt_collect() -> net
@@ -95,3 +95,11 @@ sigmajs() %>%
 ```
 
 Note that you can also dynamically add nodes, much of it explained in the [twinetbook](https://twinetbook.john-coene.com/).
+
+```{r, echo=FALSE}
+tags$a(
+  href = "https://twinetbook.john-coene.com/",
+  target = "_blank",
+  "Twinetbook"
+)
+```
