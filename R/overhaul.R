@@ -1,4 +1,4 @@
-utils::globalVariables(c("start"))
+utils::globalVariables(c("start", "screen_name"))
 
 #' Edges
 #' 
@@ -7,8 +7,9 @@ utils::globalVariables(c("start"))
 #' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
 #' @param tweets Column containing tweets.
 #' @param source Author of tweets.
+#' @param target Edges target,
 #' @param id tweets unique id.
-#' @param col Column containing co-mentions.
+#' @param col,hashtags Column containing co-mentions.
 #' @param tl Set to \code{TRUE} to convert hashtags to lower case.
 #' @param ... any other column name, see examples.
 #' 
@@ -35,10 +36,6 @@ utils::globalVariables(c("start"))
 #'
 #' tweets %>% 
 #'   gt_edges_from_text(status_id, screen_name, text)
-#'  
-#' tweets %>% 
-#'   gt_edges(screen_name, mentions_screen_name) %>% 
-#'   gt_nodes()
 #'     
 #' @return An object of class \code{graphTweets}.
 #' 
@@ -310,9 +307,8 @@ gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
 #' )
 #'
 #' tweets %>% 
-#'   gt_edges(screen_name, mentions_screen_name) %>% 
-#'   gt_nodes() %>% 
-#'   gt_collect() -> net
+#'   gt_edges_from_text(status_id, screen_name, text) %>% 
+#'   gt_nodes()
 #'   
 #' @return An object of class \code{graphTweets}, adds \code{nodes}.
 #' 

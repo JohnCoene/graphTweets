@@ -37,9 +37,11 @@ gt_edges_hashes_(data, hashtags = "hashtags", tl = TRUE)
 
 \item{...}{any other column name, see examples.}
 
+\item{target}{Edges target,}
+
 \item{tl}{Set to \code{TRUE} to convert hashtags to lower case.}
 
-\item{col}{Column containing co-mentions.}
+\item{col, hashtags}{Column containing co-mentions.}
 }
 \value{
 An object of class \code{graphTweets}.
@@ -73,9 +75,5 @@ tweets <- data.frame(
 
 tweets \%>\% 
   gt_edges_from_text(status_id, screen_name, text)
- 
-tweets \%>\% 
-  gt_edges(screen_name, mentions_screen_name) \%>\% 
-  gt_nodes()
     
 }

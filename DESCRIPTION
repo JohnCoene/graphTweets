@@ -28,6 +28,7 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    sigmajs
+    sigmajs,
+    htmltools
 VignetteBuilder: knitr
 Remotes: JohnCoene/sigmajs

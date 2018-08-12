@@ -21,8 +21,7 @@ test_that("errors", {
   expect_error(gt_edges(lst))
   expect_error(gt_edges_(lst))
   expect_error(gt_edges_())
-  expect_error(gt_edges_hash())
-  expect_error(gt_edges_hash_())
+  expect_error(gt_co_edges())
   
   expect_error(
     gt <- tweets %>% 
