@@ -190,9 +190,24 @@
 )
 
 <span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='edges.html'>gt_edges</a></span>(<span class='no'>screen_name</span>, <span class='no'>mentions_screen_name</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_nodes</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt_collect.html'>gt_collect</a></span>() <span class='kw'>-&gt;</span> <span class='no'>net</span></div><div class='output co'>#&gt; <span class='error'>Error in .f(.x[[i]], ...): object 'mentions_screen_name' not found</span></div><div class='input'>  
+  <span class='fu'><a href='edges.html'>gt_edges_from_text</a></span>(<span class='no'>status_id</span>, <span class='no'>screen_name</span>, <span class='no'>text</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>gt_nodes</span>()</div><div class='output co'>#&gt; $edges
+#&gt; # A tibble: 4 x 2
+#&gt;   source target
+#&gt;   &lt;chr&gt;  &lt;chr&gt; 
+#&gt; 1 me     you   
+#&gt; 2 me     him   
+#&gt; 3 him    me    
+#&gt; 4 him    you   
+#&gt; 
+#&gt; $nodes
+#&gt; # A tibble: 3 x 3
+#&gt;   nodes type  n_edges
+#&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;int&gt;
+#&gt; 1 him   user        3
+#&gt; 2 me    user        3
+#&gt; 3 you   user        2
+#&gt; </div><div class='input'>  
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

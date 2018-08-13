@@ -53,7 +53,7 @@ If you do not want to return an `igraph` object, use `gt_collect`, it will retur
 
 ```{r}
 tweets %>% 
-  gt_edges(screen_name, text) %>% 
+  gt_edges(screen_name, mentions_screen_name) %>% 
   gt_collect() -> edges
 
 names(edges)
@@ -65,7 +65,7 @@ So far we only used `gt_edges` to extract the edges, we can also extract the nod
 
 ```{r}
 tweets %>% 
-  gt_edges(screen_name, text) %>% 
+  gt_edges(screen_name, mentions_screen_name) %>% 
   gt_nodes() %>% 
   gt_collect() -> graph
 
@@ -79,7 +79,7 @@ Adding nodes has not bring much to table however, `gt_nodes` takes another argum
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id) %>% 
+  gt_edges(screen_name, mentions_screen_name) %>% 
   gt_nodes(meta = TRUE) %>% 
   gt_collect() -> graph
 
@@ -132,7 +132,7 @@ Let's look at communities, we'll return an `igraph` object with `gt_graph` so we
 
 ```{r}
 tweets %>% 
-  gt_edges(text, screen_name, status_id) %>% 
+  gt_edges(screen_name, mentions_screen_name) %>% 
   gt_graph() -> g
 
 class(g)

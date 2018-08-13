@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title><span class="pkg">graphTweets</span> visualise Twitter Interactions. — graphTweets • graphTweets</title>
+<title>Deprecated Functions — gt_edges_ • graphTweets</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="<span class="pkg">graphTweets</span> visualise Twitter Interactions. — graphTweets" />
+<meta property="og:title" content="Deprecated Functions — gt_edges_" />
 
-<meta property="og:description" content="graphTweets visualise Twitter Interactions." />
+<meta property="og:description" content="These functions are deprecated, see gt_edges and gt_co_edges." />
 
 <meta property="og:image" content="http://graphtweets.john-coene.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -147,57 +147,64 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1><span class="pkg">graphTweets</span> visualise Twitter Interactions.</h1>
+    <h1>Deprecated Functions</h1>
     
-    <div class="hidden name"><code>graphTweets.Rd</code></div>
+    <div class="hidden name"><code>edges_deprecated.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><span class="pkg">graphTweets</span> visualise Twitter Interactions.</p>
+    <p>These functions are deprecated, see <code><a href='edges.html'>gt_edges</a></code> and <code><a href='edges.html'>gt_co_edges</a></code>.</p>
     
     </div>
 
-        
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <pre class="usage"><span class='fu'>gt_edges_</span>(<span class='no'>data</span>, <span class='kw'>tweets</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"status_id"</span>,
+  <span class='no'>...</span>)
 
+<span class='fu'>gt_edges_hashes</span>(<span class='no'>data</span>, <span class='no'>hashtags</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>gt_edges_hashes_</span>(<span class='no'>data</span>, <span class='kw'>hashtags</span> <span class='kw'>=</span> <span class='st'>"hashtags"</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <ul>
-<li><p><code><a href='edges.html'>gt_edges</a></code> <code><a href='edges_deprecated.html'>gt_edges_</a></code> - get edges from tweets</p></li>
-<li><p><code><a href='gt_nodes.html'>gt_nodes</a></code> - add meta-data to vertices</p></li>
-<li><p><code><a href='edges.html'>gt_co_edges</a></code> - Co mentions networks</p></li>
-<li><p><code><a href='dyn.html'>gt_dyn</a></code> - create dynamic graphs</p></li>
-<li><p><code><a href='gt_collect.html'>gt_collect</a></code> - collect edges and nodes</p></li>
-<li><p><code><a href='gt_graph.html'>gt_graph</a></code> - create graph</p></li>
-<li><p><code><a href='gt_save.html'>gt_save</a></code> - save graph to file</p></li>
-</ul>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>data</th>
+      <td><p>Data.frame of tweets, usually returned by the <code>rtweet</code> package.</p></td>
+    </tr>
+    <tr>
+      <th>tweets</th>
+      <td><p>Column containing tweets.</p></td>
+    </tr>
+    <tr>
+      <th>source</th>
+      <td><p>Author of tweets.</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>tweets unique id.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>any other column name, see examples.</p></td>
+    </tr>
+    <tr>
+      <th>hashtags</th>
+      <td><p>Column containing co-mentions.</p></td>
+    </tr>
+    <tr>
+      <th>tl</th>
+      <td><p>Set to <code>TRUE</code> to convert hashtags to lower case.</p></td>
+    </tr>
+    </table>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>library</span>(<span class='no'>rtweet</span>)
-
-<span class='no'>tweets</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/rtweet/topics/search_tweets'>search_tweets</a></span>(<span class='st'>"#rstats"</span>)
-
-<span class='fu'>library</span>(<span class='no'>graphTweets</span>)
-
-<span class='co'># simple network</span>
-<span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='edges.html'>gt_edges</a></span>(<span class='no'>screen_name</span>, <span class='no'>mentions_screen_name</span>) <span class='kw'>%&gt;%</span> <span class='co'># get edges</span>
-  <span class='no'>gt_nodes</span> <span class='kw'>%&gt;%</span> <span class='co'># get nodes</span>
-  <span class='no'>gt_graph</span> <span class='kw'>%&gt;%</span> <span class='co'># build igraph object</span>
-  <span class='fu'>plot</span>(<span class='no'>.</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#functions">Functions</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>

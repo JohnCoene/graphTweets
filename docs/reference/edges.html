@@ -165,14 +165,7 @@
 
 <span class='fu'>gt_edges</span>(<span class='no'>data</span>, <span class='no'>source</span>, <span class='no'>target</span>, <span class='no'>...</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>gt_edges_</span>(<span class='no'>data</span>, <span class='kw'>tweets</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"status_id"</span>,
-  <span class='no'>...</span>)
-
-<span class='fu'>gt_co_edges</span>(<span class='no'>data</span>, <span class='no'>col</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>gt_edges_hashes</span>(<span class='no'>data</span>, <span class='no'>hashtags</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>gt_edges_hashes_</span>(<span class='no'>data</span>, <span class='kw'>hashtags</span> <span class='kw'>=</span> <span class='st'>"hashtags"</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>gt_co_edges</span>(<span class='no'>data</span>, <span class='no'>col</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,6 +189,10 @@
     <tr>
       <th>...</th>
       <td><p>any other column name, see examples.</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>Edges target.</p></td>
     </tr>
     <tr>
       <th>tl</th>
@@ -238,7 +235,7 @@ these often duplicated, i.e.: #python #Python.</p>
 )
 
 <span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_edges_from_text</span>(<span class='no'>status_id</span>, <span class='no'>screen_name</span>, <span class='no'>text</span>)</div><div class='output co'>#&gt; $edges
+  <span class='fu'>gt_edges_from_text</span>(<span class='no'>status_id</span>, <span class='no'>screen_name</span>, <span class='no'>text</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'bindrcpp' was built under R version 3.4.4</span></div><div class='output co'>#&gt; $edges
 #&gt; # A tibble: 5 x 2
 #&gt;   source target
 #&gt;   &lt;chr&gt;  &lt;chr&gt; 
@@ -247,10 +244,7 @@ these often duplicated, i.e.: #python #Python.</p>
 #&gt; 3 me     her   
 #&gt; 4 him    me    
 #&gt; 5 him    you   
-#&gt; </div><div class='input'>
-<span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_edges</span>(<span class='no'>screen_name</span>, <span class='no'>mentions_screen_name</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='gt_nodes.html'>gt_nodes</a></span>()</div><div class='output co'>#&gt; <span class='error'>Error in .f(.x[[i]], ...): object 'mentions_screen_name' not found</span></div><div class='input'>    
+#&gt; </div><div class='input'>    
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

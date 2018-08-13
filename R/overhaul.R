@@ -7,9 +7,9 @@ utils::globalVariables(c("start", "screen_name"))
 #' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
 #' @param tweets Column containing tweets.
 #' @param source Author of tweets.
-#' @param target Edges target,
+#' @param target Edges target.
 #' @param id tweets unique id.
-#' @param col,hashtags Column containing co-mentions.
+#' @param col Column containing co-mentions.
 #' @param tl Set to \code{TRUE} to convert hashtags to lower case.
 #' @param ... any other column name, see examples.
 #' 
@@ -140,7 +140,19 @@ gt_edges <- function(data, source, target, ..., tl = TRUE){
   construct(data, edges, NULL)
 }
 
-#' @rdname edges
+#' Deprecated Functions
+#' 
+#' These functions are deprecated, see \code{\link{gt_edges}} and \code{\link{gt_co_edges}}.
+#' 
+#' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
+#' @param tweets Column containing tweets.
+#' @param source Author of tweets.
+#' @param id tweets unique id.
+#' @param hashtags Column containing co-mentions.
+#' @param tl Set to \code{TRUE} to convert hashtags to lower case.
+#' @param ... any other column name, see examples.
+#' 
+#' @rdname edges_deprecated
 #' @export
 gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "status_id", ...){
   
@@ -235,7 +247,7 @@ gt_co_edges <- function(data, col, tl = TRUE){
   construct(data, edges, NULL)
 }
 
-#' @rdname edges
+#' @rdname edges_deprecated
 #' @export
 gt_edges_hashes <- function(data, hashtags,  tl = TRUE){
   
@@ -247,7 +259,7 @@ gt_edges_hashes <- function(data, hashtags,  tl = TRUE){
   gt_edges_hashes_(data, hashtags, tl = tl)
 }
 
-#' @rdname edges
+#' @rdname edges_deprecated
 #' @export
 gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
   

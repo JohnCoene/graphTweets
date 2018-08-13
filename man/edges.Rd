@@ -4,10 +4,7 @@
 \alias{gt_edges_from_text}
 \alias{gt_edges_from_text_}
 \alias{gt_edges}
-\alias{gt_edges_}
 \alias{gt_co_edges}
-\alias{gt_edges_hashes}
-\alias{gt_edges_hashes_}
 \title{Edges}
 \usage{
 gt_edges_from_text(data, id, source, tweets, ...)
@@ -17,14 +14,7 @@ gt_edges_from_text_(data, id = "status_id", source = "screen_name",
 
 gt_edges(data, source, target, ..., tl = TRUE)
 
-gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
-  ...)
-
 gt_co_edges(data, col, tl = TRUE)
-
-gt_edges_hashes(data, hashtags, tl = TRUE)
-
-gt_edges_hashes_(data, hashtags = "hashtags", tl = TRUE)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}
@@ -37,11 +27,11 @@ gt_edges_hashes_(data, hashtags = "hashtags", tl = TRUE)
 
 \item{...}{any other column name, see examples.}
 
-\item{target}{Edges target,}
+\item{target}{Edges target.}
 
 \item{tl}{Set to \code{TRUE} to convert hashtags to lower case.}
 
-\item{col, hashtags}{Column containing co-mentions.}
+\item{col}{Column containing co-mentions.}
 }
 \value{
 An object of class \code{graphTweets}.
