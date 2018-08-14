@@ -7,7 +7,7 @@
 gt_graph(gt)
 }
 \arguments{
-\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
+\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
 }
 \value{
 An object of class \code{igraph}.

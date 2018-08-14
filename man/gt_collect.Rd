@@ -7,7 +7,7 @@
 gt_collect(gt)
 }
 \arguments{
-\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
+\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
 }
 \value{
 A named list of \link[dplyr]{tibble} 1) edges and 2) nodes.

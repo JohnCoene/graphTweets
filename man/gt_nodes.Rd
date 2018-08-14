@@ -7,7 +7,7 @@
 gt_nodes(gt, meta = FALSE)
 }
 \arguments{
-\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
+\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
 
 \item{meta}{Set to \code{TRUE} to add meta data to nodes.}
 }
@@ -16,20 +16,4 @@ An object of class \code{graphTweets}, adds \code{nodes}.
 }
 \description{
 Get nodes from a \code{graphTweets} object.
-}
-\examples{
-# simulate dataset
-tweets <- data.frame(
-  text = c("I tweet @you about @him", 
-           "I tweet @me about @you"),
-  screen_name = c("me", "him"),
-  retweet_count = c(19, 5),
-  status_id = c(1, 2),
-  stringsAsFactors = FALSE
-)
-
-tweets \%>\% 
-  gt_edges_from_text(status_id, screen_name, text) \%>\% 
-  gt_nodes()
-  
 }

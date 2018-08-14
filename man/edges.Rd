@@ -37,6 +37,8 @@ gt_co_edges_bind(gt, col, tl = TRUE)
 
 \item{tl}{Set to \code{TRUE} to convert hashtags to lower case.}
 
+\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
+
 \item{col}{Column containing co-mentions.}
 }
 \value{

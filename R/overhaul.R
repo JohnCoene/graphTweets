@@ -5,6 +5,7 @@ utils::globalVariables(c("start", "screen_name"))
 #' Get edges from data.frame of tweets.
 #' 
 #' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
+#' @param gt An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.
 #' @param tweets Column containing tweets.
 #' @param source Author of tweets.
 #' @param target Edges target.
@@ -90,7 +91,7 @@ gt_edges_from_text_ <- function(data, id = "status_id", source = "screen_name", 
       source = source, 
       target = "handles",
       ...
-      ) %>% 
+    ) %>% 
     dplyr::as_tibble() %>% 
     dplyr::filter(
       source != "",
@@ -323,21 +324,6 @@ gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
 #' 
 #' @inheritParams gt_collect
 #' @param meta Set to \code{TRUE} to add meta data to nodes.
-#' 
-#' @examples 
-#' # simulate dataset
-#' tweets <- data.frame(
-#'   text = c("I tweet @you about @him", 
-#'            "I tweet @me about @you"),
-#'   screen_name = c("me", "him"),
-#'   retweet_count = c(19, 5),
-#'   status_id = c(1, 2),
-#'   stringsAsFactors = FALSE
-#' )
-#'
-#' tweets %>% 
-#'   gt_edges_from_text(status_id, screen_name, text) %>% 
-#'   gt_nodes()
 #'   
 #' @return An object of class \code{graphTweets}, adds \code{nodes}.
 #' 
@@ -375,7 +361,7 @@ gt_nodes <- function(gt, meta = FALSE){
 
 #' Collect
 #' 
-#' @param gt An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.
+#' @param gt An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.
 #' 
 #' @examples 
 #' # simulate dataset

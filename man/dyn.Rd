@@ -7,7 +7,7 @@
 gt_dyn(gt, lifetime = Inf)
 }
 \arguments{
-\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
+\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
 
 \item{lifetime}{Lifetime of a tweet in milliseconds, defaults to \code{Inf}.}
 }

@@ -1,5 +1,10 @@
 # global variables to avoid R CMD CHECK note (timeNodes) 
-globalVariables(c("start.stamp", "end.stamp", ".", "created_at", "target", "end"))
+globalVariables(
+  c(
+    "start.stamp", "end.stamp", ".", "created_at", "target", "end", "type",
+    "status_id"
+  )
+)
 
 # clean handles
 clean_handles <- function(handles) {
@@ -81,7 +86,7 @@ append_graph <- function(gt, tweets, edges, nodes = NULL){
   if(length(gt$tweets) > 1){
     if(sum(!tweets$status_id %in% tweets$status_id) >= 1){
       tw <- tweets %>% 
-        filter(status_id %in% tweets$status_id)
+        dplyr::filter(status_id %in% tweets$status_id)
       
       gt$tweets <- dplyr::bind_rows(gt$tweets, tw)
     }

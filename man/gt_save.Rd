@@ -7,7 +7,7 @@
 gt_save(gt, file = "graphTweets.graphml", format = "graphml", ...)
 }
 \arguments{
-\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}}.}
+\item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
 
 \item{file}{File name including extension (\code{format}).}
 
