@@ -113,31 +113,32 @@ gt_edges <- function(data, source, target, ..., tl = TRUE){
   target <- dplyr::enquo(target)
   source <- dplyr::enquo(source)
   
-  edges <- data %>% 
-    dplyr::select(source = !!source, target = !!target, ...) %>% 
-    tidyr::unnest(target) %>% 
-    dplyr::mutate(
-      target = dplyr::case_when(
-        tl == TRUE ~ tolower(target),
-        TRUE ~ target
-      ),
-      source = dplyr::case_when(
-        tl == TRUE ~ tolower(source),
-        TRUE ~ source
-      )
-    ) %>% 
-    dplyr::group_by(source, target, ...) %>% 
-    dplyr::count() %>% 
-    dplyr::ungroup() %>% 
-    dplyr::filter(!is.na(target)) %>% 
-    dplyr::mutate(
-      target = dplyr::case_when(
-        col_name == "hashtags" ~ paste0("#", target),
-        TRUE ~ target
-      )
-    )
+  edges <- .select_edges(data, source, target, ...) %>% 
+    .get_edges(tl, ...) %>% 
+    .rename_targets(col_name)
   
-  construct(data, edges, NULL)
+  construct(tweets = data, edges = edges, nodes = NULL)
+}
+
+#' @rdname edges
+#' @export
+gt_edges_bind <- function(gt, source, target, ..., tl = TRUE){
+  
+  if(missing(gt) || missing(target) || missing(source))
+    stop("missing gt, target, or source", call. = FALSE)
+  
+  test_input(gt)
+  
+  col_name <- deparse(substitute(target))
+  
+  target <- dplyr::enquo(target)
+  source <- dplyr::enquo(source)
+  
+  edges <- .select_edges(gt$tweets, source, target, ...) %>% 
+    .get_edges(tl, ...) %>% 
+    .rename_targets(col_name)
+  
+  append_graph(gt, gt$tweets, edges, NULL)
 }
 
 #' Deprecated Functions
@@ -201,7 +202,7 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "statu
       target != ""
     ) -> edges
   
-  construct(data, edges, NULL)
+  construct(tweets = data, edges = edges, nodes = NULL)
   
 }
 
@@ -212,22 +213,9 @@ gt_co_edges <- function(data, col, tl = TRUE){
   if(missing(data))
     stop("missing data or col", call. = FALSE)
   
-  bind_edges <- function(x){
-    h <- unlist(x)
-    if(length(h) > 1){
-      cbn <- combinat::combn(h, 2, simplify = FALSE) %>% 
-        purrr::map(function(n){
-          names(n) <- c("source", "target")
-          return(n)
-        }) %>% 
-        purrr::map_df(dplyr::bind_rows)
-      return(cbn)
-    }
-  }
-  
   col_name <- deparse(substitute(col))
   
-  edges <- purrr::map(data[[col_name]], bind_edges) %>% 
+  edges <- purrr::map(data[[col_name]], .bind_co_occurences) %>% 
     purrr::map_df(dplyr::bind_rows) %>% 
     dplyr::mutate(
       source = dplyr::case_when(
@@ -239,12 +227,41 @@ gt_co_edges <- function(data, col, tl = TRUE){
         TRUE ~ target
       )
     ) %>% 
-    dplyr::group_by(source, target) %>% 
-    dplyr::summarise(n_comentions = n()) %>% 
-    dplyr::ungroup() %>% 
-    dplyr::filter(!is.na(target))
+    dplyr::count(source, target) %>% 
+    dplyr::filter(!is.na(target)) %>% 
+    .rename_targets(col_name)
   
-  construct(data, edges, NULL)
+  construct(tweets = data, edges = edges, nodes = NULL)
+}
+
+#' @rdname edges
+#' @export
+gt_co_edges_bind <- function(gt, col, tl = TRUE){
+  
+  if(missing(gt))
+    stop("must pass gt", call. = FALSE)
+  
+  test_input(gt)
+  
+  col_name <- deparse(substitute(col))
+  
+  edges <- purrr::map(gt$tweets[[col_name]], .bind_co_occurences) %>% 
+    purrr::map_df(dplyr::bind_rows) %>% 
+    dplyr::mutate(
+      source = dplyr::case_when(
+        tl == TRUE ~ tolower(source),
+        TRUE ~ source
+      ),
+      target = dplyr::case_when(
+        tl == TRUE ~ tolower(target),
+        TRUE ~ target
+      )
+    ) %>% 
+    dplyr::count(source, target) %>% 
+    dplyr::filter(!is.na(target)) %>% 
+    .rename_targets(col_name)
+  
+  append_graph(gt, gt$tweets, edges, NULL)
 }
 
 #' @rdname edges_deprecated
@@ -297,7 +314,7 @@ gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
     dplyr::summarise(n_comentions = n()) %>% 
     dplyr::ungroup()
   
-  construct(data, edges, NULL)
+  construct(tweets = data, edges = edges, nodes = NULL)
 }
 
 #' Nodes
@@ -334,25 +351,16 @@ gt_nodes <- function(gt, meta = FALSE){
   
   nodes <- c(gt[["edges"]][["source"]], gt[["edges"]][["target"]])
   
-  if(max(grepl("#", gt$edges$target)) >= 1)
-    type <- c(
-      rep("user", nrow(gt[["edges"]])),
-      rep("hashtag", nrow(gt[["edges"]]))
-    )
-  else if("n_comentions" %in% names(gt[["edges"]]))
-    type <- "hashtag"
-  else
-    type <- "user"
-  
   nodes <- dplyr::tibble(
-    nodes = nodes,
-    type = type
+    nodes = nodes
   ) %>% 
-    dplyr::group_by(nodes, type) %>% 
-    dplyr::summarise(
-      n_edges = n()
+    dplyr::mutate(
+      type = dplyr::case_when(
+        grepl("#", nodes) == TRUE ~ "hashtag",
+        TRUE ~ "user"
+      )
     ) %>% 
-    dplyr::ungroup()
+    dplyr::count(nodes, type) 
   
   if(isTRUE(meta)){
     usr <- rtweet::users_data(gt$tweets) %>% dplyr::mutate(screen_name = tolower(screen_name))
@@ -362,7 +370,7 @@ gt_nodes <- function(gt, meta = FALSE){
       unique() -> nodes
   } 
   
-  construct(gt[["tweets"]], gt[["edges"]], nodes)
+  construct(tweets = gt[["tweets"]], edges = gt[["edges"]], nodes = nodes)
 }
 
 #' Collect
@@ -505,7 +513,7 @@ gt_dyn <- function(gt, lifetime = Inf){
   if(nrow(nodes) != nrow(gt[["nodes"]]))
     warning("incorrect number of nodes", call. = FALSE)
 
-  construct(gt[["tweets"]], edges, nodes)
+  construct(tweets = gt[["tweets"]], edges = edges, nodes = nodes)
 }
 
 #' Save

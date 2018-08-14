@@ -45,8 +45,8 @@ div(
         a(
           class = "btn btn-default",
           href = "articles/hashtags.html",
-          tags$i(class = "fa fa-hashtag"),
-          "Hashtags"
+          tags$i(class = "fa fa-arrows-h"),
+          "Co-mentions"
         )
       ),
       div(

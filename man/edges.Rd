@@ -4,7 +4,9 @@
 \alias{gt_edges_from_text}
 \alias{gt_edges_from_text_}
 \alias{gt_edges}
+\alias{gt_edges_bind}
 \alias{gt_co_edges}
+\alias{gt_co_edges_bind}
 \title{Edges}
 \usage{
 gt_edges_from_text(data, id, source, tweets, ...)
@@ -14,7 +16,11 @@ gt_edges_from_text_(data, id = "status_id", source = "screen_name",
 
 gt_edges(data, source, target, ..., tl = TRUE)
 
+gt_edges_bind(gt, source, target, ..., tl = TRUE)
+
 gt_co_edges(data, col, tl = TRUE)
+
+gt_co_edges_bind(gt, col, tl = TRUE)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}

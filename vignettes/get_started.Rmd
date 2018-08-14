@@ -138,4 +138,92 @@ tweets %>%
 class(g)
 ```
 
+## Users to Hashtags
+
+```{r, eval=FALSE}
+library(rtweet)
+tweets <- search_tweets("#rstats OR #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
+```
+
+The same principles follow, we simply use `gt_edges_hash` and pass the `hashtags` column as returned by rtweet. This creates a `tibble` of edges from `screen_name` to `hashtags` used in each tweet.
+
+```{r}
+net <- tweets %>% 
+  gt_edges(screen_name, hashtags) %>% 
+  gt_nodes() %>% 
+  gt_collect()
+```
+
+We'll visualise the graph with [sigmajs](http://sigmajs.john-coene.com/). Let's prepare the data to meet the library's requirements.
+
+* We add `id` to both nodes and edges
+* We add rename a few columns to meet sigmajs' convention
+* We color the nodes by `type` (hashtag or user)
+
+_Apologies for not getting into details here but sigmajs is very well documented, check the [website](http://sigmajs.john-coene.com/) if you want to understand it all_.
+
+```{r}
+edges <- net$edges
+nodes <- net$nodes
+
+edges$id <- seq(1, nrow(edges))
+nodes$id <- nodes$nodes
+nodes$label <- nodes$nodes
+nodes$size <- nodes$n_edges
+nodes$color <- ifelse(nodes$type == "user", "#0084b4", "#1dcaff")
+```
+
+Let's visualise it.
+
+```{r, echo=FALSE}
+library(sigmajs)
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, size, color, label) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_layout(layout = igraph::layout_components) %>% 
+  sg_settings(
+    edgeColor = "default",
+    defaultEdgeColor = "#d3d3d3"
+  ) %>% 
+  sg_neighbours()
+```
+
+We use `sg_layout` to layout the graph and `sg_neightbours` to highlight nodes on click.
+
+## Retweets
+
+You can also build networks of retweets.
+
+```{r}
+tweets <- search_tweets("#rstats filter:retweets", n = 500, include_rts = TRUE, token = token, lang = "en")
+```
+
+```{r}
+net <- tweets %>% 
+  gt_edges(screen_name, retweet_screen_name) %>% 
+  gt_nodes() %>% 
+  gt_collect()
+
+c(edges, nodes) %<-% net
+
+edges$id <- 1:nrow(edges)
+edges$size <- edges$n
+
+nodes$id <- nodes$nodes
+nodes$label <- nodes$nodes
+nodes$size <- nodes$n_edges
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, size, label) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_layout() %>% 
+  sg_cluster() %>% 
+  sg_settings(
+    edgeColor = "default",
+    defaultEdgeColor = "#d3d3d3"
+  ) %>% 
+  sg_neighbours()
+```
+
 \* Some nodes are mentioned in tweets only and therefore have no meta-data associated.
