@@ -50,24 +50,33 @@
   </a>
 </li>
 <li>
+  <a href="news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+  </a>
+</li>
+<li>
   <a href="articles/get_started.html">
     <span class="fa fa-rocket"></span>
      
-    Get Started
   </a>
 </li>
 <li>
   <a href="articles/hashtags.html">
-    <span class="fa fa-hashtag"></span>
+    <span class="fa fa-exchange"></span>
      
-    Hashtags
   </a>
 </li>
 <li>
-  <a href="articles/dynamic.html">
+  <a>
     <span class="fa fa-spinner fa-pulse fa-fw"></span>
      
-    Dynamic
+  </a>
+</li>
+<li>
+  <a href="articles/bind.html">
+    <span class="fa fa-object-group"></span>
+     
   </a>
 </li>
 <li>
@@ -75,13 +84,6 @@
     <span class="fa fa-wrench"></span>
      
     Reference
-  </a>
-</li>
-<li>
-  <a href="news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    Changelog
   </a>
 </li>
       </ul>
@@ -124,21 +126,26 @@
 <img src="logo.png" alt="graphTweets" style="max-height:280px;margin-right:3%;" align="left">
 </div>
 <div class="col-md-9">
-<div class="row"></div>
 <div class="row">
-<div class="col-md-2">
+<div class="col-md-3">
 <a class="btn btn-primary" href="articles/get_started.html">
 <i class="fa fa-rocket"></i>
 Get Started
 </a>
 </div>
-<div class="col-md-2">
-<a class="btn btn-default" href="articles/hashtags.html">
-<i class="fa fa-hashtag"></i>
-Hashtags
+<div class="col-md-3">
+<a class="btn btn-primary" href="articles/comentions.html">
+<i class="fa fa-object-group"></i>
+Co-mentions
 </a>
 </div>
-<div class="col-md-2">
+<div class="col-md-3">
+<a class="btn btn-primary" href="articles/bind.html">
+<i class="fa fa-magnet"></i>
+Bind
+</a>
+</div>
+<div class="col-md-3">
 <a class="btn btn-primary" href="articles/dynamic.html">
 <i class="fa fa-spinner fa-pulse fa-fw"></i>
 Dynamic
@@ -176,9 +183,9 @@ Read
 <a href="#functions" class="anchor"></a>Functions</h2>
 <ul>
 <li>
-<code>gt_edges</code> - get edges.</li>
+<code>gt_edges</code> &amp; <code>gt_edges_bind</code> - get edges.</li>
 <li>
-<code>gt_edges_hash</code> - get hashtags edges.</li>
+<code>gt_co_edges</code> &amp; <code>gt_co_edges_bind</code> - get co-mentions</li>
 <li>
 <code>gt_nodes</code> - get nodes, with or without metadata.</li>
 <li>

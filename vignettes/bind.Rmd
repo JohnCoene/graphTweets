@@ -1,0 +1,82 @@
+---
+title: "Bind Edges"
+author: "John Coene"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Bind Eges}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+library(htmltools)
+library(graphTweets)
+library(rtweet)
+token <- readRDS("../twitter_token.rds")
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+```
+
+Two core functions of graphTweets are `gt_edges` and `gt_co_edges` which come with sister functions: `gt_edges_bind` and `gt_co_edges_bind` that help bind edges together to build more complex graphs.
+
+Let's get some tweets again.
+
+```{r, eval = FALSE}
+library(rtweet)
+
+# 1'000 tweets on #rstats, excluding retweets
+tweets <- search_tweets("#rstats filter:mentions", n = 500, include_rts = FALSE)
+```
+
+In other sections we detailed, amongst other things, how to build 1) a network of hashtags and 2) a network of users connected to the hashtags they use in their tweets: how about we bind these two?
+
+```{r}
+net <- tweets %>% 
+  gt_co_edges(mentions_screen_name) %>%
+  gt_edges_bind(screen_name, hashtags) %>%
+  gt_nodes() %>% 
+  gt_collect()
+
+c(edges, nodes) %<-% net
+
+library(dplyr)
+
+edges <- edges %>% 
+  mutate(id = 1:n()) 
+
+nodes <- nodes %>% 
+  mutate(
+    id = nodes,
+    label = id,
+    size = n
+  )
+
+library(sigmajs)
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, label, size) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_cluster(
+    colors = c(
+      "#0084b4",
+      "#00aced",
+      "#1dcaff",
+      "#c0deed"
+      )
+  ) %>% 
+  sg_layout(layout = igraph::layout_components) %>% 
+  sg_neighbours() %>% 
+  sg_settings(
+    minNodeSize = 1,
+    maxNodeSize = 3,
+    defaultEdgeColor = "#a3a3a3",
+    edgeColor = "default"
+  )
+```
+
+_Functions are built in such a way to you can bind any edges together._

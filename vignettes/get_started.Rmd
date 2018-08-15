@@ -112,7 +112,7 @@ nodes <- gt$nodes %>%
   mutate(
     id = nodes,
     label = nodes,
-    size = n_edges,
+    size = n,
     color = "#1967be"
   ) 
 
@@ -169,7 +169,7 @@ nodes <- net$nodes
 edges$id <- seq(1, nrow(edges))
 nodes$id <- nodes$nodes
 nodes$label <- nodes$nodes
-nodes$size <- nodes$n_edges
+nodes$size <- nodes$n
 nodes$color <- ifelse(nodes$type == "user", "#0084b4", "#1dcaff")
 ```
 
@@ -212,7 +212,7 @@ edges$size <- edges$n
 
 nodes$id <- nodes$nodes
 nodes$label <- nodes$nodes
-nodes$size <- nodes$n_edges
+nodes$size <- nodes$n
 
 sigmajs() %>% 
   sg_nodes(nodes, id, size, label) %>% 

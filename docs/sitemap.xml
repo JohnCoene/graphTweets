@@ -13,6 +13,9 @@
     <loc>http://graphtweets.john-coene.com/reference/edges_deprecated.html</loc>
   </url>
   <url>
+    <loc>http://graphtweets.john-coene.com/reference/edges_from_text.html</loc>
+  </url>
+  <url>
     <loc>http://graphtweets.john-coene.com/reference/graphTweets.html</loc>
   </url>
   <url>
@@ -31,12 +34,15 @@
     <loc>http://graphtweets.john-coene.com/reference/reexports.html</loc>
   </url>
   <url>
+    <loc>http://graphtweets.john-coene.com/articles/bind.html</loc>
+  </url>
+  <url>
+    <loc>http://graphtweets.john-coene.com/articles/comentions.html</loc>
+  </url>
+  <url>
     <loc>http://graphtweets.john-coene.com/articles/dynamic.html</loc>
   </url>
   <url>
     <loc>http://graphtweets.john-coene.com/articles/get_started.html</loc>
-  </url>
-  <url>
-    <loc>http://graphtweets.john-coene.com/articles/hashtags.html</loc>
   </url>
 </urlset>

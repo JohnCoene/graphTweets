@@ -12,7 +12,7 @@ gt_nodes(gt, meta = FALSE)
 \item{meta}{Set to \code{TRUE} to add meta data to nodes.}
 }
 \value{
-An object of class \code{graphTweets}, adds \code{nodes}.
+An object of class \code{graphTweets}.
 }
 \description{
 Get nodes from a \code{graphTweets} object.

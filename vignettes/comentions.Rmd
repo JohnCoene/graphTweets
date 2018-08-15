@@ -20,7 +20,8 @@ knitr::opts_chunk$set(
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
-tweets <- search_tweets("#rstats #python", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets_mentions <- search_tweets("#rstats  filter:mentions", n = 1000, token = token, lang = "en")
 #tweets$text <- iconv(tweets$text, to = "UTF-8", sub = "")
 ```
 
@@ -47,7 +48,7 @@ net <- tweets %>%
 c(edges, nodes) %<-% net
 ```
 
-Then again, we'll use `sigmajs` for the visualisation. Since we got tweets on `#rstats` we will remove this node, it will be connected to all other hashtags. Make sure you remove it from both nodes and edges
+Then again, we'll use `sigmajs` for the visualisation. Since we got tweets on `#rstats` we will remove this node, it will be connected to all other hashtags. _Make sure you remove it from both nodes and edges._
 
 ```{r}
 library(dplyr)
@@ -56,17 +57,19 @@ edges <- edges %>%
   mutate(
     id = 1:n()
   ) %>% 
-  filter(source != "rstats") %>% 
-  filter(target != "rstats")
+  filter(source != "#rstats") %>% 
+  filter(target != "#rstats")
 
 nodes <- nodes %>% 
   mutate(
     id = nodes,
-    label = paste0("#", id),
-    size = n_edges
+    label = id,
+    size = n
   ) %>% 
-  filter(id != "rstats") %>% 
+  filter(id != "#rstats") %>% 
   select(id, label, size)
+
+library(sigmajs)
 
 sigmajs() %>% 
   sg_nodes(nodes, id, label, size) %>% 
@@ -88,3 +91,49 @@ sigmajs() %>%
 ```
 
 ## Users co-mentions
+
+We can also build networks of co-mentions where users that are \@tagged in the same tweet are connected. We'll collect more tweets, with a slightly different queries to ensure that the tweets include \@mentions.
+
+```{r other tweets 2, message=FALSE, warning=FALSE}
+tweets_mentions <- search_tweets("rstats filter:mentions", n = 1000, token = token, lang = "en")
+```
+
+When preparing the graph we simply pass `mentions_screen_name` instead of `hashtags` as we did before.
+
+```{r}
+net <- tweets_mentions %>% 
+  gt_co_edges(mentions_screen_name) %>%
+  gt_nodes() %>% 
+  gt_collect()
+
+c(edges, nodes) %<-% net
+
+edges <- edges %>% 
+  mutate(id = 1:n()) 
+
+nodes <- nodes %>% 
+  mutate(
+    id = nodes,
+    label = id,
+    size = n
+  )
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, label, size) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_cluster(
+    colors = c(
+      "#0084b4",
+      "#00aced",
+      "#1dcaff",
+      "#c0deed"
+      )
+  ) %>% 
+  sg_layout(layout = igraph::layout.fruchterman.reingold) %>% 
+  sg_neighbours() %>% 
+  sg_settings(
+    maxNodeSize = 3,
+    defaultEdgeColor = "#a3a3a3",
+    edgeColor = "default"
+  )
+```

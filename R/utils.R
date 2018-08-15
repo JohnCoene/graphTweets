@@ -57,6 +57,16 @@ construct <- function(gt, tweets, edges, nodes = NULL){
     )
 }
 
+.rename_sources <- function(edges, col_name){
+  edges %>% 
+    dplyr::mutate(
+      source = dplyr::case_when(
+        col_name == "hashtags" ~ paste0("#", source),
+        TRUE ~ source
+      )
+    )
+}
+
 .get_edges <- function(edges, tl, ...){
   edges %>% 
     dplyr::mutate(

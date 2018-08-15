@@ -1,18 +1,14 @@
 utils::globalVariables(c("start", "screen_name"))
 
-#' Edges
+#' Edges from text
 #' 
 #' Get edges from data.frame of tweets.
 #' 
 #' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
-#' @param gt An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.
-#' @param tweets Column containing tweets.
 #' @param source Author of tweets.
-#' @param target Edges target.
+#' @param tweets Column containing tweets.
 #' @param id tweets unique id.
-#' @param col Column containing co-mentions.
-#' @param tl Set to \code{TRUE} to convert hashtags to lower case.
-#' @param ... any other column name, see examples.
+#' @param ... any other column name.
 #' 
 #' @section Functions:
 #' \itemize{
@@ -40,7 +36,7 @@ utils::globalVariables(c("start", "screen_name"))
 #'     
 #' @return An object of class \code{graphTweets}.
 #' 
-#' @rdname edges
+#' @rdname edges_from_text
 #' @export
 gt_edges_from_text <- function(data, id, source, tweets, ...){
   if(missing(data) || missing(tweets) || missing(source) || missing(id))
@@ -51,7 +47,7 @@ gt_edges_from_text <- function(data, id, source, tweets, ...){
   gt_edges_from_text_(data, id, source, tweets, ...)
 }
 
-#' @rdname edges
+#' @rdname edges_from_text
 #' @export
 gt_edges_from_text_ <- function(data, id = "status_id", source = "screen_name", tweets = "text", ...){
   
@@ -102,6 +98,18 @@ gt_edges_from_text_ <- function(data, id = "status_id", source = "screen_name", 
   
 }
 
+#' Edges
+#' 
+#' Get edges from data.frame of tweets.
+#' 
+#' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
+#' @param gt An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.
+#' @param source Author of tweets.
+#' @param target Edges target.
+#' @param col Column containing co-mentions.
+#' @param tl Set to \code{TRUE} to convert hashtags to lower case.
+#' @param ... any other column name, see examples.
+#' 
 #' @rdname edges
 #' @export
 gt_edges <- function(data, source, target, ..., tl = TRUE){
@@ -142,6 +150,66 @@ gt_edges_bind <- function(gt, source, target, ..., tl = TRUE){
   append_graph(gt, gt$tweets, edges, NULL)
 }
 
+#' @rdname edges
+#' @export
+gt_co_edges <- function(data, col, tl = TRUE){
+  
+  if(missing(data))
+    stop("missing data or col", call. = FALSE)
+  
+  col_name <- deparse(substitute(col))
+  
+  edges <- purrr::map(data[[col_name]], .bind_co_occurences) %>% 
+    purrr::map_df(dplyr::bind_rows) %>% 
+    dplyr::mutate(
+      source = dplyr::case_when(
+        tl == TRUE ~ tolower(source),
+        TRUE ~ source
+      ),
+      target = dplyr::case_when(
+        tl == TRUE ~ tolower(target),
+        TRUE ~ target
+      )
+    ) %>% 
+    dplyr::count(source, target) %>% 
+    dplyr::filter(!is.na(target)) %>% 
+    .rename_targets(col_name) %>% 
+    .rename_sources(col_name)
+  
+  construct(tweets = data, edges = edges, nodes = NULL)
+}
+
+#' @rdname edges
+#' @export
+gt_co_edges_bind <- function(gt, col, tl = TRUE){
+  
+  if(missing(gt))
+    stop("must pass gt", call. = FALSE)
+  
+  test_input(gt)
+  
+  col_name <- deparse(substitute(col))
+  
+  edges <- purrr::map(gt$tweets[[col_name]], .bind_co_occurences) %>% 
+    purrr::map_df(dplyr::bind_rows) %>% 
+    dplyr::mutate(
+      source = dplyr::case_when(
+        tl == TRUE ~ tolower(source),
+        TRUE ~ source
+      ),
+      target = dplyr::case_when(
+        tl == TRUE ~ tolower(target),
+        TRUE ~ target
+      )
+    ) %>% 
+    dplyr::count(source, target) %>% 
+    dplyr::filter(!is.na(target)) %>% 
+    .rename_targets(col_name) %>% 
+    .rename_sources(col_name)
+  
+  append_graph(gt, gt$tweets, edges, NULL)
+}
+
 #' Deprecated Functions
 #' 
 #' These functions are deprecated, see \code{\link{gt_edges}} and \code{\link{gt_co_edges}}.
@@ -149,7 +217,7 @@ gt_edges_bind <- function(gt, source, target, ..., tl = TRUE){
 #' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
 #' @param tweets Column containing tweets.
 #' @param source Author of tweets.
-#' @param id tweets unique id.
+#' @param id Unique id.
 #' @param hashtags Column containing co-mentions.
 #' @param tl Set to \code{TRUE} to convert hashtags to lower case.
 #' @param ... any other column name, see examples.
@@ -205,64 +273,6 @@ gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "statu
   
   construct(tweets = data, edges = edges, nodes = NULL)
   
-}
-
-#' @rdname edges
-#' @export
-gt_co_edges <- function(data, col, tl = TRUE){
-  
-  if(missing(data))
-    stop("missing data or col", call. = FALSE)
-  
-  col_name <- deparse(substitute(col))
-  
-  edges <- purrr::map(data[[col_name]], .bind_co_occurences) %>% 
-    purrr::map_df(dplyr::bind_rows) %>% 
-    dplyr::mutate(
-      source = dplyr::case_when(
-        tl == TRUE ~ tolower(source),
-        TRUE ~ source
-      ),
-      target = dplyr::case_when(
-        tl == TRUE ~ tolower(target),
-        TRUE ~ target
-      )
-    ) %>% 
-    dplyr::count(source, target) %>% 
-    dplyr::filter(!is.na(target)) %>% 
-    .rename_targets(col_name)
-  
-  construct(tweets = data, edges = edges, nodes = NULL)
-}
-
-#' @rdname edges
-#' @export
-gt_co_edges_bind <- function(gt, col, tl = TRUE){
-  
-  if(missing(gt))
-    stop("must pass gt", call. = FALSE)
-  
-  test_input(gt)
-  
-  col_name <- deparse(substitute(col))
-  
-  edges <- purrr::map(gt$tweets[[col_name]], .bind_co_occurences) %>% 
-    purrr::map_df(dplyr::bind_rows) %>% 
-    dplyr::mutate(
-      source = dplyr::case_when(
-        tl == TRUE ~ tolower(source),
-        TRUE ~ source
-      ),
-      target = dplyr::case_when(
-        tl == TRUE ~ tolower(target),
-        TRUE ~ target
-      )
-    ) %>% 
-    dplyr::count(source, target) %>% 
-    dplyr::filter(!is.na(target)) %>% 
-    .rename_targets(col_name)
-  
-  append_graph(gt, gt$tweets, edges, NULL)
 }
 
 #' @rdname edges_deprecated
@@ -325,7 +335,7 @@ gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
 #' @inheritParams gt_collect
 #' @param meta Set to \code{TRUE} to add meta data to nodes.
 #'   
-#' @return An object of class \code{graphTweets}, adds \code{nodes}.
+#' @return An object of class \code{graphTweets}.
 #' 
 #' @export
 gt_nodes <- function(gt, meta = FALSE){

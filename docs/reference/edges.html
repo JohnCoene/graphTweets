@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Edges — gt_edges_from_text • graphTweets</title>
+<title>Edges — gt_edges • graphTweets</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Edges — gt_edges_from_text" />
+<meta property="og:title" content="Edges — gt_edges" />
 
 <meta property="og:description" content="Get edges from data.frame of tweets." />
 
@@ -86,24 +86,33 @@
   </a>
 </li>
 <li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/get_started.html">
     <span class="fa fa-rocket"></span>
      
-    Get Started
   </a>
 </li>
 <li>
   <a href="../articles/hashtags.html">
-    <span class="fa fa-hashtag"></span>
+    <span class="fa fa-exchange"></span>
      
-    Hashtags
   </a>
 </li>
 <li>
-  <a href="../articles/dynamic.html">
+  <a>
     <span class="fa fa-spinner fa-pulse fa-fw"></span>
      
-    Dynamic
+  </a>
+</li>
+<li>
+  <a href="../articles/bind.html">
+    <span class="fa fa-object-group"></span>
+     
   </a>
 </li>
 <li>
@@ -111,13 +120,6 @@
     <span class="fa fa-wrench"></span>
      
     Reference
-  </a>
-</li>
-<li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    Changelog
   </a>
 </li>
       </ul>
@@ -158,14 +160,13 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>gt_edges_from_text</span>(<span class='no'>data</span>, <span class='no'>id</span>, <span class='no'>source</span>, <span class='no'>tweets</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>gt_edges</span>(<span class='no'>data</span>, <span class='no'>source</span>, <span class='no'>target</span>, <span class='no'>...</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>gt_edges_from_text_</span>(<span class='no'>data</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"status_id"</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='st'>"screen_name"</span>,
-  <span class='kw'>tweets</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='no'>...</span>)
+<span class='fu'>gt_edges_bind</span>(<span class='no'>gt</span>, <span class='no'>source</span>, <span class='no'>target</span>, <span class='no'>...</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>gt_edges</span>(<span class='no'>data</span>, <span class='no'>source</span>, <span class='no'>target</span>, <span class='no'>...</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>gt_co_edges</span>(<span class='no'>data</span>, <span class='no'>col</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>gt_co_edges</span>(<span class='no'>data</span>, <span class='no'>col</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>gt_co_edges_bind</span>(<span class='no'>gt</span>, <span class='no'>col</span>, <span class='kw'>tl</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,28 +176,24 @@
       <td><p>Data.frame of tweets, usually returned by the <code>rtweet</code> package.</p></td>
     </tr>
     <tr>
-      <th>id</th>
-      <td><p>tweets unique id.</p></td>
-    </tr>
-    <tr>
       <th>source</th>
       <td><p>Author of tweets.</p></td>
-    </tr>
-    <tr>
-      <th>tweets</th>
-      <td><p>Column containing tweets.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>any other column name, see examples.</p></td>
     </tr>
     <tr>
       <th>target</th>
       <td><p>Edges target.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>any other column name, see examples.</p></td>
+    </tr>
+    <tr>
       <th>tl</th>
       <td><p>Set to <code>TRUE</code> to convert hashtags to lower case.</p></td>
+    </tr>
+    <tr>
+      <th>gt</th>
+      <td><p>An object of class <code>graphTweets</code> as returned by <code>gt_edges</code> and <code><a href='gt_nodes.html'>gt_nodes</a></code>.</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -204,62 +201,13 @@
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>graphTweets</code>.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The <code>tl</code> arguments stands for <code>tolower</code> and allows converting the #hashtags to lower case as 
-these often duplicated, i.e.: #python #Python.</p>
-    
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-    <ul>
-<li><p><code>gt_edges</code> - Build networks of users.</p></li>
-<li><p><code>gt_co_edges</code> - Build networks of users to hashtags.</p></li>
-</ul>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># simulate dataset</span>
-<span class='no'>tweets</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
-  <span class='kw'>text</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"I tweet @you about @him and @her"</span>,
-           <span class='st'>"I tweet @me about @you"</span>),
-  <span class='kw'>screen_name</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"me"</span>, <span class='st'>"him"</span>),
-  <span class='kw'>retweet_count</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>19</span>, <span class='fl'>5</span>),
-  <span class='kw'>status_id</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
-  <span class='kw'>hashtags</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"rstats"</span>, <span class='st'>"Python"</span>),
-  <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)
-
-<span class='no'>tweets</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>gt_edges_from_text</span>(<span class='no'>status_id</span>, <span class='no'>screen_name</span>, <span class='no'>text</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package 'bindrcpp' was built under R version 3.4.4</span></div><div class='output co'>#&gt; $edges
-#&gt; # A tibble: 5 x 2
-#&gt;   source target
-#&gt;   &lt;chr&gt;  &lt;chr&gt; 
-#&gt; 1 me     you   
-#&gt; 2 me     him   
-#&gt; 3 me     her   
-#&gt; 4 him    me    
-#&gt; 5 him    you   
-#&gt; </div><div class='input'>    
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
-
-      <li><a href="#functions">Functions</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

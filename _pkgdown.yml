@@ -21,21 +21,18 @@ navbar:
   left:
     - icon: fa-home
       href: index.html
+    - icon: fa-newspaper-o
+      href: news/index.html
     - icon: fa-rocket
-      text: "Get Started"
       href: articles/get_started.html
-    - icon: fa-hashtag
-      text: "Hashtags"
+    - icon: fa-exchange
       href: articles/hashtags.html
     - icon: fa-spinner fa-pulse fa-fw
-      text: "Dynamic"
-      href: articles/dynamic.html
+    - icon: fa-object-group 
+      href: articles/bind.html
     - icon: fa-wrench
       text: "Reference"
       href: "reference/"
-    - icon: fa-newspaper-o
-      text: "Changelog"
-      href: news/index.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/JohnCoene/graphTweets

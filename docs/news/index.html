@@ -84,24 +84,33 @@
   </a>
 </li>
 <li>
+  <a href="../news/index.html">
+    <span class="fa fa-newspaper-o"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../articles/get_started.html">
     <span class="fa fa-rocket"></span>
      
-    Get Started
   </a>
 </li>
 <li>
   <a href="../articles/hashtags.html">
-    <span class="fa fa-hashtag"></span>
+    <span class="fa fa-exchange"></span>
      
-    Hashtags
   </a>
 </li>
 <li>
-  <a href="../articles/dynamic.html">
+  <a>
     <span class="fa fa-spinner fa-pulse fa-fw"></span>
      
-    Dynamic
+  </a>
+</li>
+<li>
+  <a href="../articles/bind.html">
+    <span class="fa fa-object-group"></span>
+     
   </a>
 </li>
 <li>
@@ -109,13 +118,6 @@
     <span class="fa fa-wrench"></span>
      
     Reference
-  </a>
-</li>
-<li>
-  <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
-     
-    Changelog
   </a>
 </li>
       </ul>
@@ -158,6 +160,8 @@
 <code>gt_co_edges</code> replaces <code>gt_edges_hashes</code>, it now works with other columns than just <code>hashtags</code>.</li>
 <li>
 <code>gt_edges_hash</code> is <em>deprecated</em> in favour of <code>gt_edges</code>.</li>
+<li>
+<code>gt_edges_bind</code> and <code>gt_co_edges_bind</code> added to bind edges together and build more complex graphs.</li>
 <li>Escape hatches, functions ending in <code>_</code> are no longer necessary and are thus deprecated.</li>
 </ul>
 <p>The origin <code>gt_edges</code> functions, first part of the package in 2014, was extracting <a href='http://github.com/tagged'>@tagged</a> users from tweets’ text with convoluted regular expressions: it is no longer necessary as <code>rtweet</code> now returns <code>mentions_screen_name</code>, hence the aforementioned changes.</p>

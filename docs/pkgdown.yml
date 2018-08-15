@@ -2,9 +2,10 @@ pandoc: 2.2.1
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
+  bind: bind.html
+  comentions: comentions.html
   dynamic: dynamic.html
   get_started: get_started.html
-  hashtags: hashtags.html
 urls:
   reference: http://graphtweets.john-coene.com/reference
   article: http://graphtweets.john-coene.com/articles

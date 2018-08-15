@@ -27,12 +27,9 @@ div(
   div(
     class = "col-md-9",
     div(
-      class = "row"
-    ),
-    div(
       class = "row",
       div(
-        class = "col-md-2",
+        class = "col-md-3",
         a(
           class = "btn btn-primary",
           href = "articles/get_started.html",
@@ -41,16 +38,25 @@ div(
         )
       ),
       div(
-        class = "col-md-2",
+        class = "col-md-3",
         a(
-          class = "btn btn-default",
-          href = "articles/hashtags.html",
-          tags$i(class = "fa fa-arrows-h"),
+          class = "btn btn-primary",
+          href = "articles/comentions.html",
+          tags$i(class = "fa fa-object-group"),
           "Co-mentions"
         )
       ),
       div(
-        class = "col-md-2",
+        class = "col-md-3",
+        a(
+          class = "btn btn-primary",
+          href = "articles/bind.html",
+          tags$i(class = "fa fa-magnet"),
+          "Bind"
+        )
+      ),
+      div(
+        class = "col-md-3",
         a(
           class = "btn btn-primary",
           href = "articles/dynamic.html",
@@ -94,8 +100,8 @@ devtools::install_github("JohnCoene/graphTweets") # dev version
 
 ## Functions
 
-- `gt_edges` - get edges.
-- `gt_edges_hash` - get hashtags edges.
+- `gt_edges` & `gt_edges_bind` - get edges.
+- `gt_co_edges` & `gt_co_edges_bind` - get co-mentions
 - `gt_nodes` - get nodes, with or without metadata.
 - `gt_dyn` - create dynamic graph.
 - `gt_graph` - create `igraph` graph object.

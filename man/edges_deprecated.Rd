@@ -6,8 +6,8 @@
 \alias{gt_edges_hashes_}
 \title{Deprecated Functions}
 \usage{
-gt_edges_(data, tweets = "text", source = "screen_name", id = "status_id",
-  ...)
+gt_edges_(data, tweets = "text", source = "screen_name",
+  id = "status_id", ...)
 
 gt_edges_hashes(data, hashtags, tl = TRUE)
 
@@ -20,7 +20,7 @@ gt_edges_hashes_(data, hashtags = "hashtags", tl = TRUE)
 
 \item{source}{Author of tweets.}
 
-\item{id}{tweets unique id.}
+\item{id}{Unique id.}
 
 \item{...}{any other column name, see examples.}
 

@@ -21,7 +21,7 @@ Imports:
     tidyr,
     zeallot,
     combinat
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 URL: http://graphTweets.john-coene.com
 BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
@@ -31,4 +31,5 @@ Suggests:
     sigmajs,
     htmltools
 VignetteBuilder: knitr
+Encoding: UTF-8
 Remotes: JohnCoene/sigmajs

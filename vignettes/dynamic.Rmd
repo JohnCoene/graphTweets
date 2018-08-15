@@ -78,7 +78,7 @@ nodes <- net$nodes %>%
   dplyr::mutate(
     id = nodes,
     label = nodes,
-    size = n_edges
+    size = n
   )
 
 # graph layout 
