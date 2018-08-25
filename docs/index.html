@@ -62,13 +62,13 @@
   </a>
 </li>
 <li>
-  <a href="articles/hashtags.html">
+  <a href="articles/comentions.html">
     <span class="fa fa-exchange"></span>
      
   </a>
 </li>
 <li>
-  <a>
+  <a href="articles/dynamic.html">
     <span class="fa fa-spinner fa-pulse fa-fw"></span>
      
   </a>
@@ -175,8 +175,8 @@ Read
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"graphTweets"</span>) <span class="co"># CRAN release v0.4</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"JohnCoene/graphTweets"</span>) <span class="co"># dev version</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"graphTweets"</span>) <span class="co"># CRAN release v0.4</span>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"JohnCoene/graphTweets"</span>) <span class="co"># dev version</span></code></pre></div>
 </div>
 <div id="functions" class="section level2">
 <h2 class="hasAnchor">
@@ -207,14 +207,14 @@ Read
 <li>Extract the nodes</li>
 </ol>
 <p>One can only know the nodes of a network based on the edges, so run them in that order. However, you can build a graph based on edges alone:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(igraph) <span class="co"># for plot</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">tweets &lt;-<span class="st"> </span>rtweet<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtweet/topics/search_tweets">search_tweets</a></span>(<span class="st">"rstats"</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">tweets <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="reference/edges.html">gt_edges</a></span>(text, screen_name, status_id) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="reference/gt_graph.html">gt_graph</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw">plot</span>()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(igraph) <span class="co"># for plot</span>
+
+tweets &lt;-<span class="st"> </span>rtweet<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/rtweet/topics/search_tweets">search_tweets</a></span>(<span class="st">"rstats"</span>)
+
+tweets <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="reference/edges.html">gt_edges</a></span>(text, screen_name, status_id) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="reference/gt_graph.html">gt_graph</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">plot</span>()</code></pre></div>
 <p>This is useful if you are building a large graph and don’t need any meta data on the nodes (other than those you can compute from the graph, i.e.: <code>degree</code> like in the example above). If you need meta data on the nodes use <code>gt_nodes</code>.</p>
 </div>
 </div>

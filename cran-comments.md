@@ -11,9 +11,10 @@ Bug fixes and an additional function.
 
 NEWS.md:
 
-> # graphTweets 0.4.3
->
-> * Added `gt_edges_hashes_` and `gt_edges_hashes` to build networks of #hashtags co-mentions.
-> * Added `%<-%` from the zeallot package to unpack the nodes and edges.
-> * Fixed `gt_dyn` bug where lifetime was not working properly.
+> # graphTweets 0.5.0
+> 
+> * `gt_co_edges` replaces `gt_edges_hashes`, it now works with other columns than just `hashtags`.
+> * `gt_edges_hash` is _deprecated_ in favour of `gt_edges`.
+> * `gt_edges_bind` and `gt_co_edges_bind` added to bind edges together and build more complex graphs.
+> * Escape hatches, functions ending in `_` are no longer necessary and are thus deprecated.
 

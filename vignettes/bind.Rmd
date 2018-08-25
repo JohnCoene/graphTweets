@@ -19,7 +19,7 @@ library(htmltools)
 library(graphTweets)
 library(rtweet)
 token <- readRDS("../twitter_token.rds")
-tweets <- search_tweets("#rstats", n = 1000, include_rts = FALSE, token = token, lang = "en")
+tweets <- search_tweets("#rstats filter:mentions", n = 100, include_rts = FALSE, token = token, lang = "en")
 ```
 
 Two core functions of graphTweets are `gt_edges` and `gt_co_edges` which come with sister functions: `gt_edges_bind` and `gt_co_edges_bind` that help bind edges together to build more complex graphs.
@@ -30,7 +30,7 @@ Let's get some tweets again.
 library(rtweet)
 
 # 1'000 tweets on #rstats, excluding retweets
-tweets <- search_tweets("#rstats filter:mentions", n = 500, include_rts = FALSE)
+tweets <- search_tweets("#rstats filter:mentions", n = 100, include_rts = FALSE)
 ```
 
 In other sections we detailed, amongst other things, how to build 1) a network of hashtags and 2) a network of users connected to the hashtags they use in their tweets: how about we bind these two?

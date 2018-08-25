@@ -26,8 +26,9 @@ navbar:
     - icon: fa-rocket
       href: articles/get_started.html
     - icon: fa-exchange
-      href: articles/hashtags.html
+      href: articles/comentions.html
     - icon: fa-spinner fa-pulse fa-fw
+      href: articles/dynamic.html
     - icon: fa-object-group 
       href: articles/bind.html
     - icon: fa-wrench
