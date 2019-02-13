@@ -1,3 +1,7 @@
+# graphTweets 0.5.1
+
+Better use of tidyeval to improve usage of the package in functions.
+
 # graphTweets 0.5.0
 
 * `gt_co_edges` replaces `gt_edges_hashes`, it now works with other columns than just `hashtags`.

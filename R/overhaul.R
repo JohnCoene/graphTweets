@@ -117,10 +117,10 @@ gt_edges <- function(data, source, target, ..., tl = TRUE){
   if(missing(data) || missing(target) || missing(source))
     stop("missing data, target, or source", call. = FALSE)
   
-  col_name <- deparse(substitute(target))
-  
   target <- dplyr::enquo(target)
   source <- dplyr::enquo(source)
+  
+  col_name <- dplyr::quo_name(target)
   
   edges <- .select_edges(data, source, target, ...) %>% 
     .get_edges(tl, ...) %>% 
@@ -138,10 +138,10 @@ gt_edges_bind <- function(gt, source, target, ..., tl = TRUE){
   
   test_input(gt)
   
-  col_name <- deparse(substitute(target))
-  
   target <- dplyr::enquo(target)
   source <- dplyr::enquo(source)
+
+  col_name <- dplyr::quo_name(target)
   
   edges <- .select_edges(gt$tweets, source, target, ...) %>% 
     .get_edges(tl, ...) %>% 
