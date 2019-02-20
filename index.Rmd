@@ -34,7 +34,8 @@ div(
           class = "btn btn-primary",
           href = "articles/get_started.html",
           tags$i(class = "fa fa-rocket"),
-          "Get Started"
+          "Get Started",
+					style = "width:100%"
         )
       ),
       div(
@@ -43,7 +44,8 @@ div(
           class = "btn btn-primary",
           href = "articles/comentions.html",
           tags$i(class = "fa fa-object-group"),
-          "Co-mentions"
+          "Co-mentions",
+					style = "width:100%"
         )
       ),
       div(
@@ -52,7 +54,8 @@ div(
           class = "btn btn-primary",
           href = "articles/bind.html",
           tags$i(class = "fa fa-magnet"),
-          "Bind"
+          "Bind",
+					style = "width:100%"
         )
       ),
       div(
@@ -61,7 +64,8 @@ div(
           class = "btn btn-primary",
           href = "articles/dynamic.html",
           tags$i(class = "fa fa-spinner fa-pulse fa-fw"),
-          "Dynamic"
+          "Dynamic",
+					style = "width:100%"
         )
       )
     )

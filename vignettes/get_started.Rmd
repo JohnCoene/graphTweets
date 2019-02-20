@@ -218,7 +218,39 @@ sigmajs() %>%
   sg_nodes(nodes, id, size, label) %>% 
   sg_edges(edges, id, source, target) %>% 
   sg_layout() %>% 
-  sg_cluster() %>% 
+  sg_cluster(colors = c("#0C46A0FF", "#41A5F4FF")) %>% 
+  sg_settings(
+    edgeColor = "default",
+    defaultEdgeColor = "#d3d3d3"
+  ) %>% 
+  sg_neighbours()
+```
+
+## Retweets & Quotes
+
+We can bind quoted tweets (surely they should be considered as retweets) using `gt_bind_edges`. 
+
+```{r}
+net <- tweets %>% 
+  gt_edges(screen_name, retweet_screen_name) %>% 
+	gt_edges_bind(screen_name, quoted_screen_name) %>% 
+  gt_nodes() %>% 
+  gt_collect()
+
+c(edges, nodes) %<-% net
+
+edges$id <- 1:nrow(edges)
+edges$size <- edges$n
+
+nodes$id <- nodes$nodes
+nodes$label <- nodes$nodes
+nodes$size <- nodes$n
+
+sigmajs() %>% 
+  sg_nodes(nodes, id, size, label) %>% 
+  sg_edges(edges, id, source, target) %>% 
+  sg_layout() %>% 
+  sg_cluster(colors = c("#0C46A0FF", "#41A5F4FF")) %>% 
   sg_settings(
     edgeColor = "default",
     defaultEdgeColor = "#d3d3d3"

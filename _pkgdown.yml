@@ -23,13 +23,13 @@ navbar:
       href: index.html
     - icon: fa-newspaper-o
       href: news/index.html
-    - icon: fa-rocket
+    - text: Get Started
       href: articles/get_started.html
-    - icon: fa-exchange
+    - text: Co-mentions
       href: articles/comentions.html
-    - icon: fa-spinner fa-pulse fa-fw
+    - text: Dynamic
       href: articles/dynamic.html
-    - icon: fa-object-group 
+    - text: Bind 
       href: articles/bind.html
     - icon: fa-wrench
       text: "Reference"

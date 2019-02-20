@@ -68,7 +68,7 @@ library(sigmajs)
 # convert to numeric & rescale
 edges <- net$edges %>% 
   dplyr::mutate( 
-    id = 1:n(),
+    id = 1:dplyr::n(),
     created_at = as.numeric(created_at),
     created_at = (created_at - min(created_at)) / (max(created_at) - min(created_at)),
     created_at = created_at * 10000
@@ -90,7 +90,7 @@ sigmajs() %>%
   sg_nodes(nodes, id, size, label, x, y, color) %>% 
   sg_add_edges(edges, created_at, id, source, target, 
                cumsum = FALSE, refresh = TRUE) %>% 
-  sg_button("<i class='fa fa-play'></i>", "add_edges", class = "btn btn-primary") %>% 
+  sg_button("add_edges", tags$i(class = "fa fa-play"), class = "btn btn-primary") %>% 
   sg_settings(defaultNodeColor = "#1967be")
 ```
 
