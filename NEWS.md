@@ -1,5 +1,9 @@
 # graphTweets 0.5.1
 
+* `gt_add_meta` Added to add custom meta data to nodes. 
+
+# graphTweets 0.5.1
+
 Better use of tidyeval to improve usage of the package in functions.
 
 # graphTweets 0.5.0

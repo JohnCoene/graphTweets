@@ -2,14 +2,21 @@
 % Please edit documentation in R/overhaul.R
 \name{gt_nodes}
 \alias{gt_nodes}
+\alias{gt_add_meta}
 \title{Nodes}
 \usage{
 gt_nodes(gt, meta = FALSE)
+
+gt_add_meta(gt, name, source, target)
 }
 \arguments{
 \item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
 
-\item{meta}{Set to \code{TRUE} to add meta data to nodes.}
+\item{meta}{Set to \code{TRUE} to add meta data to nodes using \link[rtweet]{users_data}.}
+
+\item{name}{Name of column to create.}
+
+\item{source, target}{Name of column too apply to edge source and target.}
 }
 \value{
 An object of class \code{graphTweets}.
@@ -17,3 +24,11 @@ An object of class \code{graphTweets}.
 \description{
 Get nodes from a \code{graphTweets} object.
 }
+\section{Functions}{
+
+\itemize{
+  \item{\code{gt_nodes}: Builds nodes}
+  \item{\code{gt_add_meta}: Add meta data to the nodes. The meta data is taken from the edges.}
+}
+}
+

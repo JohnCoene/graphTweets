@@ -1,7 +1,7 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.5.1
+Version: 0.5.2
 Date: 2019-02-12
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
@@ -26,6 +26,7 @@ RoxygenNote: 6.1.1
 URL: http://graphTweets.john-coene.com
 BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
+    scales,
     testthat,
     knitr,
     rmarkdown,

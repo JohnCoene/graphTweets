@@ -29,6 +29,7 @@
 #'   plot(.)
 #' }
 #' 
+#' @importFrom rlang :=
 #' @importFrom dplyr n
 #' @name graphTweets
 #' @docType package

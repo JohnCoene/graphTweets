@@ -23,6 +23,9 @@ navbar:
       href: index.html
     - icon: fa-newspaper-o
       href: news/index.html
+    - icon: fa-wrench
+      text: "Reference"
+      href: "reference/"
     - text: Get Started
       href: articles/get_started.html
     - text: Co-mentions
@@ -31,9 +34,6 @@ navbar:
       href: articles/dynamic.html
     - text: Bind 
       href: articles/bind.html
-    - icon: fa-wrench
-      text: "Reference"
-      href: "reference/"
   right:
     - icon: fa-github fa-lg
       href: https://github.com/JohnCoene/graphTweets

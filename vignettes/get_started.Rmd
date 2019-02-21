@@ -75,7 +75,7 @@ lapply(graph, names) # names of data.frames returned
 
 On `graphTweets` version `0.4.1` `gt_nodes` returns the number of edges the node is present in: `n_edges`. *Here I used `gt_collect`, you can, again, use `gt_graph` if you want to return an `igraph` object.*
 
-Adding nodes has not bring much to table however, `gt_nodes` takes another argument, `meta`, which if set to `TRUE` will return meta data on each node, where availbale\*.
+Adding nodes has not bring much to table however, `gt_nodes` takes another argument, `meta`, which if set to `TRUE` will return meta data on each node, where availbale\*. More information on passing meta data to nodes further down the document.
 
 ```{r}
 tweets %>% 
@@ -251,6 +251,35 @@ sigmajs() %>%
   sg_edges(edges, id, source, target) %>% 
   sg_layout() %>% 
   sg_cluster(colors = c("#0C46A0FF", "#41A5F4FF")) %>% 
+  sg_settings(
+    edgeColor = "default",
+    defaultEdgeColor = "#d3d3d3"
+  ) %>% 
+  sg_neighbours()
+```
+
+## Meta data
+
+You can pass meta data to the edges and subsequently to the nodes using `gt_add_meta`.
+
+```{r}
+gt <- tweets %>% 
+    gt_edges(screen_name, retweet_screen_name, followers_count, retweet_followers_count) %>% 
+    gt_nodes() %>% 
+    gt_add_meta(name = size, source = followers_count, target = retweet_followers_count)
+
+# size is now number of followers
+head(gt$nodes)
+
+gt$edges$id <- 1:nrow(gt$edges)
+gt$nodes$id <- gt$nodes$nodes
+gt$nodes$label <- gt$nodes$nodes
+gt$nodes$color <- scales::col_numeric(c("#41A5F4FF", "#0C46A0FF"), NULL)(gt$nodes$size)
+
+sigmajs() %>% 
+  sg_nodes(gt$nodes, id, size, label, color) %>% 
+  sg_edges(gt$edges, id, source, target) %>% 
+  sg_layout() %>% 
   sg_settings(
     edgeColor = "default",
     defaultEdgeColor = "#d3d3d3"

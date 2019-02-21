@@ -337,10 +337,19 @@ gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
 #' Get nodes from a \code{graphTweets} object.
 #' 
 #' @inheritParams gt_collect
-#' @param meta Set to \code{TRUE} to add meta data to nodes.
+#' @param meta Set to \code{TRUE} to add meta data to nodes using \link[rtweet]{users_data}.
+#' @param name Name of column to create.
+#' @param source,target Name of column too apply to edge source and target.
+#' 
+#' @section Functions:
+#' \itemize{
+#'   \item{\code{gt_nodes}: Builds nodes}
+#'   \item{\code{gt_add_meta}: Add meta data to the nodes. The meta data is taken from the edges.}
+#' }
 #'   
 #' @return An object of class \code{graphTweets}.
 #' 
+#' @rdname gt_nodes
 #' @export
 gt_nodes <- function(gt, meta = FALSE){
   
@@ -371,6 +380,36 @@ gt_nodes <- function(gt, meta = FALSE){
   } 
   
   construct(tweets = gt[["tweets"]], edges = gt[["edges"]], nodes = nodes)
+}
+
+#' @rdname gt_nodes
+#' @export
+gt_add_meta <- function(gt, name, source, target){
+  
+  if(missing(name) || missing(source) || missing(target))
+    stop("missing name, source, target", call. = FALSE)
+  
+  if(is.null(gt$nodes))
+    stop("missing nodes, run gt_nodes first", call. = FALSE)
+  
+  src <- gt$edges %>% 
+    dplyr::select(
+      nodes = source,
+      !!dplyr::ensym(name) := !!dplyr::enquo(source)
+    )
+  
+  tgt <- gt$edges %>% 
+    dplyr::select(
+      nodes = target,
+      !!dplyr::ensym(name) := !!dplyr::enquo(target)
+    )
+  
+  gt$nodes <- src %>% 
+    dplyr::bind_rows(tgt) %>% 
+    dplyr::distinct() %>% 
+    dplyr::left_join(gt$nodes, ., by = "nodes")
+  
+  return(gt)
 }
 
 #' Collect
