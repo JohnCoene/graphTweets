@@ -1,4 +1,4 @@
-# graphTweets 0.5.1
+# graphTweets 0.5.2
 
 * `gt_add_meta` Added to add custom meta data to nodes. 
 

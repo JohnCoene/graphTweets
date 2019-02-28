@@ -88,7 +88,19 @@ div(
       ),
       div(
         class = "col-md-2",
-        a(tags$i(class = "fa fa-book"), "Read", href = "http://twinetbook.john-coene.com/", target = "_blank", class = "btn btn-default")
+        a(tags$i(class = "fa fa-book"), "Read", href = "http://twinetbook.john-coene.com/", target = "_blank", class = "btn btn-default", style="width:100%;")
+      )
+    ),
+		br(),
+    div(
+      class = "row",
+      div(
+        class = "col-md-10",
+        "graphTweets is being used to build all the networks of Chirp."
+      ),
+      div(
+        class = "col-md-2",
+        a(tags$i(class = "fa fa-twitter"), "Visit", href = "https://chirp.sh", target = "_blank", class = "btn btn-default", style="width:100%;")
       )
     )
   )
@@ -111,6 +123,7 @@ devtools::install_github("JohnCoene/graphTweets") # dev version
 - `gt_graph` - create `igraph` graph object.
 - `gt_save` - save the graph to file
 - `gt_collect` - collect nodes and edges.
+- `gt_add_meta` - Add meta data to nodes (from edges)
 
 ## Rationale
 
