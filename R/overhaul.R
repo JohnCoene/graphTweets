@@ -107,8 +107,17 @@ gt_edges_from_text_ <- function(data, id = "status_id", source = "screen_name", 
 #' @param source Author of tweets.
 #' @param target Edges target.
 #' @param col Column containing co-mentions.
-#' @param tl Set to \code{TRUE} to convert hashtags to lower case.
+#' @param func Function to pre-process edges, takes edges as constructed by \code{gt_edges}, includes columns named \code{source}
+#'  \code{target} and others passed to the three dot construct.
+#' @param tl Set to \code{TRUE} to convert \code{source} and \code{target} to lower case (recommended).
 #' @param ... any other column name, see examples.
+#' 
+#' @section Functions:
+#' \itemize{
+#'   \item{\code{gt_edges}: Build edges}  
+#'   \item{\code{gt_preproc_edges}: Pre-process edges}  
+#'   \item{\code{gt_edges_bind}: Append edges}  
+#' }
 #' 
 #' @rdname edges
 #' @export
@@ -127,6 +136,17 @@ gt_edges <- function(data, source, target, ..., tl = TRUE){
     .rename_targets(col_name)
   
   construct(tweets = data, edges = edges, nodes = NULL)
+}
+
+#' @rdname edges
+#' @export
+gt_preproc_edges <- function(gt, func){
+
+  if(missing(func))
+    stop("missing func", call. = FALSE)
+
+  gt[["edges"]] <- func(gt[["edges"]])
+  construct(tweets = gt[["tweets"]], edges = gt[["edges"]], nodes = NULL)
 }
 
 #' @rdname edges
@@ -212,124 +232,6 @@ gt_co_edges_bind <- function(gt, col, tl = TRUE){
     .rename_sources(col_name)
   
   append_graph(gt, gt$tweets, edges, NULL)
-}
-
-#' Deprecated Functions
-#' 
-#' These functions are deprecated, see \code{\link{gt_edges}} and \code{\link{gt_co_edges}}.
-#' 
-#' @param data Data.frame of tweets, usually returned by the \code{rtweet} package.
-#' @param tweets Column containing tweets.
-#' @param source Author of tweets.
-#' @param id Unique id.
-#' @param hashtags Column containing co-mentions.
-#' @param tl Set to \code{TRUE} to convert hashtags to lower case.
-#' @param ... any other column name, see examples.
-#' 
-#' @rdname edges_deprecated
-#' @export
-gt_edges_ <- function(data, tweets = "text", source = "screen_name", id = "status_id", ...){
-  
-  .Deprecated("gt_edges")
-  
-  if(missing(data))
-    stop("missing data", call. = FALSE)
-  
-  if(!inherits(data, "data.frame"))
-    stop("data is not of class data.frame")
-  
-  ids <- data[[id]]
-  
-  if(length(unique(ids)) != nrow(data))
-    stop("id are not unique", call. = FALSE)
-  
-  handles <- data %>%
-    dplyr::select(tweets) %>% 
-    unlist() %>% 
-    purrr::map(., extract_handles) %>% 
-    purrr::set_names(ids) %>% 
-    purrr::map(., clean_handles) %>% 
-    purrr::map(., paste0, collapse = ",")
-  
-  df <- dplyr::tibble(
-    handles = unlist(handles),
-    status_id = names(handles)
-  )
-  names(df) <- c("handles", id)
-  
-  if(!inherits(ids, "character"))
-    data[[id]] <- as.character(ids)
-  
-  df %>% 
-    dplyr::left_join(data, handles, by = id) %>% 
-    tidyr::separate_rows_("handles") %>% 
-    dplyr::mutate(handles = as.character(handles)) %>% 
-    dplyr::select_(
-      source = source, 
-      target = "handles",
-      ...
-    ) %>% 
-    dplyr::as_tibble() %>% 
-    dplyr::filter(
-      source != "",
-      target != ""
-    ) -> edges
-  
-  construct(tweets = data, edges = edges, nodes = NULL)
-  
-}
-
-#' @rdname edges_deprecated
-#' @export
-gt_edges_hashes <- function(data, hashtags,  tl = TRUE){
-  
-  .Deprecated("gt_co_edges")
-  
-  if(missing(data) || missing(hashtags))
-    stop("missing data or hashtags", call. = FALSE)
-  hashtags <- deparse(substitute(hashtags))
-  gt_edges_hashes_(data, hashtags, tl = tl)
-}
-
-#' @rdname edges_deprecated
-#' @export
-gt_edges_hashes_ <- function(data, hashtags = "hashtags", tl = TRUE){
-  
-  .Deprecated("gt_co_edges")
-  
-  if(missing(data))
-    stop("missing data", call. = FALSE)
-  
-  b_edges <- function(x){
-    h <- unlist(x)
-    if(length(h) > 1){
-      cbn <- combinat::combn(h, 2, simplify = FALSE) %>% 
-        purrr::map(function(n){
-          names(n) <- c("source", "target")
-          return(n)
-        }) %>% 
-        purrr::map_df(dplyr::bind_rows)
-      return(cbn)
-    }
-  }
-  
-  edges <- purrr::map(data[[hashtags]], b_edges) %>% 
-    purrr::map_df(dplyr::bind_rows) %>% 
-    dplyr::mutate(
-      source = dplyr::case_when(
-        tl == TRUE ~ tolower(source),
-        TRUE ~ source
-      ),
-      target = dplyr::case_when(
-        tl == TRUE ~ tolower(target),
-        TRUE ~ target
-      )
-    ) %>% 
-    dplyr::group_by_("source", "target") %>% 
-    dplyr::summarise(n_comentions = n()) %>% 
-    dplyr::ungroup()
-  
-  construct(tweets = data, edges = edges, nodes = NULL)
 }
 
 #' Nodes

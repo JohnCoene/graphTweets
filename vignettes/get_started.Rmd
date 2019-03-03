@@ -287,4 +287,36 @@ sigmajs() %>%
   sg_neighbours()
 ```
 
+## Preprocess edges
+
+You may also pre-process edges before computing the nodes.
+
+```{r}
+prep <- function(df){
+  df %>% 
+    group_by(source, target) %>% 
+    summarise(
+      n = sum(n),
+      nchar = nchar(text) / n
+    ) %>% 
+    dplyr::ungroup()
+}
+
+gt <- tweets %>% 
+    gt_edges(screen_name, retweet_screen_name, text) %>% 
+    gt_preproc_edges(prep) %>% 
+    gt_nodes()
+
+gt$edges$id <- 1:nrow(gt$edges)
+gt$nodes$id <- gt$nodes$nodes
+gt$nodes$label <- gt$nodes$nodes
+gt$nodes$size <- gt$nodes$n
+gt$edges$color <- scales::col_numeric(c("blue", "red"), NULL)(gt$edges$nchar)
+
+sigmajs() %>% 
+  sg_nodes(gt$nodes, id, size, label) %>% 
+  sg_edges(gt$edges, id, source, target, color) %>% 
+  sg_layout() 
+```
+
 \* Some nodes are mentioned in tweets only and therefore have no meta-data associated.

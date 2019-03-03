@@ -2,7 +2,7 @@
 #'  
 #' @section Functions:
 #' \itemize{
-#' \item \code{\link{gt_edges}} \code{\link{gt_edges_}} - get edges from tweets
+#' \item \code{\link{gt_edges}} - get edges from tweets
 #' \item \code{\link{gt_nodes}} - add meta-data to vertices
 #' \item \code{\link{gt_co_edges}} - Co mentions networks
 #' \item \code{\link{gt_dyn}} - create dynamic graphs

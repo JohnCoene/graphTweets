@@ -1,6 +1,7 @@
 # graphTweets 0.5.2
 
 * `gt_add_meta` Added to add custom meta data to nodes. 
+* `gt_preproc_edges` Added to preprocess edges before comoputing nodes.
 
 # graphTweets 0.5.1
 

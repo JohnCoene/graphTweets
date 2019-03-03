@@ -19,8 +19,6 @@ test_that("errors", {
   
   lst <- list(tweets)
   expect_error(gt_edges(lst))
-  expect_error(gt_edges_(lst))
-  expect_error(gt_edges_())
   expect_error(gt_co_edges())
   
   expect_error(
@@ -37,6 +35,7 @@ test_that("nodes & edges & dyn", {
     text = c("I tweet @you about @him", 
              "I tweet @me about @you"),
     hashtags = c("rstats", "python"),
+    retweet_screen_name = c("someone", "someonelese"),
     screen_name = c("me", "him"),
     retweet_count = c(19, 5),
     status_id = c(1, 2),
@@ -44,18 +43,15 @@ test_that("nodes & edges & dyn", {
     stringsAsFactors = FALSE
   )
   
-  expect_is(gt_edges_(tweets), "graphTweets")
-  expect_is(gt_edges(tweets, screen_name, text, status_id), "graphTweets")
-  expect_is(gt_edges_(tweets, RT = "retweet_count"), "graphTweets")
-  expect_is(gt_edges(tweets, screen_name, text, status_id, "retweet_count"), "graphTweets")
-  edges <- gt_edges_(tweets)
+  expect_is(gt_edges(tweets, screen_name, retweet_screen_name), "graphTweets")
+  edges <- gt_edges(tweets, screen_name, retweet_screen_name)
   
   expect_is(gt_nodes(edges), "graphTweets")
   
-  expect_is(tweets %>% gt_edges_() %>% gt_collect(), "list")
-  expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_collect(), "list")
-  expect_is(tweets %>% gt_edges_() %>% gt_nodes %>% gt_graph(), "igraph")
-  expect_is(tweets %>% gt_edges_() %>% gt_graph(), "igraph")
+  expect_is(tweets %>% gt_edges(screen_name, retweet_screen_name) %>% gt_collect(), "list")
+  expect_is(tweets %>% gt_edges(screen_name, retweet_screen_name) %>% gt_nodes %>% gt_collect(), "list")
+  expect_is(tweets %>% gt_edges(screen_name, retweet_screen_name) %>% gt_nodes %>% gt_graph(), "igraph")
+  expect_is(tweets %>% gt_edges(screen_name, retweet_screen_name) %>% gt_graph(), "igraph")
   tweets %>% 
     gt_edges(text, screen_name, status_id, created_at) %>% 
     gt_nodes() %>% 

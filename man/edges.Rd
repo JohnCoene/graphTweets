@@ -2,12 +2,15 @@
 % Please edit documentation in R/overhaul.R
 \name{gt_edges}
 \alias{gt_edges}
+\alias{gt_preproc_edges}
 \alias{gt_edges_bind}
 \alias{gt_co_edges}
 \alias{gt_co_edges_bind}
 \title{Edges}
 \usage{
 gt_edges(data, source, target, ..., tl = TRUE)
+
+gt_preproc_edges(gt, func)
 
 gt_edges_bind(gt, source, target, ..., tl = TRUE)
 
@@ -24,12 +27,24 @@ gt_co_edges_bind(gt, col, tl = TRUE)
 
 \item{...}{any other column name, see examples.}
 
-\item{tl}{Set to \code{TRUE} to convert hashtags to lower case.}
+\item{tl}{Set to \code{TRUE} to convert \code{source} and \code{target} to lower case (recommended).}
 
 \item{gt}{An object of class \code{graphTweets} as returned by \code{\link{gt_edges}} and \code{\link{gt_nodes}}.}
+
+\item{func}{Function to pre-process edges, takes edges as constructed by \code{gt_edges}, includes columns named \code{source}
+\code{target} and others passed to the three dot construct.}
 
 \item{col}{Column containing co-mentions.}
 }
 \description{
 Get edges from data.frame of tweets.
 }
+\section{Functions}{
+
+\itemize{
+  \item{\code{gt_edges}: Build edges}  
+  \item{\code{gt_preproc_edges}: Pre-process edges}  
+  \item{\code{gt_edges_bind}: Append edges}  
+}
+}
+
