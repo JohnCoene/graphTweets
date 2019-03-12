@@ -53,33 +53,23 @@ HTMLWidgets.widget({
 						}
 					);
 				} else {
-					// create
-					if(!initialized){
-					  initialized = true;
-    				s = new sigma({
-    					graph: x.data,
-    					settings: x.settings
-    				});
-					} 
 
-					if(s.clear === true){
-					  s.clear();
+					if (HTMLWidgets.shinyMode) { 
+						sigInst = document.getElementById(el.id)
+						while (sigInst.firstChild) {
+							sigInst.removeChild(sigInst.firstChild);
+						}
 					}
 					
-					if(x.kill === true){
-					  
-					  s.kill();
-					  
-    				s = new sigma({
-    					graph: x.data,
-    					settings: x.settings
-    				});
-					}
-					
+					s = new sigma({
+						graph: x.data,
+						settings: x.settings
+					});
+					s.refresh();
+
 				  renderer = s.addRenderer({
 						container: el.id,
 						type: x.type
-						
 				  });
 				}
 				
@@ -491,6 +481,42 @@ HTMLWidgets.widget({
 			  }
 			  
 			}
+
+			if(x.hasOwnProperty('read')){
+			  
+				var is_it_running = s.isForceAtlas2Running();
+				
+			  if(x.buttonevent.indexOf('read_exec') > -1){
+  			  for (var i = 0; i < x.button.length; i++){
+    		    x.button[i].btn.addEventListener("click", function(event) {
+      				x.read.data.forEach(function(data){
+								setTimeout(function(){
+									if(x.read.refresh == true && is_it_running == true)
+										s.killForceAtlas2();
+								
+									s.graph.read(data);
+		
+									if(x.read.refresh == true && is_it_running == true)
+										s.startForceAtlas2();
+								}, data.nodes[0].delay)
+							});
+    		    });  
+  			  }
+			  } else {
+					x.read.data.forEach(function(data){
+						setTimeout(function(){
+							if(x.read.refresh == true && is_it_running == true)
+								s.killForceAtlas2();
+							
+							s.graph.read(data);
+
+							if(x.read.refresh == true && is_it_running == true)
+								s.startForceAtlas2();
+							
+						}, data.nodes[0].delay)
+					});
+				}
+			}
 			
       sel_handle.setGroup(x.crosstalk.crosstalk_group);
       //filter_handle.setGroup(x.crosstalk.crosstalk_group);
@@ -623,8 +649,6 @@ HTMLWidgets.widget({
 			for(var name in s.renderers)
 				s.renderers[name].resize(width, height);
 		},
-
-		s: s,
 		
 		getCamera: function() {
 		  return cam;
@@ -1039,6 +1063,39 @@ if (HTMLWidgets.shinyMode) {
 		}
 	);
 
+	// read data
+	Shiny.addCustomMessageHandler('sg_read_exec_p',
+		function (message) {
+			var s = get_sigma_graph(message.id);
+			if (typeof s != 'undefined') {
+				s.graph.read(message.data)
+			}
+		}
+	);
+
+	// read batch data
+	Shiny.addCustomMessageHandler('sg_read_bacth_exec_p',
+		function (message) {
+			var s = get_sigma_graph(message.id);
+			if (typeof s != 'undefined') {
+				message.data.forEach(function(data){
+					var running = s.isForceAtlas2Running();
+					setTimeout(function () {
+						if (message.refresh === true && running === true) {
+							s.killForceAtlas2();
+						}
+						s.graph.read(data);
+						if(message.refresh === true)
+							s.refresh();
+						if (message.refresh === true && running === true) {
+							s.startForceAtlas2();
+						}
+					}, data.nodes[0].delay);
+				});
+			}
+		}
+	);
+
 	// noverlap
 	Shiny.addCustomMessageHandler('sg_noverlap_p',
 		function (message) {
@@ -1305,6 +1362,72 @@ if (HTMLWidgets.shinyMode) {
 					.undo(message.name)
 					.apply()
 				
+			}
+		}
+	);
+
+	// filter neighbours
+	Shiny.addCustomMessageHandler('sg_filter_neighbours_p',
+		function (message) {
+			var s = get_sigma_graph(message.id);
+			
+			if (typeof s != 'undefined') {
+			  
+			  var filter = new sigma.plugins.filter(s);
+			  
+				filter
+					.neighborsOf(message.node, message.name)
+					.apply()
+				
+			}
+		}
+	);
+
+	// set neightbours highlight
+	Shiny.addCustomMessageHandler('sg_neighbours_p',
+		function(message){
+			var s = get_sigma_graph(message.id);
+			
+			if (typeof s != 'undefined') {
+			  
+				db = new sigma.plugins.neighborhoods();
+
+				s.graph.nodes().forEach(function(n) {
+					n.originalColor = n.color;
+				});
+				s.graph.edges().forEach(function(e) {
+					e.originalColor = e.color;
+				});
+				s.bind("clickNode", function(e) {
+					var nodeId = e.data.node.id,
+							toKeep = s.graph.neighbors(nodeId);
+					toKeep[nodeId] = e.data.node;
+					sel_handle.set(nodeId);
+					s.graph.nodes().forEach(function(n) {
+						if (toKeep[n.id])
+							n.color = n.originalColor;
+						else
+							n.color = message.nodes;
+					});
+					s.graph.edges().forEach(function(e) {
+						if (toKeep[e.source] && toKeep[e.target])
+							e.color = e.originalColor;
+						else
+							e.color = message.edges;
+					});
+					s.refresh();
+				});
+				s.bind("clickStage", function(e) {
+					s.graph.nodes().forEach(function(n) {
+						n.color = n.originalColor;
+					});
+					s.graph.edges().forEach(function(e) {
+						e.color = e.originalColor;
+					});
+					s.refresh();
+					sel_handle.clear();
+				});
+
 			}
 		}
 	);

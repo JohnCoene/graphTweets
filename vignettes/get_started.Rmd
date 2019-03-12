@@ -296,8 +296,8 @@ prep <- function(df){
   df %>% 
     group_by(source, target) %>% 
     summarise(
-      n = sum(n),
-      nchar = nchar(text) / n
+      n = sum(n), # number of tweets
+      nchar = sum(nchar(text)) / n # characters per tweet
     ) %>% 
     dplyr::ungroup()
 }
