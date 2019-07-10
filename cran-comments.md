@@ -11,10 +11,7 @@ Bug fixes and an additional function.
 
 NEWS.md:
 
-> # graphTweets 0.5.0
+> # graphTweets 0.5.2
 > 
-> * `gt_co_edges` replaces `gt_edges_hashes`, it now works with other columns than just `hashtags`.
-> * `gt_edges_hash` is _deprecated_ in favour of `gt_edges`.
-> * `gt_edges_bind` and `gt_co_edges_bind` added to bind edges together and build more complex graphs.
-> * Escape hatches, functions ending in `_` are no longer necessary and are thus deprecated.
-
+> * `gt_add_meta` Added to add custom meta data to nodes. 
+> * `gt_preproc_edges` Added to preprocess edges before comoputing nodes.
