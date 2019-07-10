@@ -28,4 +28,3 @@ BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
     testthat
 Encoding: UTF-8
-Remotes: JohnCoene/sigmajs
