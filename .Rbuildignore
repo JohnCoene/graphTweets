@@ -11,3 +11,5 @@
 index.Rmd
 docs
 _pkgdown.yml
+pkgdown
+vignettes
