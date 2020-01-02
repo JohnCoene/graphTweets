@@ -7,8 +7,13 @@
 \usage{
 gt_edges_from_text(data, id, source, tweets, ...)
 
-gt_edges_from_text_(data, id = "status_id", source = "screen_name",
-  tweets = "text", ...)
+gt_edges_from_text_(
+  data,
+  id = "status_id",
+  source = "screen_name",
+  tweets = "text",
+  ...
+)
 }
 \arguments{
 \item{data}{Data.frame of tweets, usually returned by the \code{rtweet} package.}

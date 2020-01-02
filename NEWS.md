@@ -1,3 +1,7 @@
+# graphTweets 0.5.3
+
+Moving rtweet to Suggests.
+
 # graphTweets 0.5.2
 
 * `gt_add_meta` Added to add custom meta data to nodes. 

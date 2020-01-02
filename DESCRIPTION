@@ -1,8 +1,8 @@
 Package: graphTweets
 Type: Package
 Title: Visualise Twitter Interactions
-Version: 0.5.2
-Date: 2019-07-09
+Version: 0.5.3
+Date: 2020-01-02
 Authors@R:
     person("John", "Coene", email = "jcoenep@gmail.com", 
     role = c("aut", "cre"))
@@ -14,7 +14,6 @@ Depends:
 Imports:
     dplyr,
     igraph, 
-    rtweet,
     purrr,
     rlang,
     magrittr,
@@ -22,9 +21,10 @@ Imports:
     tidyr,
     zeallot,
     combinat
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 URL: http://graphTweets.john-coene.com
 BugReports: https://github.com/JohnCoene/graphTweets/issues
 Suggests:
+    rtweet,
     testthat
 Encoding: UTF-8

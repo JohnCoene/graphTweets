@@ -3,7 +3,6 @@
 \docType{package}
 \name{graphTweets}
 \alias{graphTweets}
-\alias{graphTweets-package}
 \title{\pkg{graphTweets} visualise Twitter Interactions.}
 \description{
 \pkg{graphTweets} visualise Twitter Interactions.
